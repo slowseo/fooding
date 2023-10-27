@@ -24,25 +24,32 @@ public class PaymentAction implements Action {
 			forward.setRedirect(true);
 		}
 		
+		
+		
+		
+		
 		// DB에서 장바구니 정보를 조회 + 주소, 주문일 정보 조회
 		// PaymentDAO 객체 생성 - 장바구니정보 조회 메서드 호출
-		PaymentDAO dao = new PaymentDAO();
-		PaymentDTO dto = dao.getCart(id);
+		PaymentDAO pdao = new PaymentDAO();
+		ArrayList cartList = pdao.getCart(id); 
 		
 		
 		// DB에서 주소, 주문일 정보 조회
-		// StopDAO 객체 생성 - 장바구니정보 조회 메서드 호출
-	
+		// PaymentDAO 객체 생성 - 정차지정보 조회 메서드 호출
+		StopDTO stopdto = pdao.getStop();
 		
 		
+		// reqest 영역에 정보 저장하기
+		request.setAttribute("cartList", cartList);
+		request.setAttribute("stopdto", stopdto);
+		
+		// 페이지 이동(./payment/payment.jsp)
+		forward.setPath("./payment/payment.jsp");
+		forward.setRedirect(false);
+		
+		return forward;
 		
 		
-		
-		
-		
-		
-		
-		return null;
 	}
 	
 
