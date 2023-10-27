@@ -18,21 +18,15 @@
 
 <table border="1">
 	<tr>
-		<td>아이디</td>
-		<td>이름</td>
-		<td>나이</td>
-		<td>성별</td>
-		<td>이메일</td>
-		<td>회원가입일</td>
+		<td>상품이름</td>
+		<td>가격</td>
+		<td>갯수</td>
 	</tr>
 		<c:forEach var = "dto" items="${cartList }">
 	<tr>
 		<td>${dto.id}</td>
 		<td>${dto.name }</td>
 		<td>${dto.age }</td>
-		<td>${dto.gender }</td>
-		<td>${dto.email }</td>
-		<td>${dto.regdate }</td>
 	</tr>
 	</c:forEach>
 </table>
@@ -59,11 +53,17 @@
 <input type="radio" name="pay" value="결제2"> 결제2
 <input type="radio" name="pay" value="결제1"> 결제3
 
-
 <!-- 결제방법 선택하기(2~3개) -->
 
 <!-- 총 주문금액(=결제금액)  -->
 
+가격*갯수 + 가격*갯수 = 총금액이렇게 구하기
+<c:forEach var = "dto" items="${cartList }">
+ 총가격 : ${dto.가격} * ${dto. 갯수}
+
+</c:forEach>
+
+<!-- 총 주문금액(=결제금액)  -->
 
 <!-- 결제하기 버튼 -->
 <input type="submit" value="결제하기" onclick="location.href='./paymentAfter.pay'">
