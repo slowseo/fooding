@@ -39,9 +39,17 @@ public class PaymentAction implements Action {
 		StopDTO stopdto = pdao.getStop();
 		
 		
+		// 결제api 연결하기
+		
+		
+		
 		// reqest 영역에 정보 저장하기
 		request.setAttribute("cartList", cartList);
 		request.setAttribute("stopdto", stopdto);
+		
+		
+		
+		
 		
 		// 페이지 이동(./payment/payment.jsp)
 		forward.setPath("./payment/payment.jsp");
