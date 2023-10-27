@@ -31,9 +31,8 @@ public class PaymentAction implements Action {
 		
 		
 		// DB에서 주소, 주문일 정보 조회
-		// 
-		
-		
+		// StopDAO 객체 생성 - 장바구니정보 조회 메서드 호출
+	
 		
 		
 		
