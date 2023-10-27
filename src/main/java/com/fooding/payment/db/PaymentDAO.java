@@ -62,7 +62,7 @@ public class PaymentDAO {
 			
 			while(rs.next()) {
 				// rs -> dto -> list
-				PaymentDTO dto = new PaymentDTO();
+				PurchaseDTO dto = new PurchaseDTO();
 				
 				
 			}

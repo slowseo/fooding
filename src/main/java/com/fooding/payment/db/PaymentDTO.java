@@ -1,32 +1,26 @@
 package com.fooding.payment.db;
 
 public class PaymentDTO {
-
-	// 장바구니(cart) 테이블
-	private int cart_id;
-	private int member_id;
-	private int product_id;
-	private String name;
-	private int quantity;
-	private String price;
+	private int payment_id;
+	private String method; // 결제방식번호
+	// 라디오 버튼에 따라 결제방식번호가 달라지게 하기
 	
-	// 주문내역(order) 테이블
-	private int order_id;
-//	private int member_id;
-	private String address; //주소
-	private java.sql.Timestamp date; // 주문일
-	private int status;
 	
-	// 주문상세내역(order_detail) 테이블
-	private int detail_id;
-//	private int order_id;
-	private int product;
-	
-	// 정차지(stop) 테이블 
-	private int stop_id;
-	private String beginaddress; //정착지 주소
-	private java.sql.Timestamp begintime;
-	private java.sql.Timestamp endtime;
-	
+	public int getPayment_id() {
+		return payment_id;
+	}
+	public void setPayment_id(int payment_id) {
+		this.payment_id = payment_id;
+	}
+	public String getMethod() {
+		return method;
+	}
+	public void setMethod(String method) {
+		this.method = method;
+	}
+	@Override
+	public String toString() {
+		return "PaymentDTO [payment_id=" + payment_id + ", method=" + method + "]";
+	}
 	
 }
