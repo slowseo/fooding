@@ -48,7 +48,7 @@ public class PaymentDAO {
 
 	//================    디비 연결(자원) 해제 메서드    ====================
 	
-	//============= 장바구니 정보 조회 메서드 =======
+	//============= 장바구니 정보 조회 메서드(== Db정보 dto에 입력하기) =======
 	public ArrayList getCart() {
 		ArrayList cartList = new ArrayList();
 		
@@ -62,20 +62,58 @@ public class PaymentDAO {
 			
 			while(rs.next()) {
 				// rs -> dto -> list
-				PurchaseDTO dto = new PurchaseDTO();
+				CartDTO dto = new CartDTO ();
 				
+				dto.setCart_id(rs.getInt("cart_id"));
+				dto.setMember_id(rs.getInt("member_id"));
 				
+				cartList.add(dto);
+				
+				System.out.println(" DAO : cart 조회 완료!");
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			CloseDB();
 		}
-		return null;
+		return cartList;
+	}
+	//============= 장바구니 정보 조회 메서드(== Db정보 dto에 입력하기) =======
+	public ArrayList getDetail() {
+		ArrayList detailList = new ArrayList();
+		
+		try {
+			con=getCon();
+			
+			sql = "select * from cart_detail";
+			pstmt = con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				// rs -> dto -> list
+				cartDetailDTO dto = new cartDetailDTO();
+				
+				dto.setCartdetail_id(rs.getInt("cartdetail_id"));
+				dto.setCart_id(rs.getInt("cart_id"));
+				dto.setProduct_id(rs.getInt("product_id"));
+				dto.setQuantity(rs.getInt("quantity"));
+				dto.setAddress(rs.getString("address"));
+				detailList.add(dto);
+				
+				System.out.println(" DAO : cart 조회 완료!");
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			CloseDB();
+		}
+		return detailList;
 	}
 	
-	
-	
+	// 결제방법 조회 - getPayment
 	
 	
 	

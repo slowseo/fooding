@@ -1,16 +1,16 @@
 package com.fooding.payment.db;
 
 public class cartDetailDTO {
-	private int cardetail_id;
+	private int cartdetail_id;
 	private int cart_id;
 	private int product_id;
 	private int quantity;
 	private String address;
-	public int getCardetail_id() {
-		return cardetail_id;
+	public int getCartdetail_id() {
+		return cartdetail_id;
 	}
-	public void setCardetail_id(int cardetail_id) {
-		this.cardetail_id = cardetail_id;
+	public void setCartdetail_id(int cardetail_id) {
+		this.cartdetail_id = cardetail_id;
 	}
 	public int getCart_id() {
 		return cart_id;
@@ -38,7 +38,7 @@ public class cartDetailDTO {
 	}
 	@Override
 	public String toString() {
-		return "cartDetailDTO [cardetail_id=" + cardetail_id + ", cart_id=" + cart_id + ", product_id=" + product_id
+		return "cartDetailDTO [cardetail_id=" + cartdetail_id + ", cart_id=" + cart_id + ", product_id=" + product_id
 				+ ", quantity=" + quantity + ", address=" + address + "]";
 	}
 	
