@@ -39,7 +39,9 @@ public class PaymentAction implements Action {
 		StopDTO stopdto = pdao.getStop();
 		
 		
-		// 결제api 연결하기
+		// 결제방식 테이블에서 결제방식 정보 dto에 저장
+		
+		
 		
 		
 		
@@ -52,6 +54,7 @@ public class PaymentAction implements Action {
 		
 		
 		// 페이지 이동(./payment/payment.jsp)
+		forward = new ActionForward();
 		forward.setPath("./payment/payment.jsp");
 		forward.setRedirect(false);
 		
