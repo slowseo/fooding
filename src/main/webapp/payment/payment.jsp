@@ -7,7 +7,7 @@
 <head>
 <!-- 포트원 결제연동 소스 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-</script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js" ></script>
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <!-- iamport.payment.js -->
@@ -82,17 +82,7 @@ value에 dto.method 하면 될 듯-->
 <button onclick="requestPay()">결제하기</button>
 
 <script>
-function checkRadioAndPay() {
-  var selectedRadio = document.querySelector('input[name="pay"]:checked');
-  
-  if (selectedRadio) {
-    // 라디오 버튼이 선택된 경우, 결제를 진행
-    requestPay();
-  } else {
-    // 라디오 버튼이 선택되지 않은 경우, 알림을 표시
-    alert("라디오 버튼을 선택하세요.");
-  }
-}
+// 라디오 버튼을 안눌렀을때 결제하기 누르면 알럿뜨게하기
 
 const userCode = "imp75410442";
 IMP.init(userCode);
