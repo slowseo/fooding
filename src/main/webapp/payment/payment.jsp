@@ -5,20 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- 포트원 결제연동 소스 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-<script type="text/javascript">
-<!--
-  function check(country){
- alert(country);
-   }
- function check2(form){
- for(var i=0; i<form.country.length;i++){
-  if(form.country[i].checked == true){
-   alert(i+"번째의 "+form.country[i].value + " 선택");
-  }
- }
-   }
-//-->
 </script>
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
@@ -54,7 +42,7 @@
 <!-- 장바구니 정보 출력하기 출력하기(리스트) -->
 
 <!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
-<h1> 트럭 ㄴ</h1>
+<h1> 트럭 </h1>
 <table border="1">
 	<tr>
 		<td>픽업 주소</td>
@@ -69,11 +57,12 @@
 
 <!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
 
-<!-- 결제방법 선택하기(2~3개) -->
+<!-- 결제방법 선택하기(2~3개) 
+value에 dto.method 하면 될 듯-->
 <h1> 결제방법</h1>
 <form>
-<input type="radio" name="pay" value="requestPay()"> 결제1
-<input type="radio" name="pay" value="kakao"> 카카오
+<input type="radio" name="pay" value="INIBillTst"> 카드결제
+<input type="radio" name="pay" value="kakaopay"> 카카오 간편결제
 <input type="radio" name="pay" value="결제1"> 결제3
 </form>
 
@@ -83,37 +72,59 @@
 <h1> 결제금액 </h1>
 가격*갯수 + 가격*갯수 = 총금액이렇게 구하기
 <c:forEach var = "dto" items="${cartList }">
-<%--  총가격 : ${dto.가격} * ${dto. 갯수} --%>
+<%--  총가격 : ${dto.가격 * dto. 갯수} --%>
 
 </c:forEach>
 
 <!-- 총 주문금액(=결제금액)  -->
 <br>
-<!-- 결제하기 버튼 라디오버튼 값에 따라 온클릭 이벤트 변경 -->
-<script type="text/javascript">
-var checkVal = $('input[name=pay]:checked').val();
-</script>
+<!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
 <button onclick="requestPay()">결제하기</button>
 
 <script>
+<script>
+function checkRadioAndPay() {
+  var selectedRadio = document.querySelector('input[name="pay"]:checked');
+  
+  if (selectedRadio) {
+    // 라디오 버튼이 선택된 경우, 결제를 진행
+    requestPay();
+  } else {
+    // 라디오 버튼이 선택되지 않은 경우, 알림을 표시
+    alert("라디오 버튼을 선택하세요.");
+  }
+}
+
 const userCode = "imp75410442";
 IMP.init(userCode);
 
 function requestPay() {
+	// 라디오 버튼 선택에 따라 pg 값을 동적으로 설정
+	var selectedPG = document.querySelector('input[name="pay"]:checked').value; 
+
+// 	var merchant_uid = generateRandomMerchantUID();
+
   IMP.request_pay({
-    pg: "INIBillTst", // 라디오 버튼마다 이거 달라지게 하기
+    pg: selectedPG, // 라디오 버튼마다 결제방식 달라지게 하기
     pay_method: "card",
-    merchant_uid: "www",
+    merchant_uid: "sgeseg", // 랜덤으로 출력하기?? 고유아이디....넣기?
     amount: 10,
     buyer_tel: "01012345678",
   } , function(data){ 
 	  if(data.success){ // 결제성공후
 		 var msg ="송공";
-		 $.ajax({
-         	type : 'post',
-         	url : '/PaymentAfter.pay',
-         });
-	  }else{ // 결제취소할때
+		 jQuery.ajax({ // !!!!! 이거 어떻게 하면 되는거지...
+		        url: "/PaymentActionAfter.pay", 
+		        method: "POST",
+		        headers: { "Content-Type": "application/json" },
+		        data: {
+		          amount : data.amount,            // 결제 고유번호
+		          merchant_uid: data.merchant_uid   // 주문번호
+		        }
+		      }).done(function (data) {
+		        // 가맹점 서버 결제 API 성공시 로직
+		      })
+		    }else{ // 결제취소할때, 중복결제하려고 할 때
 		 var msg ="결제를 취소하셨습니다";
 	  }
 	  alert(msg);

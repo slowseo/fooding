@@ -14,17 +14,11 @@ public class PaymentAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		// 전달정보 저장하기
+		
+		
 		// 로그인 세션 제어 (비로그인 접근불가)
-		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-		
-		ActionForward forward = new ActionForward();
-		if(id==null) {
-			forward.setPath("./Main.me");
-			forward.setRedirect(true);
-		}
-		
-		
+
 		
 		
 		

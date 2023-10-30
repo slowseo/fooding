@@ -3,8 +3,6 @@ package com.fooding.payment.db;
 public class PaymentDTO {
 	private int payment_id;
 	private String method; // 결제방식번호
-	// 라디오 버튼에 따라 결제방식번호가 달라지게 하기
-	
 	
 	public int getPayment_id() {
 		return payment_id;

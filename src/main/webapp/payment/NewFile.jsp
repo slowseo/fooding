@@ -1,41 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>radio 버튼 테스트</title>
-<script type="text/javascript">
-<!--
-  function check(country){
- alert(country);
-   }
- function check2(form){
- for(var i=0; i<form.country.length;i++){
-  if(form.country[i].checked == true){
-   alert(i+"번째의 "+form.country[i].value + " 선택");
-  }
- }
-   }
-//-->
-</script>
+    <title>라디오 버튼 예제</title>
 </head>
 <body>
+    <form>
+        <input type="radio" name="textOption" value="option1" onchange="updateText(this.value)"> 옵션 1
+        <input type="radio" name="textOption" value="option2" onchange="updateText(this.value)"> 옵션 2
+        <input type="radio" name="textOption" value="option3" onchange="updateText(this.value)"> 옵션 3
+    </form>
+    
+    <div id="displayText">여기에 텍스트가 나타납니다.</div>
 
-1. onclick을 이용해서 radio 버튼 개별적으로 이벤트 체크 <br>
-<form name="mform">
- <input type="radio" name="country" value="Korea" onclick="check(this.value)" checked>대한민국 
- <input type="radio" name="country" value="USA" onclick="check(this.value)">미국 
- <input type="radio" name="country" value="China" onclick="check(this.value)">중국 
-</form>
+    <script>
+        function updateText(selectedValue) {
+            var displayText = document.getElementById("displayText");
 
-2. radio 버튼 선택 후 선택한 radio 버튼의 index 및 value 출력 <br>
-<form name="sform">
- <input type="radio" name="country" value="Korea" checked="checked">대한민국 
- <input type="radio" name="country" value="USA">미국 
- <input type="radio" name="country" value="China">중국 
- <input type="button" value="확인" onclick="check2(this.form)">
-</form>
+            if (selectedValue === "option1") {
+                displayText.innerText = "옵션 1을 선택했습니다.";
+            } else if (selectedValue === "option2") {
+                displayText.innerText = "옵션 2를 선택했습니다.";
+            } else if (selectedValue === "option3") {
+                displayText.innerText = "옵션 3을 선택했습니다.";
+            }
+        }
+    </script>
 </body>
 </html>
-

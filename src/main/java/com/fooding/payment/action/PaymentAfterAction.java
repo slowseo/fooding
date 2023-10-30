@@ -12,6 +12,9 @@ public class PaymentAfterAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		// 전달정보 저장하기
+		
+		
 		// 로그인 세션 제어
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
@@ -22,15 +25,23 @@ public class PaymentAfterAction implements Action{
 			forward.setRedirect(true);
 		}
 		
+		// 결제처리??
+		
+		
+		
+		
+		// 뒤로가기 막기(뒤로로가기 두번누르는것도 막기)
+		// => 메인페이지로 이동하게 만들기
+		
+		
+		// 장바구니 테이블 데이터 지우기
+		// 장바구니 dto 초기화
 		
 		
 		
 		
 		
-		
-		
-		
-		
+		// 모든 처리 후 결제정보확인 페이지로 이동하기
 		
 		
 		return null;
