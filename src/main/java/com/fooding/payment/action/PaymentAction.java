@@ -46,10 +46,6 @@ public class PaymentAction implements Action {
 		ArrayList detailList = pdao.getDetail();
 		
 		
-		// 결제방식 테이블에서 결제방식 정보 dto에 저장
-		PaymentDTO dto = pdao.getPayment(1);
-		
-		
 		
 		
 		// reqest 영역에 정보 저장하기

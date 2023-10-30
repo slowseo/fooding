@@ -115,41 +115,6 @@ public class PaymentDAO {
 		return detailList;
 	}
 	
-	// 결제방법 조회 - getPayment
-	public PaymentDTO getPayment(int payment_id) {
-		PaymentDTO dto = null;
-		// 1.2.  디비연결
-		try {
-			con = getCon();
-			// 3. sql 작성(select) & pstmt 객체
-			sql = "select * from payment where payment_id = ?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, payment_id);
-			
-			// 4. sql 실행 
-			rs = pstmt.executeQuery();
-			
-			// 5. 데이터 처리 (DB에 저장된 정보(rs)를 DTO로 저장)
-			if(rs.next()) {
-				dto = new PaymentDTO();
-				//rs => dto 저장
-				dto.setPayment_id(rs.getInt("payment_id"));
-				dto.setMethod(rs.getString("method"));
-			}
-			
-			System.out.println("DAO : 결제방법 조회 완료!");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			CloseDB();
-		}
-		
-		
-		return dto;
-	}
-	
-	
 	
 	
 	
