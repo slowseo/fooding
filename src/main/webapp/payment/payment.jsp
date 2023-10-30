@@ -21,27 +21,29 @@
 
 
 <!-- 본문들어가는곳(결제페이지) -->
-
+<fieldset>
+<form action="./paymentAfter.pay" method="post">
 <!-- 장바구니 정보 출력하기 출력하기(리스트) -->
 
 <!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
 
 <!-- 결제방법 선택하기(2~3개) -->
 <h1> 결제방법</h1>
-<form>
+
 <input type="radio" name="pay" value="INIBillTst"> 카드결제
 <input type="radio" name="pay" value="kakaopay"> 카카오페이
 <input type="radio" name="pay" value="tosspay"> 토스페이
-</form>
+
 
 <!-- 총 주문금액(=결제금액)  -->
 <h1> 결제금액 </h1>
 가격*갯수 + 가격*갯수 = 총금액이렇게 구하기
 <c:forEach var = "dto" items="${cartList }">
 <%--  총가격 : ${dto.가격 * dto. 갯수} --%>
-
 </c:forEach>
 
+</form>
+</fieldset>
 <br>
 <!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
 <button onclick="requestPay()">결제하기</button>
