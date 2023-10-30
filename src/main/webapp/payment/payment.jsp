@@ -82,7 +82,6 @@ value에 dto.method 하면 될 듯-->
 <button onclick="requestPay()">결제하기</button>
 
 <script>
-<script>
 function checkRadioAndPay() {
   var selectedRadio = document.querySelector('input[name="pay"]:checked');
   

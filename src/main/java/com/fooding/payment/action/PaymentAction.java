@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fooding.payment.db.PaymentDAO;
+import com.fooding.payment.db.PaymentDTO;
 import com.fooding.payment.db.PurchaseDTO;
 import com.fooding.payment.db.cartDetailDTO;
+import com.fooding.paymentResult.action.PaymentResultAction;
 import com.fooding.util.Action;
 import com.fooding.util.ActionForward;
 
@@ -20,8 +22,15 @@ public class PaymentAction implements Action {
 		// 전달정보 저장하기
 		
 		
-		// 로그인 세션 제어 (비로그인 접근불가)
-
+		// 로그인 세션 제어
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		
+		ActionForward forward = new ActionForward();
+		if(id==null) {
+			forward.setPath("./MemberLogin.me");
+			forward.setRedirect(true);
+		}
 		
 		
 		//리스트로저장
@@ -38,7 +47,7 @@ public class PaymentAction implements Action {
 		
 		
 		// 결제방식 테이블에서 결제방식 정보 dto에 저장
-		
+		PaymentDTO dto = pdao.getPayment(1);
 		
 		
 		
