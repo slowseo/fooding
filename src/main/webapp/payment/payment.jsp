@@ -26,17 +26,19 @@
 	<!-- 본문들어가는곳(결제페이지) -->
 	<fieldset>
 		<form action="./paymentAfter.pay" method="post" id="mypayment">
-			<c:forEach items="${cart_list }" items="${여러개 가능 }">
+			<c:forEach var="cart" items="${cartList}" >
+			<c:forEach var="product" items="${productList}">
 			<!-- 장바구니 정보 출력하기 출력하기(리스트) -->
-			상품사진 : <img src="" alt=""> <br>
-			상품이름 : <input type="text" name="name" value="${dto.name}" readonly> <br>
+			상품사진 : <img src="${product.image}" > <br>
+			상품이름 : <input type="text" name="name" value="${product.name}" readonly> <br>
 			수량 : <input type="number" name="quantity" 
-							value="${dto.quantity }" readonly> <br>
+							value="${cart.quantity }" readonly> <br>
+			가격 : <input type="text" name="price" value="${product.price }" readonly>
 
 			<!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
-			주소 : <input type="text" name="address" value="${dto.address}" readonly> <br>
-			주문일 : <input type="text" name="date"
-						value="${dto.date}" readonly><br>
+			주소 : <input type="text" name="address" value="${cart.address}" readonly> <br>
+
+			</c:forEach>
 			</c:forEach>
 						
 			<!-- 결제방법 선택하기(2~3개) -->
@@ -49,8 +51,10 @@
 			<!-- 총 주문금액(=결제금액)  -->
 			<h1>결제금액</h1>
 			가격*갯수 + 가격*갯수 = 총금액이렇게 구하기
-			<c:forEach var="dto" items="${cartList }">
-				<%--  총가격 : ${dto.가격 * dto. 갯수} --%>
+			<c:forEach var="cart" items="${cartList}" >
+			<c:forEach var="product" items="${productList}">
+				 총가격 : <input type="text" name="address" value="${product.price * cart.quantity}">
+			</c:forEach>
 			</c:forEach>
 
 		</form>

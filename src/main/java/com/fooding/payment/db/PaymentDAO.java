@@ -27,7 +27,7 @@ public class PaymentDAO {
 		// 프로젝트의 정보를 확인(JNDI)
 		Context initCTX = new InitialContext();  //컨텍스트= 프로젝트, init = 초기화, CTX = 컨텍스트
 		// 프로젝트안에 작성된 디비 연결정보(context.xml)를 불러오기
-		DataSource ds = (DataSource)initCTX.lookup(" "); // 불러오기
+		DataSource ds = (DataSource)initCTX.lookup("java:comp/env/jdbc/mvc"); // 불러오기
 		// DB 연결 수행
 		con = ds.getConnection();
 		System.out.println(" DAO : 디비연결 성공! (커넥션풀)");

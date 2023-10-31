@@ -27,7 +27,7 @@
 // 		response.sendRedirect("./Main.me"); //조인에서 로그인으로 변경함
 		
 // 		response.sendRedirect("./test.bo");
-		response.sendRedirect("./test.pay");
+		response.sendRedirect("./Payment.pay");
 
 
 	%>

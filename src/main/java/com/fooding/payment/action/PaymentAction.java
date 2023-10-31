@@ -17,18 +17,11 @@ public class PaymentAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		// 0. 전달정보 저장하기
 		// ArrayList 로 오는 전달정보 저장하기
 		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단 어떻게 테스트하지)
-		 String[] arr = request.getParameterValues("cart_id");
-//		 int[] cart_id = null; 	//int변환은 마지막에 하기
-//		 if( arr != null ){ 
-//			 cart_id = new int[ arr.length ]; 
-//			 	for( int i=0; i<arr.length;i++) {
-//			 		cart_id[i]=Integer.parseInt(arr[i]);
-//			 	}
-//		 }
-//		 System.out.println(cart_id);
-
+		 String[] arr = {"1","2","3"};
+//				 request.getParameterValues("cart_id");
 		
 		// 로그인 세션 제어
 		HttpSession session = request.getSession();
@@ -56,23 +49,20 @@ public class PaymentAction implements Action {
 		
 		
 		// reqest 영역에 정보 저장하기
-		// 장바구니 번호
-		// 조회한 장바구니 정보
-		// 상품이름
-		// 상품번호
 		request.setAttribute("cart_id", cart_id);
 		request.setAttribute("cartList", cartList);
+		request.setAttribute("productList", productList);
 		
 		
 		
 		
 		
 		// 페이지 이동(./payment/payment.jsp)
-//		forward = new ActionForward();
-//		forward.setPath("./payment/payment.jsp");
-//		forward.setRedirect(false);
-//		
-		return null;
+		forward = new ActionForward();
+		forward.setPath("./payment/payment.jsp");
+		forward.setRedirect(false);
+		
+		return forward;
 		
 		
 	}
