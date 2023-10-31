@@ -26,19 +26,17 @@
 	<!-- 본문들어가는곳(결제페이지) -->
 	<fieldset>
 		<form action="./paymentAfter.pay" method="post" id="mypayment">
-			<c:forEach var="cart" items="${cartList}" >
-			<c:forEach var="product" items="${productList}">
+			<c:forEach var="dto" items="${purchaseList}" varStatus="">
 			<!-- 장바구니 정보 출력하기 출력하기(리스트) -->
-			상품사진 : <img src="${product.image}" > <br>
-			상품이름 : <input type="text" name="name" value="${product.name}" readonly> <br>
+			상품사진 : <img src="${dto.image}" > <br>
+			상품이름 : <input type="text" name="name" value="${dto.name}" readonly> <br>
 			수량 : <input type="number" name="quantity" 
-							value="${cart.quantity }" readonly> <br>
-			가격 : <input type="text" name="price" value="${product.price }" readonly>
+							value="${dto.quantity }" readonly> <br>
+			가격 : <input type="text" name="price" value="${dto.price }" readonly>
 
 			<!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
-			주소 : <input type="text" name="address" value="${cart.address}" readonly> <br>
+			주소 : <input type="text" name="address" value="${dto.address}" readonly> <br>
 
-			</c:forEach>
 			</c:forEach>
 						
 			<!-- 결제방법 선택하기(2~3개) -->
@@ -50,12 +48,13 @@
 
 			<!-- 총 주문금액(=결제금액)  -->
 			<h1>결제금액</h1>
-			가격*갯수 + 가격*갯수 = 총금액이렇게 구하기
-			<c:forEach var="cart" items="${cartList}" >
-			<c:forEach var="product" items="${productList}">
-				 총가격 : <input type="text" name="address" value="${product.price * cart.quantity}">
+<!-- 			가격*갯수 + 가격*갯수 = 총금액이렇게 구하기 -->
+			<c:forEach var="dto" items="${purchaseList}" >
+				<c:set var="total" value="${(dto.price * dto.quantity)+total}"/>
 			</c:forEach>
-			</c:forEach>
+			
+			<h2> 총 결제 금액 : <c:out value="${total}"/></h2>
+		
 
 		</form>
 	</fieldset>
@@ -68,8 +67,8 @@
 
 
 	<script>
-		let money = "{결제금액 옮기기}"
-		let name = "{결제물건이름..?}"
+		let money = "<c:out value="${total}"/>"
+		let name = "사용자"
 		let purchaseid = new Date().getTime()
 
 		function cartBack() {
@@ -94,7 +93,7 @@
 				pay_method : "card",// card는 고정
 				merchant_uid : purchaseid, //상품번호+주문날짜
 				name : "테스트 결제", // 여기에 주문자 이름
-				amount : 10,
+				amount : money,
 			}, function(data) {
 				console.log(data); //ajax처럼 콜백 성공 유무
 				if (data.success) { // 결제성공후

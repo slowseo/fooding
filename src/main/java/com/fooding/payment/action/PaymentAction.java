@@ -20,7 +20,7 @@ public class PaymentAction implements Action {
 		// 0. 전달정보 저장하기
 		// ArrayList 로 오는 전달정보 저장하기
 		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단 어떻게 테스트하지)
-		 String[] arr = {"1","2","3"};
+		 String[] arr = {"1"};
 //				 request.getParameterValues("cart_id");
 		
 		// 로그인 세션 제어
@@ -46,12 +46,12 @@ public class PaymentAction implements Action {
 		// 상품 번호, 상품이름, 상품가격, 상품 이미지경로
 		ArrayList productList = pdao.getProduct(cart_id);
 		
-		
+		//4. 2번이랑 3번 하나로 합치기
+		ArrayList purchaseList = pdao.getPurchase(cart_id);
 		
 		// reqest 영역에 정보 저장하기
 		request.setAttribute("cart_id", cart_id);
-		request.setAttribute("cartList", cartList);
-		request.setAttribute("productList", productList);
+		request.setAttribute("purchaseList", purchaseList);
 		
 		
 		

@@ -127,6 +127,44 @@ public class PaymentDAO {
 		return productList;
 		}//3.끝
 	
+	//4. 카트랑 프로덕트 합치기
+	public ArrayList getPurchase(ArrayList<Integer> cart_id) {
+		ArrayList purchasetList = new ArrayList();
+		
+		try {con=getCon();
+			
+			sql = "select * from cart c join product p on c.product_id = p.product_id where c.cart_id =?";
+			pstmt = con.prepareStatement(sql);
+			
+			for(int cartId : cart_id) {
+				pstmt.setInt(1, cartId);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					PaymentDTO payDto = new PaymentDTO();
+					
+					payDto.setCart_id(rs.getInt("cart_id"));
+					payDto.setMember_id(rs.getInt("member_id"));
+					payDto.setProduct_id(rs.getInt("product_id"));
+					payDto.setQuantity(rs.getInt("quantity"));
+					payDto.setAddress(rs.getString("address"));
+					payDto.setStopdate_id(rs.getInt("stopdate_id"));
+					payDto.setName(rs.getString("name"));
+					payDto.setPrice(rs.getInt("price"));
+					payDto.setImage(rs.getString("image"));
+					
+					purchasetList.add(payDto);
+				}
+			}
+			System.out.println("Payment DAO : 상품 정보 조회 완료!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			CloseDB();
+		}
+		return purchasetList;
+		}//4.끝
+	
+	
 	
 	
 	
