@@ -48,72 +48,52 @@ public class PaymentDAO {
 	}
 
 	//================    디비 연결(자원) 해제 메서드    ====================
+	//=============     /////////////    =======================
+	// 1. String[] 으로 오는 장바구니 번 ArrayList로 변환하기
+	public ArrayList<Integer> stringToArrayList(String[] arr){
+		ArrayList<Integer> cart_id = new ArrayList<>();
+		
+		for(String eachArr : arr) {
+			cart_id.add(Integer.parseInt(eachArr));
+		}
+		
+		return cart_id;
+	} // 1. 끝
 	
-	//============= 장바구니 정보 조회 메서드(== Db정보 dto에 입력하기) =======
-	public ArrayList getCart() {
+	
+	// 2. 장바구니번호 ArrayList<Integer> 로 장바구니 정보 조회하기
+	public ArrayList getCart(ArrayList<Integer> cart_id) {
 		ArrayList cartList = new ArrayList();
 		
-		try {
-			con=getCon();
+		try {con=getCon();
 			
 			sql = "select * from cart where cart_id = ?";
 			pstmt = con.prepareStatement(sql);
 			
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				// rs -> dto -> list
-				CartDTO dto = new CartDTO ();
-				
-				dto.setCart_id(rs.getInt("cart_id"));
-				dto.setMember_id(rs.getInt("member_id"));
-				
-				cartList.add(dto);
-				
-				System.out.println(" DAO : cart 조회 완료!");
-
+			for(int cartId : cart_id) {
+				pstmt.setInt(1, cartId);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					CartDTO cartDto = new CartDTO();
+					
+					cartDto.setCart_id(rs.getInt("cart_id"));
+					cartDto.setMember_id(rs.getInt("member_id"));
+					cartDto.setProduct_id(rs.getInt("product_id"));
+					cartDto.setQuantity(rs.getInt("quantity"));
+					cartDto.setAddress(rs.getString("address"));
+					cartDto.setStopdate_id(rs.getInt("stopdate_id"));
+					
+					cartList.add(cartDto);
+				}
 			}
+			System.out.println(" DAO : 장바구니 목록 조회 완료!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			CloseDB();
 		}
 		return cartList;
-	}
-	//============= 장바구니 정보 조회 메서드(== Db정보 dto에 입력하기) =======
-	public ArrayList getDetail() {
-		ArrayList detailList = new ArrayList();
-		
-		try {
-			con=getCon();
-			
-			sql = "select * from cart_detail";
-			pstmt = con.prepareStatement(sql);
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				// rs -> dto -> list
-				cartDetailDTO dto = new cartDetailDTO();
-				
-				dto.setCartdetail_id(rs.getInt("cartdetail_id"));
-				dto.setCart_id(rs.getInt("cart_id"));
-				dto.setProduct_id(rs.getInt("product_id"));
-				dto.setQuantity(rs.getInt("quantity"));
-				dto.setAddress(rs.getString("address"));
-				detailList.add(dto);
-				
-				System.out.println(" DAO : cart 조회 완료!");
-
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			CloseDB();
-		}
-		return detailList;
-	}
+	} // 2. 끝
 	
 	
 	

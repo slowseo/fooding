@@ -26,21 +26,24 @@
 	<!-- 본문들어가는곳(결제페이지) -->
 	<fieldset>
 		<form action="./paymentAfter.pay" method="post" id="mypayment">
+			<c:forEach items="${cart_list }" items="${여러개 가능 }">
 			<!-- 장바구니 정보 출력하기 출력하기(리스트) -->
-			상품사진 : <img src="" alt=""> 상품이름 : <input type="text"
-				name="name" value="${dto.name}" readonly> 수량 : <input
-				type="number" name="quantity" value="${dto.quantity }" readonly>
+			상품사진 : <img src="" alt=""> <br>
+			상품이름 : <input type="text" name="name" value="${dto.name}" readonly> <br>
+			수량 : <input type="number" name="quantity" 
+							value="${dto.quantity }" readonly> <br>
 
 			<!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
-			주소 : <input type="text" name="address" value="${dto.address}"
-				readonly> 주문일 : <input type="text" name="date"
-				value="${dto.date}" readonly>
+			주소 : <input type="text" name="address" value="${dto.address}" readonly> <br>
+			주문일 : <input type="text" name="date"
+						value="${dto.date}" readonly><br>
+			</c:forEach>
+						
 			<!-- 결제방법 선택하기(2~3개) -->
 			<h1>결제방법</h1>
-
-			<input type="radio" name="pay" value="INIBillTst"> 카드결제 <input
-				type="radio" name="pay" value="kakaopay"> 카카오페이 <input
-				type="radio" name="pay" value="tosspay"> 토스페이
+			<input type="radio" name="pay" value="INIBillTst"> 카드결제 <br>
+			<input type="radio" name="pay" value="kakaopay"> 카카오페이 <br>
+			<input type="radio" name="pay" value="tosspay"> 토스페이 <br>
 
 
 			<!-- 총 주문금액(=결제금액)  -->
@@ -63,7 +66,7 @@
 	<script>
 		let money = "{결제금액 옮기기}"
 		let name = "{결제물건이름..?}"
-		let purchaseid = 'merchant_' + new Date().getTime()
+		let purchaseid = new Date().getTime()
 
 		function cartBack() {
 			var confirmResult = confirm("장바구니로 돌아가시겠습니까?");
