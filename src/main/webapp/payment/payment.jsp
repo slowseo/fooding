@@ -24,9 +24,13 @@
 <fieldset>
 <form action="./paymentAfter.pay" method="post" id="mypayment">
 <!-- 장바구니 정보 출력하기 출력하기(리스트) -->
+상품사진 : <img src="" alt="">
+상품이름 : <input type="text" name="name" value="${dto.name}" readonly>
+수량 : <input type="number" name="quantity" value="${dto.quantity }" readonly>
 
 <!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
-
+주소 : <input type="text" name="address" value="${dto.address}" readonly>
+주문일 : <input type="text" name="date" value="${dto.date}" readonly>
 <!-- 결제방법 선택하기(2~3개) -->
 <h1> 결제방법</h1>
 
@@ -67,17 +71,15 @@ IMP.init(userCode);
 
 	// 라디오 버튼 선택에 따라 pg 값을 동적으로 설정
 	var selectedPG = document.querySelector('input[name="pay"]:checked').value;
-	if(selectedPG ==null){
-		alert('결제수단을 선택하세요');
-	}
+
 
 // 	var merchant_uid = generateRandomMerchantUID();
 
   IMP.request_pay({
-    pg: selectedPG, // 라디오 버튼마다 결제방식 달라지게 하기
-    pay_method: "card",
+    pg: selectedPG, // 라디오 버튼마다 결제방식 달라짐
+    pay_method: "card",// card는 고정
     merchant_uid: 'merchant_' + new Date().getTime(), // +new Date().getTime()상품번호+주문날짜
-    name: "테스트 결제",
+    name: "테스트 결제", // 여기에 주문자 이름
     amount: 10,
 //     buyer_tel: "01012345678",
   } , function(data){ 
