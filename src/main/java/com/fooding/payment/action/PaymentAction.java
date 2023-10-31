@@ -19,7 +19,8 @@ public class PaymentAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		// 전달정보 저장하기
+		// 전달정보 저장하기(request로 구매할 장바구니 정보 받아오기) => 결제완료 후 삭제
+		// arraylist 로 받아와서 동적처리하기
 		
 		
 		// 로그인 세션 제어
@@ -28,13 +29,13 @@ public class PaymentAction implements Action {
 		
 		ActionForward forward = new ActionForward();
 		if(id==null) {
-			forward.setPath("./MemberLogin.me");
+			forward.setPath("./MemberLogin.mem");
 			forward.setRedirect(true);
 		}
 		
 		
 		//리스트로저장
-		// DB에서 장바구니 정보 가져오기
+		// DB에서 장바구니 정보 가져오기(저장한 전달정보 이용하기)
 		// PaymentDAO 객체 생성 - 장바구니정보 조회 메서드 호출
 		PaymentDAO pdao = new PaymentDAO();
 		ArrayList cartList = pdao.getCart(); 
@@ -50,7 +51,6 @@ public class PaymentAction implements Action {
 		
 		// reqest 영역에 정보 저장하기
 		request.setAttribute("cartList", cartList);
-		request.setAttribute("stopdto", stopdto);
 		
 		
 		

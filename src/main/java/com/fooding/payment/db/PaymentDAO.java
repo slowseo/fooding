@@ -10,7 +10,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.itwillbs.member.db.MemberDTO;
 
 public class PaymentDAO {
 	
@@ -57,8 +56,9 @@ public class PaymentDAO {
 		try {
 			con=getCon();
 			
-			sql = "select * from cart";
+			sql = "select * from cart where cart_id = ?";
 			pstmt = con.prepareStatement(sql);
+			
 			
 			rs = pstmt.executeQuery();
 			

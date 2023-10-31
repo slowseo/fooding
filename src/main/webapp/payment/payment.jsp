@@ -22,7 +22,7 @@
 
 <!-- 본문들어가는곳(결제페이지) -->
 <fieldset>
-<form action="./paymentAfter.pay" method="post">
+<form action="./paymentAfter.pay" method="post" id="mypayment">
 <!-- 장바구니 정보 출력하기 출력하기(리스트) -->
 
 <!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
@@ -48,10 +48,11 @@
 <!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
 <button onclick="requestPay()">결제하기</button>
 <!-- 주문취소 버튼 (장바구니 페이지로 이동)  -->
-<button id="cancel" onclick="cartBack()">결제취소</button>
+<button id="cancel" onclick="cartBack()">장바구니로</button>
 
 <script>
-
+	let money = "{결제금액 옮기기}"
+	let name = "{결제물건이름..?}"
 
 function cartBack(){
 	var confirmResult = confirm("장바구니로 돌아가시겠습니까?");
@@ -65,21 +66,27 @@ const userCode = "imp75410442";
 IMP.init(userCode);
 
 	// 라디오 버튼 선택에 따라 pg 값을 동적으로 설정
-	var selectedPG = document.querySelector('input[name="pay"]:checked').value; 
+	var selectedPG = document.querySelector('input[name="pay"]:checked').value;
+	if(selectedPG ==null){
+		alert('결제수단을 선택하세요');
+	}
 
 // 	var merchant_uid = generateRandomMerchantUID();
 
   IMP.request_pay({
     pg: selectedPG, // 라디오 버튼마다 결제방식 달라지게 하기
     pay_method: "card",
-    merchant_uid: "hergewf", // +new Date().getTime()상품번호+주문날짜
+    merchant_uid: 'merchant_' + new Date().getTime(), // +new Date().getTime()상품번호+주문날짜
     name: "테스트 결제",
     amount: 10,
-    buyer_tel: "01012345678",
+//     buyer_tel: "01012345678",
   } , function(data){ 
+	  console.log(data); //ajax처럼 콜백 성공 유무
   	  if(data.success){ // 결제성공후
-  		 var msg ="송공";
+  		 var msg ="결제 완료";
   		 
+  	  	// 폼 데이터 submit 실행
+  	  	document.getElementById("mypayment").submit(); // 넘어감!
   		    
   		    }else{ // 결제취소할때, 중복결제하려고 할 때
   		 var msg ="결제를 취소하셨습니다";

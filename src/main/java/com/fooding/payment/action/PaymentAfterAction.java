@@ -35,16 +35,19 @@ public class PaymentAfterAction implements Action{
 		
 		
 		// 장바구니 테이블 데이터 지우기
-		// 장바구니 dto 초기화
+		// => 사용한 장바구니 데이터만 지우기!
 		
 		
 		
 		
 		
 		// 모든 처리 후 결제정보확인 페이지로 이동하기
+		forward = new ActionForward();
+		forward.setPath("./paymentList/pay");
+		forward.setRedirect(true);
 		
+		return forward;
 		
-		return null;
 	}
 	
 }
