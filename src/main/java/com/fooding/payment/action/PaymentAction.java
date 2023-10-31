@@ -51,6 +51,7 @@ public class PaymentAction implements Action {
 		
 		// 장바구니에서 상품번호 가져오기(getId) => 저장
 		
+		
 		// 상품번호로 상품이름 가져오기(getName)  => 저장
 		
 		// 상품번호로 상품이미지주소 가져오기(getImgSrc)  => 저장

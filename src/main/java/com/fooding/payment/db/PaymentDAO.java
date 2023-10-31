@@ -49,14 +49,14 @@ public class PaymentDAO {
 
 	//================    디비 연결(자원) 해제 메서드    ====================
 	//=============     /////////////    =======================
-	// 1. String[] 으로 오는 장바구니 번 ArrayList로 변환하기
+	// 1. String[] 으로 오는 장바구니 번호 ArrayList로 변환하기
 	public ArrayList<Integer> stringToArrayList(String[] arr){
 		ArrayList<Integer> cart_id = new ArrayList<>();
 		
 		for(String eachArr : arr) {
 			cart_id.add(Integer.parseInt(eachArr));
 		}
-		
+		System.out.println("Payment DAO : 전달받은 장바구니 번호 변환 완료 ");
 		return cart_id;
 	} // 1. 끝
 	
@@ -86,7 +86,7 @@ public class PaymentDAO {
 					cartList.add(cartDto);
 				}
 			}
-			System.out.println(" DAO : 장바구니 목록 조회 완료!");
+			System.out.println("Payment DAO : 장바구니 목록 조회 완료!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
