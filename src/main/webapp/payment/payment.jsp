@@ -63,6 +63,7 @@
 	<script>
 		let money = "{결제금액 옮기기}"
 		let name = "{결제물건이름..?}"
+		let purchaseid = 'merchant_' + new Date().getTime()
 
 		function cartBack() {
 			var confirmResult = confirm("장바구니로 돌아가시겠습니까?");
@@ -84,7 +85,7 @@
 			IMP.request_pay({
 				pg : selectedPG, // 라디오 버튼마다 결제방식 달라짐
 				pay_method : "card",// card는 고정
-				merchant_uid : 'merchant_' + new Date().getTime(), //상품번호+주문날짜
+				merchant_uid : purchaseid, //상품번호+주문날짜
 				name : "테스트 결제", // 여기에 주문자 이름
 				amount : 10,
 			}, function(data) {

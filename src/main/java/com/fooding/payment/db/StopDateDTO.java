@@ -1,6 +1,6 @@
 package com.fooding.payment.db;
 
-public class StopDTO {
+public class StopDateDTO {
 	// 정차지(stop) 테이블 
 		private int stop_id;
 		private String beginaddress; //정착지 주소
