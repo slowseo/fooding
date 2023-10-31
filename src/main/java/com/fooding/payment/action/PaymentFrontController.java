@@ -32,8 +32,17 @@ public class PaymentFrontController extends HttpServlet{
 		System.out.println("\n -----------------2. 가상주소 매핑 시작 --------------------");
 		Action action = null;
 		ActionForward forward = null;
-		
-		if(command.equals("/Payment.pay")) { // 디비정보 가져와서 출력페이지 내용 보여야함
+		if(command.equals("/test.pay")) {
+			System.out.println(" C : /test.pay 매핑 ");
+			System.out.println(" C : 패턴1 - DB처리X, 뷰페이지 이동 ");
+			
+			forward = new ActionForward();
+			forward.setPath("./payment/paymentBefore.jsp");
+			forward.setRedirect(false);
+			
+			System.out.println(" C : "+forward);			
+		}
+		else if(command.equals("/Payment.pay")) { // 디비정보 가져와서 출력페이지 내용 보여야함
 			System.out.println(" C : /Payment.pay 매핑" );
 			System.out.println(" C : 패턴 3 - DB사용O, 페이지 출력 ");			
 		

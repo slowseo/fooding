@@ -19,9 +19,18 @@ public class PaymentAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		// 전달정보 저장하기(request로 구매할 장바구니 정보 받아오기) => 결제완료 후 삭제
-		// arraylist 로 받아와서 동적처리하기
-		
+		// array list 로 오는 전달정보 저장하기
+		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단? 어떻게 테스트하지)
+		 String[] arr = request.getParameterValues("cart_id");
+		 int[] cart_id = null; 
+		 if( arr != null ){ 
+			 cart_id = new int[ arr.length ]; 
+			 	for( int i=0; i<arr.length;i++) {
+			 		cart_id[i]=Integer.parseInt(arr[i]);
+			 	}
+		 }
+		 System.out.println(cart_id);
+
 		
 		// 로그인 세션 제어
 		HttpSession session = request.getSession();
@@ -33,23 +42,23 @@ public class PaymentAction implements Action {
 			forward.setRedirect(true);
 		}
 		
-		
+		// 장바구니 번호로 장바구니 정보 조회하기
 		//리스트로저장
-		// DB에서 장바구니 정보 가져오기(저장한 전달정보 이용하기)
-		// PaymentDAO 객체 생성 - 장바구니정보 조회 메서드 호출
 		PaymentDAO pdao = new PaymentDAO();
 		ArrayList cartList = pdao.getCart(); 
 		
+		// 장바구니에서 상품번호 가져오기(getId) => 저장
 		
-		//리스트로저장
-		// DB에서 장바구니디테일 정보 가져오기
-		// PaymentDAO 객체 생성 - 정차지정보 조회 메서드 호출
-		ArrayList detailList = pdao.getDetail();
+		// 상품번호로 상품이름 가져오기(getName)
 		
-		
+		// 상품번호로 상품이미지주소 가져오기(getImgSrc)
 		
 		
 		// reqest 영역에 정보 저장하기
+		// 장바구니 번호
+		// 조회한 장바구니 정보
+		// 상품이름
+		// 상품번호
 		request.setAttribute("cartList", cartList);
 		
 		
@@ -57,11 +66,11 @@ public class PaymentAction implements Action {
 		
 		
 		// 페이지 이동(./payment/payment.jsp)
-		forward = new ActionForward();
-		forward.setPath("./payment/payment.jsp");
-		forward.setRedirect(false);
-		
-		return forward;
+//		forward = new ActionForward();
+//		forward.setPath("./payment/payment.jsp");
+//		forward.setRedirect(false);
+//		
+		return null;
 		
 		
 	}

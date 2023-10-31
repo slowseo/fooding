@@ -13,6 +13,11 @@ public class PaymentAfterAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		// 전달정보 저장하기
+		//장바구니 번호
+		
+		//장바구니 정보(회원번호, 수량, 주소)
+		
+		// 주문번호
 		
 		
 		// 로그인 세션 제어
@@ -29,13 +34,12 @@ public class PaymentAfterAction implements Action{
 		
 		
 		
-		
 		// 뒤로가기 막기(뒤로로가기 두번누르는것도 막기)
 		// => 메인페이지로 이동하게 만들기
 		
 		
 		// 장바구니 테이블 데이터 지우기
-		// => 사용한 장바구니 데이터만 지우기!
+		// => 사용한 장바구니 데이터만 지우기! (장바구니 번호 이용)
 		
 		
 		
