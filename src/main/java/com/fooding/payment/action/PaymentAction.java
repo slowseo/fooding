@@ -49,12 +49,10 @@ public class PaymentAction implements Action {
 		// 2. 장바구니 번호 ArrayList로 DB 조회해서 장바구니 정보 가져오기
 		ArrayList cartList = pdao.getCart(cart_id); 
 		
-		// 장바구니에서 상품번호 가져오기(getId) => 저장
+		// 3. 장바구니 번호 ArrayList로 조회해서 상품정보 가져오기
+		// 상품 번호, 상품이름, 상품가격, 상품 이미지경로
+		ArrayList productList = pdao.getProduct(cart_id);
 		
-		
-		// 상품번호로 상품이름 가져오기(getName)  => 저장
-		
-		// 상품번호로 상품이미지주소 가져오기(getImgSrc)  => 저장
 		
 		
 		// reqest 영역에 정보 저장하기

@@ -95,7 +95,37 @@ public class PaymentDAO {
 		return cartList;
 	} // 2. 끝
 	
-	
+	//3. 상품정보 가져오기
+	public ArrayList getProduct(ArrayList<Integer> cart_id) {
+		ArrayList productList = new ArrayList();
+		
+		try {con=getCon();
+			
+			sql = "select * from product p where product_id = (select product_id from cart where cart_id = ?)";
+			pstmt = con.prepareStatement(sql);
+			
+			for(int cartId : cart_id) {
+				pstmt.setInt(1, cartId);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					ProductDTO ProDto = new ProductDTO ();
+					
+					ProDto.setProduct_id(rs.getInt("product_id"));
+					ProDto.setName(rs.getString("name"));
+					ProDto.setPrice(rs.getInt("price"));
+					ProDto.setImage(rs.getString("image"));
+					
+					productList.add(ProDto);
+				}
+			}
+			System.out.println("Payment DAO : 상품 정보 조회 완료!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			CloseDB();
+		}
+		return productList;
+		}//3.끝
 	
 	
 	
