@@ -4,13 +4,14 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fooding.util.Action;
 import com.fooding.util.ActionForward;
-
+@WebServlet("*.pay")
 public class PaymentFrontController extends HttpServlet{
 
 	
@@ -45,8 +46,8 @@ public class PaymentFrontController extends HttpServlet{
 			}
 			
 		}
-		else if(command.equals("/PaymentAfter.pay")) { // 디비에 정보를 저장하고 이동해야함
-			System.out.println(" C : /PaymentAfter.pay 호출 ");
+		else if(command.equals("/PaymentResult.pay")) { // 디비에 정보를 저장하고 이동해야함
+			System.out.println(" C : /PaymentResult.pay 호출 ");
 			System.out.println(" C : 패턴 2 - 데이터처리O, 페이지로 이동");
 		
 			action = new PaymentAfterAction();
