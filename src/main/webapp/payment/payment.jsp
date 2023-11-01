@@ -13,6 +13,7 @@
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <!-- 포트원 결제연동 소스 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+
 <script
 	src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
 <meta charset="UTF-8">
@@ -25,9 +26,14 @@
 
 	<!-- 본문들어가는곳(결제페이지) -->
 	<fieldset>
+		<legend> 주문 내역 </legend>
 		<form action="./paymentAfter.pay" method="post" id="mypayment">
 			<c:forEach var="dto" items="${purchaseList}" varStatus="">
 			<!-- 장바구니 정보 출력하기 출력하기(리스트) -->
+			<!-- 회원번호 -->
+			<input type="text" name ="member_id" value="${dto.member_id}" hidden="" >
+			<!-- 상품번호 -->
+			<input type="text" name ="product_id" value="${dto.product_id}" hidden="" >
 			상품사진 : <img src="${dto.image}" > <br>
 			상품이름 : <input type="text" name="name" value="${dto.name}" readonly> <br>
 			수량 : <input type="number" name="quantity" 
@@ -36,9 +42,8 @@
 
 			<!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
 			주소 : <input type="text" name="address" value="${dto.address}" readonly> <br>
-
 			</c:forEach>
-						
+								
 			<!-- 결제방법 선택하기(2~3개) -->
 			<h1>결제방법</h1>
 			<input type="radio" name="pay" value="INIBillTst"> 카드결제 <br>
@@ -51,13 +56,13 @@
 <!-- 			가격*갯수 + 가격*갯수 = 총금액이렇게 구하기 -->
 			<c:forEach var="dto" items="${purchaseList}" >
 				<c:set var="total" value="${(dto.price * dto.quantity)+total}"/>
+				<c:set var="test" value="${dto.name}"/>
 			</c:forEach>
 			
 			<h2> 총 결제 금액 : <c:out value="${total}"/></h2>
-		
-
 		</form>
 	</fieldset>
+	
 	<br>
 	<!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
 	<button onclick="requestPay()">결제하기</button>
@@ -95,19 +100,18 @@
 				name : "테스트 결제", // 여기에 주문자 이름
 				amount : money,
 			}, function(data) {
-				console.log(data); //ajax처럼 콜백 성공 유무
-				if (data.success) { // 결제성공후
-					var msg = "결제 완료";
-
-					// 폼 데이터 submit 실행
-					document.getElementById("mypayment").submit(); // 넘어감!
-
-				} else { // 결제취소할때, 중복결제하려고 할 때
-					var msg = "결제를 취소하셨습니다";
-				}
-				alert(msg);
-			});
-		}
+              console.log(data); //ajax처럼 콜백 성공 유무
+                  if (data.success) { // 결제성공후
+                  var msg = "결제 완료";
+                  // 폼 데이터 submit 실행
+                  document.getElementById("mypayment").submit(); // 넘어감!
+             }else { // 결제취소할때, 중복결제하려고 할 때
+                    var msg = "결제를 취소하셨습니다";
+                }
+                alert(msg);
+            });
+        }
+			 
 	</script>
 
 	

@@ -2,6 +2,7 @@ package com.fooding.payment.action;
 
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,7 @@ public class PaymentAction implements Action {
 		// 0. 전달정보 저장하기
 		// ArrayList 로 오는 전달정보 저장하기
 		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단 어떻게 테스트하지)
-		 String[] arr = {"1"};
+		 String[] arr = {"1","2"};
 //				 request.getParameterValues("cart_id");
 		
 		// 로그인 세션 제어
@@ -35,7 +36,7 @@ public class PaymentAction implements Action {
 		
 		//===========================================================================================
 		
-		// 1. 장바구니 번호 String[] 이거 ArrayList로 변경하기
+		// 1. 장바구니 번호 String[] 이거 ArrayList<Integer>로 변경하기
 		PaymentDAO pdao = new PaymentDAO();
 		ArrayList cart_id = pdao.stringToArrayList(arr);
 		
@@ -51,13 +52,16 @@ public class PaymentAction implements Action {
 		
 		// reqest 영역에 정보 저장하기
 		request.setAttribute("cart_id", cart_id);
+
+		
 		request.setAttribute("purchaseList", purchaseList);
 		
 		
 		
 		
 		
-		// 페이지 이동(./payment/payment.jsp)
+		// 페이지 이동
+
 		forward = new ActionForward();
 		forward.setPath("./payment/payment.jsp");
 		forward.setRedirect(false);

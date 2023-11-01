@@ -20,17 +20,6 @@
   	 <url-pattern>*.pay</url-pattern>
   </servlet-mapping>
   
-  <servlet>
-     <servlet-name>PaymentResultFrontController</servlet-name>
-     <servlet-class>com.fooding.paymentResult.action.PaymentResultFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	 <servlet-name>PaymentResultFrontController</servlet-name>
-  	 <url-pattern>*.pre</url-pattern>
-  </servlet-mapping>
-  
-  
     <!-- 한글 인코딩 처리설정 -->
 	<filter>
 		<filter-name>SetUTF8</filter-name>
