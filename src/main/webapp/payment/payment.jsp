@@ -27,7 +27,7 @@
 	<!-- 본문들어가는곳(결제페이지) -->
 	<fieldset>
 		<legend> 주문 내역 </legend>
-		<form action="./paymentAfter.pay" method="post" id="mypayment">
+		<form action="./PaymentAfter.pay" method="post" id="mypayment">
 			<c:forEach var="dto" items="${purchaseList}" varStatus="">
 			<!-- 장바구니 정보 출력하기 출력하기(리스트) -->
 			<!-- 회원번호 -->
@@ -65,9 +65,9 @@
 	
 	<br>
 	<!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
-	<button onclick="requestPay()">결제하기</button>
+	<button onclick="callAPI(pay)">결제하기</button>
 	<!-- 주문취소 버튼 (장바구니 페이지로 이동)  -->
-	<button id="cancel" onclick="cartBack()">장바구니로</button>
+	<button id="cancel" onclick="requestPay()">장바구니로</button>
 
 
 
@@ -75,6 +75,14 @@
 		let money = "<c:out value="${total}"/>"
 		let name = "사용자"
 		let purchaseid = new Date().getTime()
+		
+// 		function callAPI(pay){
+// 			payment = document
+// 			.querySelector('input[name="pay"]:checked').value;
+// 			requestPay();
+// 		}
+		
+		
 
 		function cartBack() {
 			var confirmResult = confirm("장바구니로 돌아가시겠습니까?");
@@ -91,7 +99,6 @@
 			var selectedPG = document
 					.querySelector('input[name="pay"]:checked').value;
 
-			// 	var merchant_uid = generateRandomMerchantUID();
 
 			IMP.request_pay({
 				pg : selectedPG, // 라디오 버튼마다 결제방식 달라짐
@@ -99,16 +106,22 @@
 				merchant_uid : purchaseid, //상품번호+주문날짜
 				name : "테스트 결제", // 여기에 주문자 이름
 				amount : money,
-			}, function(data) {
-              console.log(data); //ajax처럼 콜백 성공 유무
-                  if (data.success) { // 결제성공후
-                  var msg = "결제 완료";
-                  // 폼 데이터 submit 실행
-                  document.getElementById("mypayment").submit(); // 넘어감!
-             }else { // 결제취소할때, 중복결제하려고 할 때
+				m_redirect_url : 'PaymentAfter.pay'
+			}, function (rsp) {
+				console.log(rsp); //
+			    if (rsp.success) {
+			          var mas = "결제성공ㅋ";
+		                alert(msg);
+	                  // 폼 데이터 submit 실행
+	                  document.getElementById("mypayment").submit(); // 넘어감!
+	                  // 결제 후 이동
+	                 location.href="./PaymentAfter.pay"
+			         
+			      } else { // 결제취소할때, 중복결제하려고 할 때
                     var msg = "결제를 취소하셨습니다";
-                }
+			      msg += '에러내용 : '+rsp.error_msg;
                 alert(msg);
+                }
             });
         }
 			 

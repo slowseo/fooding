@@ -21,9 +21,9 @@ public class PaymentAction implements Action {
 		// 0. 전달정보 저장하기
 		// ArrayList 로 오는 전달정보 저장하기
 		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단 어떻게 테스트하지)
+		
 		 String[] arr = {"1","2"};
 //				 request.getParameterValues("cart_id");
-		
 		// 로그인 세션 제어
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
@@ -34,6 +34,11 @@ public class PaymentAction implements Action {
 			forward.setRedirect(true);
 		}
 		
+		// 뒤로가기 막기 . 장바구니 데이터가 전달되지 않은 경우!
+		if(arr == null) {
+			forward.setPath("./main.me");
+			forward.setRedirect(true);
+		}
 		//===========================================================================================
 		
 		// 1. 장바구니 번호 String[] 이거 ArrayList<Integer>로 변경하기
@@ -49,6 +54,9 @@ public class PaymentAction implements Action {
 		
 		//4. 2번이랑 3번 하나로 합치기
 		ArrayList purchaseList = pdao.getPurchase(cart_id);
+		
+		//5. 로그인 아이디로 회원정보 조회하기
+		
 		
 		// reqest 영역에 정보 저장하기
 		request.setAttribute("cart_id", cart_id);

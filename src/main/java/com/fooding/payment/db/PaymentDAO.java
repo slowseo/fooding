@@ -10,7 +10,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-
 public class PaymentDAO {
 	
 	// 공통 변수 선언
@@ -50,8 +49,8 @@ public class PaymentDAO {
 	//================    디비 연결(자원) 해제 메서드    ====================
 	//=============     /////////////    =======================
 	// 1. String[] 으로 오는 장바구니 번호 ArrayList<Integer>로 변환하기
-	public ArrayList<Integer> stringToArrayList(String[] arr){
-		ArrayList<Integer> cart_id = new ArrayList<>();
+	public ArrayList stringToArrayList(String[] arr){
+		ArrayList cart_id = new ArrayList<>();
 		
 		for(String eachArr : arr) {
 			cart_id.add(Integer.parseInt(eachArr));
@@ -155,7 +154,7 @@ public class PaymentDAO {
 					purchasetList.add(payDto);
 				}
 			}
-			System.out.println("Payment DAO : 상품 정보 조회 완료!");
+			System.out.println("Payment DAO : (cart+product)상품 정보 조회 완료!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
@@ -164,7 +163,10 @@ public class PaymentDAO {
 		return purchasetList;
 		}//4.끝
 	
-	//=================================================================================
+	// 5. 아이디정보로 회원정보 조회하기
+	
+	
+	//AFter=================================================================================
 	//1. 
 	public ArrayList stringToArrayList(String[] purchase,String[] member,
 						String[] product,String[] quantity,String[] address){
@@ -178,11 +180,67 @@ public class PaymentDAO {
 		    dto.setAddress(address[i]);
 		    purchaseList.add(dto);
 		}
-		System.out.println("Payment DAO : 전달받은 장바구니 번호 변환 완료 ");
+		System.out.println("Payment DAO : 전달받은 String[] 하나로 합치기 완료 ");
 		return purchaseList;
-	} // 
+	} // 1.끝 
 	
+	//2. insertPurchase(ArrayList arr) 만들기
+	//		=> DB업데이트
+	public void insertPurchase(ArrayList<PurchaseDTO> arr) {
+		   try {
+		      con = getCon();
+		      sql = "INSERT INTO purchase (purchaseid, member_id, product_id, quantity, address) VALUES (?,?,?,?,?)";
+		      pstmt = con.prepareStatement(sql);
+
+		      for (PurchaseDTO dto : arr) {
+		         pstmt.setInt(1, dto.getPurchase_id());
+		         pstmt.setInt(2, dto.getMember_id());
+		         pstmt.setInt(3, dto.getProduct_id());
+		         pstmt.setInt(4, dto.getQuantity());
+		         pstmt.setString(5, dto.getAddress());
+
+		         pstmt.executeUpdate();
+		      }
+		   } catch (Exception e) {
+		      e.printStackTrace();
+		   } finally {
+		      CloseDB();
+		   }
+		}// 2. 끝
 	
-	
+	//3. deleteCart(ArrayList arr)
+	public int deleteMember(ArrayList<Integer> arr) {
+		int result=-1;  // -1, 0, 1
+		ArrayList cartIds = new ArrayList<>();
+		
+		try {
+			// select 해서 지워야할 데이터 찾기
+			con=getCon();
+			for (int dto : arr) {
+				sql = "DELETE FROM cart WHERE cart_id = ?";
+				try(PreparedStatement pstmt = con.prepareStatement(sql)){
+					pstmt.setInt(1, dto);
+					 int deletedRows = pstmt.executeUpdate();
+	                    if (deletedRows > 0) {
+	                    	result = -1;
+	                        System.out.println("cart_id " + dto + "의 레코드를 삭제했습니다.");
+	                    } else {
+	                    	result=1;
+	                        System.out.println("cart_id " + dto + "를 찾을 수 없습니다.");
+	                    }
+	                }
+	            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			CloseDB();
+		}
+		
+		System.out.println("DAO : 회원정보 삭제("+result+")");
+
+		return result;
+}
+		
+		
 	
 }//dao end
