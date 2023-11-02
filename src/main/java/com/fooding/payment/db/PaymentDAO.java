@@ -10,6 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+
 public class PaymentDAO {
 	
 	// 공통 변수 선언
@@ -48,6 +49,12 @@ public class PaymentDAO {
 
 	//================    디비 연결(자원) 해제 메서드    ====================
 	//=============     /////////////    =======================
+	
+	//0-1.ArrayList로 전달된 장바구니 정보를 String[]으로 받음
+	// 그거를 카트DTO에서 저장하기. getCartID(String[] arr)
+	
+	
+	
 	// 1. String[] 으로 오는 장바구니 번호 ArrayList<Integer>로 변환하기
 	public ArrayList stringToArrayList(String[] arr){
 		ArrayList cart_id = new ArrayList<>();
@@ -163,7 +170,43 @@ public class PaymentDAO {
 		return purchasetList;
 		}//4.끝
 	
-	// 5. 아이디정보로 회원정보 조회하기
+	// 5. 아이디정보로 회원정보 조회하기 getMember()
+	public MemberDTO getMember(String id) {
+		MemberDTO dto = null;
+		// 1.2.  디비연결
+		try {
+			con = getCon();
+			// 3. sql 작성(select) & pstmt 객체
+			sql = "select * from member where id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			// 4. sql 실행 
+			rs = pstmt.executeQuery();
+			
+			// 5. 데이터 처리 (DB에 저장된 정보(rs)를 DTO로 저장)
+			if(rs.next()) {
+				dto = new MemberDTO();
+				//rs => dto 저장
+				dto.setMember_id(rs.getInt("member_id"));
+				dto.setId(rs.getString("id"));
+				dto.setPw(rs.getString("pw"));
+				dto.setName(rs.getString("name"));
+				dto.setEmail(rs.getString("email"));
+				dto.setRegdate(rs.getTimestamp("regdate"));
+			}
+			
+			System.out.println("DAO : 회원정보 조회 완료!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			CloseDB();
+		}
+		
+		
+		return dto;
+	}
 	
 	
 	//AFter=================================================================================
@@ -189,6 +232,7 @@ public class PaymentDAO {
 	public void insertPurchase(ArrayList<PurchaseDTO> arr) {
 		   try {
 		      con = getCon();
+		      //쿼리에서 date 삭제하기
 		      sql = "INSERT INTO purchase (purchaseid, member_id, product_id, quantity, address,date) VALUES (?,?,?,?,?,now())";
 		      pstmt = con.prepareStatement(sql);
 

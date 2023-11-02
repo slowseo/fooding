@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fooding.payment.db.CartDTO;
+import com.fooding.payment.db.MemberDTO;
 import com.fooding.payment.db.PaymentDAO;
 import com.fooding.payment.db.PurchaseDTO;
 import com.fooding.util.Action;
@@ -22,7 +24,7 @@ public class PaymentAction implements Action {
 		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단 어떻게 테스트하지)
 		
 		 String[] arr = {"1","2"};
-//				 request.getParameterValues("cart_id");
+//		 String[] cartList = request.getParameterValues("cartList");
 		// 로그인 세션 제어
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
@@ -39,9 +41,13 @@ public class PaymentAction implements Action {
 			forward.setRedirect(true);
 		}
 		//===========================================================================================
-		
-		// 1. 장바구니 번호 String[] 이거 ArrayList<Integer>로 변경하기
 		PaymentDAO pdao = new PaymentDAO();
+		
+		// 0-1. ArrayList로 전달된 장바구니 정보를 String[]으로 받음
+		// 그거를 카트DTO에서 저장하기
+		CartDTO cartDto = new CartDTO();
+		
+		// 1. 장바구니 번호 String[] 이거 ArrayList로 변경하기
 		ArrayList cart_id = pdao.stringToArrayList(arr);
 		
 //		// 2. 장바구니 번호 ArrayList로 DB 조회해서 장바구니 정보 가져오기
@@ -55,14 +61,15 @@ public class PaymentAction implements Action {
 		ArrayList purchaseList = pdao.getPurchase(cart_id);
 		
 		//5. 로그인 아이디로 회원정보 조회하기
+		MemberDTO member = pdao.getMember("id234");
+		
+		//6. 상품이름들을 하나의 String으로 만들기
 		
 		
 		// reqest 영역에 정보 저장하기
 		request.setAttribute("cart_id", cart_id);
-
-		
 		request.setAttribute("purchaseList", purchaseList);
-		
+		request.setAttribute("member", member);
 		
 		
 		

@@ -67,7 +67,7 @@ public class PaymentDTO {
 	}
 	@Override
 	public String toString() {
-		return "이게 정답인가? [cart_id=" + cart_id + ", member_id=" + member_id + ", product_id=" + product_id
+		return "paymentDTO [cart_id=" + cart_id + ", member_id=" + member_id + ", product_id=" + product_id
 				+ ", quantity=" + quantity + ", address=" + address + ", stopdate_id=" + stopdate_id + ", name=" + name
 				+ ", price=" + price + ", image=" + image + "]";
 	}

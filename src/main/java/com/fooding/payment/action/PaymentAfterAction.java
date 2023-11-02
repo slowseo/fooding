@@ -79,7 +79,7 @@ public class PaymentAfterAction implements Action{
 		
 		// 모든 처리 후 결제정보확인 페이지로 이동하기
 		forward = new ActionForward();
-		forward.setPath("./paymentList/pay");
+		forward.setPath("./payment/paymentResult.jsp"); // 결제내역창 주소 입력해야함
 		forward.setRedirect(true);
 		
 		return forward;

@@ -13,11 +13,10 @@
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <!-- 포트원 결제연동 소스 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-
 <script
 	src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
 <meta charset="UTF-8">
-<title>payment</title>
+<title>결제창</title>
 </head>
 <body>
 	<!-- 헤더 들어가는곳 -->
@@ -29,24 +28,30 @@
 		<legend> 주문 내역 </legend>
 		<form action="./PaymentResult.pay" method="post" id="mypayment">
 			<c:forEach var="dto" items="${purchaseList}" varStatus="">
-			<!-- 장바구니 정보 출력하기 출력하기(리스트) -->
-			<!-- 회원번호 -->
-			<input type="text" name ="member_id" value="${dto.member_id}" hidden="" >
-			<!-- 상품번호 -->
-			<input type="text" name ="product_id" value="${dto.product_id}" hidden="" >
-			상품사진 : <img src="${dto.image}" > <br>
-			상품이름 : <input type="text" name="name" value="${dto.name}" readonly> <br>
-			수량 : <input type="number" name="quantity" 
-							value="${dto.quantity }" readonly> <br>
+				<!-- 장바구니 정보 출력하기 출력하기(리스트) -->
+				<!-- 회원번호 -->
+				<input type="text" name="member_id" value="${dto.member_id}"
+					hidden="">
+				<!-- 상품번호 -->
+				<input type="text" name="product_id" value="${dto.product_id}"
+					hidden="">
+			상품사진 : <img src="${dto.image}">
+				<br>
+			상품이름 : <input type="text" name="name" value="${dto.name}" readonly>
+				<br>
+			수량 : <input type="number" name="quantity" value="${dto.quantity }"
+					readonly>
+				<br>
 			가격 : <input type="text" name="price" value="${dto.price }" readonly>
 
-			<!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
-			<input type="text" name="address" value="${dto.address}" hidden=""> <br>
+				<!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
+				<input type="text" name="address" value="${dto.address}" hidden="">
+				<br>
 			</c:forEach>
-	    <!-- 중복이 없는 주소를 출력할 엘리먼트 -->
-    <h2>주소 :</h2>
-     <span id="addressOutput"></span>
-								
+			<!-- 중복이 없는 주소를 출력할 엘리먼트 -->
+			<h2>주소 :</h2>
+			<span id="addressOutput"></span>
+
 			<!-- 결제방법 선택하기(2~3개) -->
 			<h1>결제방법</h1>
 			<input type="radio" name="pay" value="INIBillTst"> 카드결제 <br>
@@ -56,22 +61,24 @@
 
 			<!-- 총 주문금액(=결제금액)  -->
 			<h1>결제금액</h1>
-<!-- 			가격*갯수 + 가격*갯수 = 총금액이렇게 구하기 -->
-			<c:forEach var="dto" items="${purchaseList}" >
-				<c:set var="total" value="${(dto.price * dto.quantity)+total}"/>
-				<c:set var="test" value="${dto.name}"/>
+			<!-- 			가격*갯수 + 가격*갯수 = 총금액이렇게 구하기 -->
+			<c:forEach var="dto" items="${purchaseList}">
+				<c:set var="total" value="${(dto.price * dto.quantity)+total}" />
+				<c:set var="test" value="${dto.name}" />
 			</c:forEach>
-			<h2> 총 결제 금액 : <c:out value="${total}"/></h2>
+			<h2>
+				총 결제 금액 :
+				<c:out value="${total}" />
+			</h2>
 		</form>
 	</fieldset>
-	
 
-    <script>
+	<script>
     </script>
-	
+
 	<br>
 	<!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
-	<button onclick="requestPay()">결제하기</button>
+	<button class="payButton" onclick="findSubject()">결제하기</button>
 	<!-- 주문취소 버튼 (장바구니 페이지로 이동)  -->
 	<button id="cancel" onclick="cartBack()">장바구니로</button>
 
@@ -107,7 +114,10 @@
         
         
 		let money = "<c:out value="${total}"/>"
-		let name = "사용자"
+		let productName = "<c:out value="${dto.name}"/>"
+		let email = "<c:out value="${member.email}"/>"
+		let userName = "<c:out value="${member.name}"/>"
+		
 		
 		// 상품번호 생성
 		function createOrderNum(){
@@ -130,7 +140,25 @@
 				location.href = './cart.car'
 			}
 		}
-	
+		
+		// 주문버튼을 클릭했을때 주문한게 없으면 없다고 alert창으로 알려주기 
+			function findSubject(){
+				var arrRadio = document.getElementsByName("pay");
+			    var selected = false;
+
+			    for (var i = 0; i < arrRadio.length; i++) {
+			        if (arrRadio[i].checked) {
+			            selected = true;
+			            break;
+			        }
+			    }
+
+			    if (selected) {
+			        requestPay();
+			    } else {
+			        alert('결제수단을 선택하세요');
+			    } }
+
 		// 포트원(구 아임포트) API
 		function requestPay() {
 			const userCode = "imp75410442";
@@ -144,8 +172,10 @@
 				pg : selectedPG, // 라디오 버튼마다 결제방식 달라짐
 				pay_method : "card",// card는 고정
 				merchant_uid : createOrderNum(), //상품번호+주문날짜
-				name : "테스트 결제", // 여기에 주문자 이름
+				name : "사용자", // 여기에 상품명
 				amount : money,
+				buyer_email: email,
+				buyer_name: userName
 			}, function(data) {
               console.log(data); //ajax처럼 콜백 성공 유무
                   if (data.success) { // 결제성공후
@@ -163,7 +193,7 @@
 			 
 	</script>
 
-	
+
 	<!-- 본문들어가는곳(결제페이지) -->
 
 	<!-- 푸터들어가는곳 -->
