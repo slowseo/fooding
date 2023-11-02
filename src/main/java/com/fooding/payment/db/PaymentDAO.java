@@ -52,7 +52,14 @@ public class PaymentDAO {
 	
 	//0-1.ArrayList로 전달된 장바구니 정보를 String[]으로 받음
 	// 그거를 카트DTO에서 저장하기. getCartID(String[] arr)
-	
+	public ArrayList<Integer> cartList(ArrayList<CartDTO> arr){
+		ArrayList<Integer> cartIdList = new ArrayList<Integer>();
+		for (CartDTO cartDTO : arr) {
+		    int cartId = cartDTO.getCart_id(); 
+		    cartIdList.add(cartId);
+		}
+		return cartIdList;
+	}
 	
 	
 	// 1. String[] 으로 오는 장바구니 번호 ArrayList<Integer>로 변환하기

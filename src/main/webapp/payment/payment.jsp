@@ -27,15 +27,16 @@
 	<h1>주문/결제</h1>
 	<fieldset>
 		<form action="./PaymentResult.pay" method="post" id="mypayment">
-		
+		<!-- 주문번호 -->
+   		 <input type="hidden" id="purchase_id" name="purchase_id" value="">
 			<c:forEach var="dto" items="${purchaseList}" varStatus="">
 				<!-- 장바구니 정보 출력하기 출력하기(리스트) -->
+				<!-- 장바구니 번호 -->
+				<input type="hidden" name="cart_id" value="${dto.cart_id}">
 				<!-- 회원번호 -->
-				<input type="text" name="member_id" value="${dto.member_id}"
-					hidden="">
+				<input type="hidden" name="member_id" value="${dto.member_id}">
 				<!-- 상품번호 -->
-				<input type="text" name="product_id" value="${dto.product_id}"
-					hidden="">
+				<input type="hidden" name="product_id" value="${dto.product_id}">
 			상품사진 : <img src="${dto.image}">
 				<br>
 			상품이름 : <input type="text" name="name" value="${dto.name}" readonly>
@@ -44,9 +45,9 @@
 					readonly>
 				<br>
 			가격 : <input type="text" name="price" value="${dto.price }" readonly>
-
+			<hr>
 				<!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
-				<input type="text" name="address" value="${dto.address}" hidden="">
+				<input type="hidden" name="address" value="${dto.address}">
 				<br>
 			</c:forEach>
 			<!-- 중복이 없는 주소를 출력할 엘리먼트 -->
@@ -87,21 +88,17 @@
         // JavaScript로 중복 주소 제거
         var addresses = []; // 주소를 저장할 배열
         var uniqueAddresses = new Set(); // 중복을 체크할 Set
-    
         // 주소 정보를 가져와서 배열에 저장
         var addressElements = document.getElementsByName("address");
         for (var i = 0; i < addressElements.length; i++) {
             addresses.push(addressElements[i].value);
         }
-    
         // 중복 주소를 체크하고 중복이 없는 주소를 Set에 저장
         for (var i = 0; i < addresses.length; i++) {
             uniqueAddresses.add(addresses[i]);
         }
-    
         // 중복이 없는 주소를 다시 배열에 저장
         var uniqueAddressesArray = Array.from(uniqueAddresses);
-    
         // 중복이 없는 주소를 출력
         var addressOutput = document.getElementById("addressOutput");
         for (var i = 0; i < uniqueAddressesArray.length; i++) {
@@ -117,17 +114,19 @@
 		let email = "<c:out value="${member.email}"/>"
 		let userName = "<c:out value="${member.name}"/>"
 		
+	    const purchase_id = createOrderNum();
+	    document.getElementById("purchase_id").value = purchase_id;
 		
 		// 상품번호 생성
 		function createOrderNum(){
 			const date = new Date();
-			const year = date.getFullYear();
+			const year = date.getFullYear().toString().slice(-2);
 			const month = String(date.getMonth() + 1).padStart(2, "0");
 			const day = String(date.getDate()).padStart(2, "0");
 			
-			let orderNum = year + month + day;
-			for(let i=0;i<10;i++) {
-				orderNum += Math.floor(Math.random() * 8);	
+			let orderNum = day;
+			for(let i=0;i<6;i++) {
+				orderNum += Math.floor(Math.random() * 10);	
 			}
 			return orderNum;
 		}
@@ -148,15 +147,12 @@
 			    for (var i = 0; i < arrRadio.length; i++) {
 			        if (arrRadio[i].checked) {
 			            selected = true;
-			            break;
-			        }
-			    }
+			            break; } }
 
 			    if (selected) {
 			        requestPay();
 			    } else {
-			        alert('결제수단을 선택하세요');
-			    } }
+			        alert('결제수단을 선택하세요'); } }
 
 		// 포트원(구 아임포트) API
 		function requestPay() {
@@ -170,7 +166,7 @@
 			IMP.request_pay({
 				pg : selectedPG, // 라디오 버튼마다 결제방식 달라짐
 				pay_method : "card",// card는 고정
-				merchant_uid : createOrderNum(), //상품번호+주문날짜
+				merchant_uid : purchase_id, //상품번호+주문날짜
 				name : "사용자", // 여기에 상품명
 				amount : money,
 				buyer_email: email,
@@ -179,7 +175,7 @@
               console.log(data); //ajax처럼 콜백 성공 유무
                   if (data.success) { // 결제성공후
                   var msg = "결제 완료";
-
+                  
                   // 폼 데이터 submit 실행
                   document.getElementById("mypayment").submit(); // 넘어감!
 

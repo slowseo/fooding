@@ -22,9 +22,10 @@ public class PaymentAction implements Action {
 		// 0. 전달정보 저장하기
 		// ArrayList 로 오는 전달정보 저장하기
 		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단 어떻게 테스트하지)
+		CartDTO cartDto = new CartDTO();
 		
-		 String[] arr = {"1","2"};
-//		 String[] cartList = request.getParameterValues("cartList");
+		 String[] arr = {"5","16","22"}; // 임시
+//      ArrayList<CartDTO> cartList  = request.getParameterValues("cartList"); <-d이거
 		// 로그인 세션 제어
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
@@ -43,12 +44,9 @@ public class PaymentAction implements Action {
 		//===========================================================================================
 		PaymentDAO pdao = new PaymentDAO();
 		
-		// 0-1. ArrayList로 전달된 장바구니 정보를 String[]으로 받음
-		// 그거를 카트DTO에서 저장하기
-		CartDTO cartDto = new CartDTO();
-		
 		// 1. 장바구니 번호 String[] 이거 ArrayList로 변경하기
-		ArrayList cart_id = pdao.stringToArrayList(arr);
+		ArrayList cart_id = pdao.stringToArrayList(arr); // 임시
+//		ArrayList cart_id = pdao.cartList(cartList);
 		
 //		// 2. 장바구니 번호 ArrayList로 DB 조회해서 장바구니 정보 가져오기
 //		ArrayList cartList = pdao.getCart(cart_id); 

@@ -19,7 +19,7 @@ public class PaymentAfterAction implements Action{
 		// 전달정보 저장하기
 		//장바구니 번호
 			// 이게 있어야지 데이터 지울 수 있음
-		String[] arr = {"1","2"}; // 임시
+		String[] arr = request.getParameterValues("cart_id"); 
 		
 		 ArrayList<PurchaseDTO> purchaseList = new ArrayList<>();
 		//장바구니 정보(회원번호, 수량, 주소)
@@ -34,7 +34,7 @@ public class PaymentAfterAction implements Action{
         
         // 주문번호
         // purchaseid 값을 가져와야함. 그러면..? AJax를 이용해야해돼
-        String purchaseid = "132456";
+        int purchaseid = (Integer.parseInt(request.getParameter("purchase_id")));
         
         for (int i = 0; i < memberid.length; i++) {
             PurchaseDTO dto = new PurchaseDTO();
@@ -42,7 +42,7 @@ public class PaymentAfterAction implements Action{
             dto.setProduct_id(Integer.parseInt(productid[i]));
             dto.setQuantity(Integer.parseInt(quantities[i]));
             dto.setAddress(addresses[i]);
-            dto.setPurchase_id(Integer.parseInt(purchaseid));
+            dto.setPurchase_id(purchaseid);
             purchaseList.add(dto);
         }
         
