@@ -2,6 +2,7 @@ package com.fooding.payment.action;
 
 import java.io.IOException;
 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fooding.util.Action;
 import com.fooding.util.ActionForward;
-@WebServlet("*.pay")
+
 public class PaymentFrontController extends HttpServlet{
 
 	

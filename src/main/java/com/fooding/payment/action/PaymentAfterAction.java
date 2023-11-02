@@ -2,6 +2,7 @@ package com.fooding.payment.action;
 
 import java.util.ArrayList;
 
+import javax.management.ConstructorParameters;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ public class PaymentAfterAction implements Action{
 			// 이게 있어야지 데이터 지울 수 있음
 		String[] arr = {"1","2"}; // 임시
 		
+		 ArrayList<PurchaseDTO> purchaseList = new ArrayList<>();
 		//장바구니 정보(회원번호, 수량, 주소)
 		// purchase 테이블에 저장되어야할 정보
 		String[] memberid = request.getParameterValues("member_id"); // 회원번호
@@ -29,6 +31,15 @@ public class PaymentAfterAction implements Action{
 		// 저장안해도 되는 정보
         String[] prices = request.getParameterValues("price"); //가격
         String[] names = request.getParameterValues("name"); //상품이름
+        
+        for (int i = 0; i < memberid.length; i++) {
+            PurchaseDTO dto = new PurchaseDTO();
+            dto.setMember_id(Integer.parseInt(memberid[i]));
+            dto.setProduct_id(Integer.parseInt(productid[i]));
+            dto.setQuantity(Integer.parseInt(quantities[i]));
+            dto.setAddress(addresses[i]);
+            purchaseList.add(dto);
+        }
         
 		// 주문번호
 			// purchaseid 값을 가져와야함. 그러면..? AJax를 이용해야해돼
@@ -50,7 +61,7 @@ public class PaymentAfterAction implements Action{
 		PaymentDAO pdao = new PaymentDAO();
 		ArrayList cart_id = pdao.stringToArrayList(arr);
 //		// 주문번호, 회원번호, 상품번호, 수량, 주소 순으로 입력)
-		ArrayList purchaseList = pdao.stringToArrayList(purchaseid, memberid, productid, quantities, addresses);
+//		ArrayList purchaseList = pdao.stringToArrayList(purchaseid, memberid, productid, quantities, addresses);
 		
 		//1. insert 메서드 호출하기
 		PurchaseDTO dto = new PurchaseDTO();

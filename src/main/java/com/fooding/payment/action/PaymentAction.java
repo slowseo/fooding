@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import com.fooding.payment.db.PaymentDAO;
 import com.fooding.payment.db.PurchaseDTO;
-import com.fooding.paymentResult.action.PaymentResultAction;
 import com.fooding.util.Action;
 import com.fooding.util.ActionForward;
 
@@ -45,12 +44,12 @@ public class PaymentAction implements Action {
 		PaymentDAO pdao = new PaymentDAO();
 		ArrayList cart_id = pdao.stringToArrayList(arr);
 		
-		// 2. 장바구니 번호 ArrayList로 DB 조회해서 장바구니 정보 가져오기
-		ArrayList cartList = pdao.getCart(cart_id); 
-		
-		// 3. 장바구니 번호 ArrayList로 조회해서 상품정보 가져오기
-		// 상품 번호, 상품이름, 상품가격, 상품 이미지경로
-		ArrayList productList = pdao.getProduct(cart_id);
+//		// 2. 장바구니 번호 ArrayList로 DB 조회해서 장바구니 정보 가져오기
+//		ArrayList cartList = pdao.getCart(cart_id); 
+//		
+//		// 3. 장바구니 번호 ArrayList로 조회해서 상품정보 가져오기
+//		// 상품 번호, 상품이름, 상품가격, 상품 이미지경로
+//		ArrayList productList = pdao.getProduct(cart_id);
 		
 		//4. 2번이랑 3번 하나로 합치기
 		ArrayList purchaseList = pdao.getPurchase(cart_id);
