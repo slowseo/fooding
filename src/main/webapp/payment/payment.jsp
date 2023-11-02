@@ -24,9 +24,10 @@
 
 
 	<!-- 본문들어가는곳(결제페이지) -->
+	<h1>주문/결제</h1>
 	<fieldset>
-		<legend> 주문 내역 </legend>
 		<form action="./PaymentResult.pay" method="post" id="mypayment">
+		
 			<c:forEach var="dto" items="${purchaseList}" varStatus="">
 				<!-- 장바구니 정보 출력하기 출력하기(리스트) -->
 				<!-- 회원번호 -->
@@ -60,15 +61,13 @@
 
 
 			<!-- 총 주문금액(=결제금액)  -->
-			<h1>결제금액</h1>
 			<!-- 			가격*갯수 + 가격*갯수 = 총금액이렇게 구하기 -->
 			<c:forEach var="dto" items="${purchaseList}">
 				<c:set var="total" value="${(dto.price * dto.quantity)+total}" />
 				<c:set var="test" value="${dto.name}" />
 			</c:forEach>
 			<h2>
-				총 결제 금액 :
-				<c:out value="${total}" />
+				총 결제 금액 : <c:out value="${total}" />
 			</h2>
 		</form>
 	</fieldset>
