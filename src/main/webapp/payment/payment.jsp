@@ -61,7 +61,6 @@
 				<c:set var="total" value="${(dto.price * dto.quantity)+total}"/>
 				<c:set var="test" value="${dto.name}"/>
 			</c:forEach>
-			
 			<h2> 총 결제 금액 : <c:out value="${total}"/></h2>
 		</form>
 	</fieldset>
@@ -123,14 +122,16 @@
 			}
 			return orderNum;
 		}
-
+		
+		// 장바구니로 돌아가기
 		function cartBack() {
 			var confirmResult = confirm("장바구니로 돌아가시겠습니까?");
 			if (confirmResult) {
 				location.href = './cart.car'
 			}
 		}
-
+	
+		// 포트원(구 아임포트) API
 		function requestPay() {
 			const userCode = "imp75410442";
 			IMP.init(userCode);

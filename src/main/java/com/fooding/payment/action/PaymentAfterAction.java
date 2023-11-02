@@ -32,19 +32,20 @@ public class PaymentAfterAction implements Action{
         String[] prices = request.getParameterValues("price"); //가격
         String[] names = request.getParameterValues("name"); //상품이름
         
+        // 주문번호
+        // purchaseid 값을 가져와야함. 그러면..? AJax를 이용해야해돼
+        String purchaseid = "132456";
+        
         for (int i = 0; i < memberid.length; i++) {
             PurchaseDTO dto = new PurchaseDTO();
             dto.setMember_id(Integer.parseInt(memberid[i]));
             dto.setProduct_id(Integer.parseInt(productid[i]));
             dto.setQuantity(Integer.parseInt(quantities[i]));
             dto.setAddress(addresses[i]);
+            dto.setPurchase_id(Integer.parseInt(purchaseid));
             purchaseList.add(dto);
         }
         
-		// 주문번호
-			// purchaseid 값을 가져와야함. 그러면..? AJax를 이용해야해돼
-		String[] purchaseid = {"132456","132456","132456"};
-		
 		
 		// 로그인 세션 제어
 		HttpSession session = request.getSession();
@@ -64,6 +65,8 @@ public class PaymentAfterAction implements Action{
 //		ArrayList purchaseList = pdao.stringToArrayList(purchaseid, memberid, productid, quantities, addresses);
 		
 		//1. insert 메서드 호출하기
+		// 오류났던게 지금 내가 사용하는 데이터베이스(구)에 date컬럼이 남아있어서!
+		// 차후 수정해야함(date 지우는거 잊지말것)
 		PurchaseDTO dto = new PurchaseDTO();
 		pdao.insertPurchase(purchaseList);
 

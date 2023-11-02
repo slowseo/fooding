@@ -189,7 +189,7 @@ public class PaymentDAO {
 	public void insertPurchase(ArrayList<PurchaseDTO> arr) {
 		   try {
 		      con = getCon();
-		      sql = "INSERT INTO purchase (purchaseid, member_id, product_id, quantity, address) VALUES (?,?,?,?,?)";
+		      sql = "INSERT INTO purchase (purchaseid, member_id, product_id, quantity, address,date) VALUES (?,?,?,?,?,now())";
 		      pstmt = con.prepareStatement(sql);
 
 		      for (PurchaseDTO dto : arr) {
