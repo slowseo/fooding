@@ -120,8 +120,8 @@
 			const month = String(date.getMonth() + 1).padStart(2, "0");
 			const day = String(date.getDate()).padStart(2, "0");
 			
-			let orderNum = day;
-			for(let i=0;i<6;i++) {
+			let orderNum = year+day;
+			for(let i=0;i<4;i++) {
 				orderNum += Math.floor(Math.random() * 10);	
 			}
 			return orderNum;
