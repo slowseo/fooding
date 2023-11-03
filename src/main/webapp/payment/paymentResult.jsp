@@ -8,7 +8,12 @@
 <meta charset="UTF-8">
 <title>payment</title>
 </head>
+ <script type="text/javascript">
+ window.history.forward();
+ function noBack(){window.history.forward();}
+</script>
 <body>
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="./payment/paymentResult.jsp">
 테스트 출력
 
 주문내역

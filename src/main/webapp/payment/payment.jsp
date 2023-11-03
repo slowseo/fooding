@@ -5,16 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- jQuery -->
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <!-- iamport.payment.js -->
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <!-- 포트원 결제연동 소스 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>결제창</title>
 </head>
@@ -78,7 +74,7 @@
 
 	<br>
 	<!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
-	<button class="payButton" onclick="findSubject()">결제하기</button>
+	<button id="order-btn" onclick="findSubject()">결제하기</button>
 	<!-- 주문취소 버튼 (장바구니 페이지로 이동)  -->
 	<button id="cancel" onclick="cartBack()">장바구니로</button>
 
@@ -109,10 +105,10 @@
         }
         
         
-		let money = "<c:out value="${total}"/>"
-		let productName = "<c:out value="${dto.name}"/>"
-		let email = "<c:out value="${member.email}"/>"
-		let userName = "<c:out value="${member.name}"/>"
+		let money = "<c:out value="${total}"/>" // 결제금액
+// 		let productName = // 구매상품명
+		let email = "<c:out value="${member.email}"/>" // 구매자 이메일
+		let userName = "<c:out value="${member.name}"/>" // 구매자 이름
 		
 	    const purchase_id = createOrderNum();
 	    document.getElementById("purchase_id").value = purchase_id;
@@ -143,12 +139,10 @@
 			function findSubject(){
 				var arrRadio = document.getElementsByName("pay");
 			    var selected = false;
-
 			    for (var i = 0; i < arrRadio.length; i++) {
 			        if (arrRadio[i].checked) {
 			            selected = true;
 			            break; } }
-
 			    if (selected) {
 			        requestPay();
 			    } else {
@@ -162,12 +156,11 @@
 			// 라디오 버튼 선택에 따라 pg 값을 동적으로 설정
 			var selectedPG = document.querySelector('input[name="pay"]:checked').value;
 
-
 			IMP.request_pay({
 				pg : selectedPG, // 라디오 버튼마다 결제방식 달라짐
 				pay_method : "card",// card는 고정
 				merchant_uid : purchase_id, //상품번호+주문날짜
-				name : "사용자", // 여기에 상품명
+				name : purchase_id, // 여기에 상품명
 				amount : money,
 				buyer_email: email,
 				buyer_name: userName
