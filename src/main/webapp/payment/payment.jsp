@@ -11,10 +11,12 @@
 <!-- 포트원 결제연동 소스 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+
 <meta charset="UTF-8">
 <title>결제창</title>
 </head>
 <body>
+
 	<!-- 헤더 들어가는곳 -->
 	<!-- 헤더 들어가는곳 -->
 
@@ -81,6 +83,7 @@
 
 
 	<script>
+
         // JavaScript로 중복 주소 제거
         var addresses = []; // 주소를 저장할 배열
         var uniqueAddresses = new Set(); // 중복을 체크할 Set
@@ -106,7 +109,7 @@
         
         
 		let money = "<c:out value="${total}"/>" // 결제금액
-// 		let productName = // 구매상품명
+// 		let productName = // 구매상품명 계산은 어ㄸㅎ게하지
 		let email = "<c:out value="${member.email}"/>" // 구매자 이메일
 		let userName = "<c:out value="${member.name}"/>" // 구매자 이름
 		
@@ -160,7 +163,7 @@
 				pg : selectedPG, // 라디오 버튼마다 결제방식 달라짐
 				pay_method : "card",// card는 고정
 				merchant_uid : purchase_id, //상품번호+주문날짜
-				name : purchase_id, // 여기에 상품명
+				name : "Fooding", // 여기에 브랜드명 입력 (\n 뒤에 자세한 내용은 주문내역확인 누르니까 결제가 안넘어감)
 				amount : money,
 				buyer_email: email,
 				buyer_name: userName

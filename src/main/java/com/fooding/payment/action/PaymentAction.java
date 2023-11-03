@@ -24,7 +24,7 @@ public class PaymentAction implements Action {
 		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단 어떻게 테스트하지)
 		CartDTO cartDto = new CartDTO();
 		
-		 String[] arr = {"9","19"}; // 임시
+		 String[] arr = {"12"}; // 임시
 //      ArrayList<CartDTO> cartList  = request.getParameterValues("cartList"); <-이거 써야함
 		 
 		// 로그인 세션 제어
