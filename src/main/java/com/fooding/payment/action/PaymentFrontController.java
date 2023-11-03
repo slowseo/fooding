@@ -15,8 +15,7 @@ import com.fooding.util.ActionForward;
 
 
 public class PaymentFrontController extends HttpServlet{
-	app.use(bodyParser.json());
-	
+
 	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("\n\n C : PaymentFrontController_doProcess() 호출 ");
@@ -58,6 +57,16 @@ public class PaymentFrontController extends HttpServlet{
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/PaymentCheck.pay")) { // 디비에 정보를 저장하고 이동해야함
+			System.out.println(" C : /PaymentCheck.pay 호출 ");
+			System.out.println(" C : 패턴 2 - 데이터처리O, 페이지로 이동");
+		
+		
+				forward = new ActionForward();
+				forward.setPath("./board/체크할jsp파일이름.jsp");
+				forward.setRedirect(false);
 			}
 		}
 		
