@@ -24,7 +24,7 @@ public class PaymentAction implements Action {
 		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단 어떻게 테스트하지)
 		CartDTO cartDto = new CartDTO();
 		
-		 String[] arr = {"12"}; // 임시
+		 String[] arr = {"14"}; // 임시
 //      ArrayList<CartDTO> cartList  = request.getParameterValues("cartList"); <-이거 써야함
 		 
 		// 로그인 세션 제어
@@ -47,16 +47,9 @@ public class PaymentAction implements Action {
 		
 		// 1. 장바구니 번호 String[] 이거 ArrayList로 변경하기
 		ArrayList cart_id = pdao.stringToArrayList(arr); // 임시
-//		ArrayList cart_id = pdao.cartList(cartList);
+//		ArrayList cart_id = pdao.cartList(cartList); // 상품번호 얻어오기
 		
-//		// 2. 장바구니 번호 ArrayList로 DB 조회해서 장바구니 정보 가져오기
-//		ArrayList cartList = pdao.getCart(cart_id); 
-//		
-//		// 3. 장바구니 번호 ArrayList로 조회해서 상품정보 가져오기
-//		// 상품 번호, 상품이름, 상품가격, 상품 이미지경로
-//		ArrayList productList = pdao.getProduct(cart_id);
-		
-		//4. 2번이랑 3번 하나로 합치기
+		//4. 장바구니 번호 ArrayList로 조회해서 상품정보 가져오기
 		ArrayList purchaseList = pdao.getPurchase(cart_id);
 		
 		//5. 로그인 아이디로 회원정보 조회하기

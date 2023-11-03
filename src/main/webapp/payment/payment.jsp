@@ -48,9 +48,6 @@
 				<input type="hidden" name="address" value="${dto.address}">
 				<br>
 			</c:forEach>
-			<!-- 중복이 없는 주소를 출력할 엘리먼트 -->
-			<h2>주소 :</h2>
-			<span id="addressOutput"></span>
 
 			<!-- 결제방법 선택하기(2~3개) -->
 			<h1>결제방법</h1>
@@ -84,30 +81,6 @@
 
 	<script>
 
-        // JavaScript로 중복 주소 제거
-        var addresses = []; // 주소를 저장할 배열
-        var uniqueAddresses = new Set(); // 중복을 체크할 Set
-        // 주소 정보를 가져와서 배열에 저장
-        var addressElements = document.getElementsByName("address");
-        for (var i = 0; i < addressElements.length; i++) {
-            addresses.push(addressElements[i].value);
-        }
-        // 중복 주소를 체크하고 중복이 없는 주소를 Set에 저장
-        for (var i = 0; i < addresses.length; i++) {
-            uniqueAddresses.add(addresses[i]);
-        }
-        // 중복이 없는 주소를 다시 배열에 저장
-        var uniqueAddressesArray = Array.from(uniqueAddresses);
-        // 중복이 없는 주소를 출력
-        var addressOutput = document.getElementById("addressOutput");
-        for (var i = 0; i < uniqueAddressesArray.length; i++) {
-            var address = uniqueAddressesArray[i];
-            var addressElement = document.createElement("div");
-            addressElement.textContent = address;
-            addressOutput.appendChild(addressElement);
-        }
-        
-        
 		let money = "<c:out value="${total}"/>" // 결제금액
 // 		let productName = // 구매상품명 계산은 어ㄸㅎ게하지
 		let email = "<c:out value="${member.email}"/>" // 구매자 이메일
@@ -123,11 +96,11 @@
 			const month = String(date.getMonth() + 1).padStart(2, "0");
 			const day = String(date.getDate()).padStart(2, "0");
 			
-			let orderNum = year+day;
-			for(let i=0;i<4;i++) {
+			let orderNum = day;
+			for(let i=0;i<6;i++) {
 				orderNum += Math.floor(Math.random() * 10);	
 			}
-			return orderNum;
+			return orderNum; // 총 8자리 숫자
 		}
 		
 		// 장바구니로 돌아가기

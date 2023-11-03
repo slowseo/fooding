@@ -58,6 +58,7 @@ public class PaymentDAO {
 		    int cartId = cartDTO.getCart_id(); 
 		    cartIdList.add(cartId);
 		}
+		System.out.println("Payment DAO : 장바구니 번호 cartDTO  ");
 		return cartIdList;
 	}
 	
