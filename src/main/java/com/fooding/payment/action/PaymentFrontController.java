@@ -15,7 +15,8 @@ import com.fooding.util.ActionForward;
 
 
 public class PaymentFrontController extends HttpServlet{
-
+	app.use(bodyParser.json());
+	
 	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("\n\n C : PaymentFrontController_doProcess() 호출 ");
