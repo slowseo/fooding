@@ -176,13 +176,20 @@
 				amount : money,
 				buyer_email: email,
 				buyer_name: userName
-			}, function(data) {
-              console.log(data); //ajax처럼 콜백 성공 유무
-                  if (data.success) { // 결제성공후
-                  var msg = "결제 완료";
-                  
-                  // 폼 데이터 submit 실행 (뒤로가기 막기)
-                  function goToAFromSpecificPage(); 
+			},  rsp => {
+			    if (rsp.success) {   
+			        // axios로 HTTP 요청
+			        axios({
+			          url: "/TestAjax.pay",
+			          method: "post",
+			          headers: { "Content-Type": "application/json" },
+			          data: {
+			            imp_uid: rsp.imp_uid,
+			            merchant_uid: rsp.merchant_uid
+			          }
+			        }).then((data) => {
+			        	goToAFromSpecificPage();
+			        })
 
              }else { // 결제취소할때, 중복결제하려고 할 때
                     var msg = "결제를 취소하셨습니다";
