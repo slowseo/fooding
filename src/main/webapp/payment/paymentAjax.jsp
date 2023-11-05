@@ -120,7 +120,8 @@
 			  // submit
 			  document.getElementById("mypayment").submit(); 
 			}  
-			  
+		
+		// 상품번호(랜덤생성) 저장
 	    const purchase_id = createOrderNum();
 	    document.getElementById("purchase_id").value = purchase_id;
 		
@@ -181,7 +182,7 @@
                   var msg = "결제 완료";
                   
                   // 폼 데이터 submit 실행 (뒤로가기 막기)
-                  function goToAFromSpecificPage();
+                  function goToAFromSpecificPage(); 
 
              }else { // 결제취소할때, 중복결제하려고 할 때
                     var msg = "결제를 취소하셨습니다";

@@ -59,6 +59,19 @@ public class PaymentFrontController extends HttpServlet{
 				e.printStackTrace();
 			}
 		}
+		else if(command.equals("/TestAjax.pay")) {
+			System.out.println(" C : /TestAjax.pay 호출 ");
+			System.out.println(" C : 패턴 2 - 데이터처리O, 페이지로 이동");
+		
+			action = new PaymentAfterAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+				
+				
 		
 		System.out.println("\n -----------------2. 가상주소 매핑 시작 --------------------");
 
