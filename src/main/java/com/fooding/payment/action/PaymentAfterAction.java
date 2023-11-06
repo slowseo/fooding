@@ -72,7 +72,7 @@ public class PaymentAfterAction implements Action{
 
 		// 2. 장바구니 테이블 데이터 지우기
 		// => 사용한 장바구니 데이터만 지우기! (장바구니 번호 이용)
-		pdao.deleteMember(cart_id);
+//		pdao.deleteMember(cart_id);
 		
 		// 뒤로가기 막기
 		boolean blockBackOnSpecificPage = true;

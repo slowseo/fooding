@@ -6,12 +6,14 @@
 <html>
 <head>
 <script>
-
+	
 // 일단 뒤로가기 무조건 막음(다른방법 필요)
-	history.pushState(null, null, location.href);
+	history.pushState(null, null, "./PaymentResult.pay");
 		window.onpopstate = function (event) {
+		alert('해당페이지에서는 뒤로 갈 수 없습니다');
 		history.forward();
 		};
+		
 </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
