@@ -70,8 +70,17 @@ public class PaymentFrontController extends HttpServlet{
 				e.printStackTrace();
 			}
 		}
-				
-				
+//<<<<<<< HEAD
+//				
+//				
+//=======
+		else if(command.equals("/payementResult.jsp")) {
+			forward = new ActionForward();
+			forward.setPath("./payment/paymentResult.jsp"); // 결제내역창 주소 입력해야함
+			forward.setRedirect(false);
+		}
+			
+//>>>>>>> branch 'feat-ajax' of https://github.com/slowseo/fooding.git
 		
 		System.out.println("\n -----------------2. 가상주소 매핑 시작 --------------------");
 

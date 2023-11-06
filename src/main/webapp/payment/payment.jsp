@@ -5,6 +5,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+   <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>fooding</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+
+    <!-- 구글폰트 (변경가능)-->
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Black+Han+Sans&family=Lato:wght@700&family=Noto+Sans+KR&family=Playpen+Sans&display=swap" rel="stylesheet">
+
+    <!-- 테마 기본 설정 끝 -->
+
+     <!-- css -->
+     <link rel="stylesheet" href="css/team2.css">
 <!-- iamport.payment.js -->
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
@@ -18,8 +43,31 @@
 <body>
 
 	<!-- 헤더 들어가는곳 -->
+	   <!-- Navigation-->
+   <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm fooding-nav" id="mainNav">
+    <div class="container px-5">
+        <a class="navbar-brand fw-bold" href="메인페이지 주소">fooding</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="bi-list"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                <li class="nav-item"><a class="nav-link me-lg-3" href="">마이페이지</a></li>
+                <li class="nav-item"><a class="nav-link me-lg-3" href="">장바구니</a></li>
+               
+            </ul>
+            <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+                <span class="d-flex align-items-center">
+                    <i class="bi-chat-text-fill me-2"></i>
+                    <span class="small">로그인</span>
+                </span>
+            </button>
+        </div>
+    </div>
+</nav>
 	<!-- 헤더 들어가는곳 -->
-
+<br>
 
 	<!-- 본문들어가는곳(결제페이지) -->
 	<h1>주문/결제</h1>
@@ -35,7 +83,12 @@
 				<input type="hidden" name="member_id" value="${dto.member_id}">
 				<!-- 상품번호 -->
 				<input type="hidden" name="product_id" value="${dto.product_id}">
-			상품사진 : <img src="${dto.image}">
+			<c:forEach var="address" items="${dto.address}" varStatus="addressStatus">
+			<h1> 주문일 </h1>
+				<h2>${dto.time}</h2>
+			<h1> 주소 </h1>
+				<h2>${dto.address}</h2>
+			상품사진 : <img src="${address}">
 				<br>
 			상품이름 : <input type="text" name="name" value="${dto.name}" readonly>
 				<br>
@@ -44,13 +97,9 @@
 				<br>
 			가격 : <input type="text" name="price" value="${dto.price }" readonly>
 			<hr>
-				<!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
-				<input type="hidden" name="address" value="${dto.address}">
-				<br>
 			</c:forEach>
-			<!-- 중복이 없는 주소를 출력할 엘리먼트 -->
-			<h2>주소 :</h2>
-			<span id="addressOutput"></span>
+			
+			</c:forEach>
 
 			<!-- 결제방법 선택하기(2~3개) -->
 			<h1>결제방법</h1>
@@ -83,35 +132,11 @@
 
 
 	<script>
-
-        // JavaScript로 중복 주소 제거
-        var addresses = []; // 주소를 저장할 배열
-        var uniqueAddresses = new Set(); // 중복을 체크할 Set
-        // 주소 정보를 가져와서 배열에 저장
-        var addressElements = document.getElementsByName("address");
-        for (var i = 0; i < addressElements.length; i++) {
-            addresses.push(addressElements[i].value);
-        }
-        // 중복 주소를 체크하고 중복이 없는 주소를 Set에 저장
-        for (var i = 0; i < addresses.length; i++) {
-            uniqueAddresses.add(addresses[i]);
-        }
-        // 중복이 없는 주소를 다시 배열에 저장
-        var uniqueAddressesArray = Array.from(uniqueAddresses);
-        // 중복이 없는 주소를 출력
-        var addressOutput = document.getElementById("addressOutput");
-        for (var i = 0; i < uniqueAddressesArray.length; i++) {
-            var address = uniqueAddressesArray[i];
-            var addressElement = document.createElement("div");
-            addressElement.textContent = address;
-            addressOutput.appendChild(addressElement);
-        }
-        
-        
-		let money = "<c:out value="${total}"/>" // 결제금액
-// 		let productName = // 구매상품명 계산은 어ㄸㅎ게하지
-		let email = "<c:out value="${member.email}"/>" // 구매자 이메일
-		let userName = "<c:out value="${member.name}"/>" // 구매자 이름
+		
+	let money = '<c:out value="${total}"/>'; // 결제금액
+	let name = '<c:out value="${combinedName}"/>';
+	let email = '<c:out value="${member.email}"/>'; // 구매자 이메일
+	let userName = '<c:out value="${member.name}"/>'; // 구매자 이름
 		
 		// 뒤로가기 막기
 		var blockBackOnSpecificPage = false; 
@@ -123,6 +148,14 @@
 			  
 	    const purchase_id = createOrderNum();
 	    document.getElementById("purchase_id").value = purchase_id;
+	    
+		// 뒤로가기 막기
+		var blockBackOnSpecificPage = false; 
+		function goToAFromSpecificPage() {
+			  blockBackOnSpecificPage = true;
+			  // submit
+			  document.getElementById("mypayment").submit(); 
+			}
 		
 		// 상품번호 생성
 		function createOrderNum(){
@@ -131,11 +164,11 @@
 			const month = String(date.getMonth() + 1).padStart(2, "0");
 			const day = String(date.getDate()).padStart(2, "0");
 			
-			let orderNum = year+day;
-			for(let i=0;i<4;i++) {
+			let orderNum = day;
+			for(let i=0;i<6;i++) {
 				orderNum += Math.floor(Math.random() * 10);	
 			}
-			return orderNum;
+			return orderNum; // 총 8자리 숫자
 		}
 		
 		// 장바구니로 돌아가기
@@ -171,7 +204,7 @@
 				pg : selectedPG, // 라디오 버튼마다 결제방식 달라짐
 				pay_method : "card",// card는 고정
 				merchant_uid : purchase_id, //상품번호+주문날짜
-				name : "Fooding", // 여기에 브랜드명 입력 (\n 뒤에 자세한 내용은 주문내역확인 누르니까 결제가 안넘어감)
+				name : "Fooding", // 
 				amount : money,
 				buyer_email: email,
 				buyer_name: userName
@@ -180,8 +213,8 @@
                   if (data.success) { // 결제성공후
                   var msg = "결제 완료";
                   
-                  // 폼 데이터 submit 실행 (뒤로가기 막기)
-                  function goToAFromSpecificPage();
+                  // 폼 데이터 submit 실행
+		        	goToAFromSpecificPage();
 
              }else { // 결제취소할때, 중복결제하려고 할 때
                     var msg = "결제를 취소하셨습니다";
@@ -193,9 +226,27 @@
 	</script>
 
 
-	<!-- 본문들어가는곳(결제페이지) -->
+	<!-- 본문들어가는곳(결제페이지) 끝 -->
 
 	<!-- 푸터들어가는곳 -->
+	 <div class="fooding-footer">
+  <p>
+    부산광역시 부산진구 동천로 109 삼한골든게이트빌딩 7층(접수)
+    사업자등록번호 : 507-85-07103<br />
+    TEL : 051-803-0909 FAX : 051-803-0979 <br />
+    ©fooding - All rights reserved
+  </p>
+</div>
+
+   <!-- Bootstrap core JS-->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+   <!-- Core theme JS-->
+   <script src="js/scripts.js"></script>
+   <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+   <!-- * *                               SB Forms JS                               * *-->
+   <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+   <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 	<!-- 푸터들어가는곳 -->
 </body>
 </html>

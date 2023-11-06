@@ -11,6 +11,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 
+
+
 public class PaymentDAO {
 	
 	// 공통 변수 선언
@@ -54,11 +56,25 @@ public class PaymentDAO {
 	// 그거를 카트DTO에서 저장하기. getCartID(String[] arr)
 	public ArrayList<Integer> cartList(ArrayList<CartDTO> arr){
 		ArrayList<Integer> cartIdList = new ArrayList<Integer>();
+
 		for (CartDTO cartDTO : arr) {
 		    int cartId = cartDTO.getCart_id(); 
 		    cartIdList.add(cartId);
 		}
+		System.out.println("Payment DAO : 장바구니 번호 CartDTO");
 		return cartIdList;
+	}
+	
+	// 운행정보 번호
+	public ArrayList <Integer> stopDateIdList(ArrayList<CartDTO> arr){
+	    ArrayList<Integer> stopDateIdList = new ArrayList<Integer>();
+
+		for (CartDTO cartDTO : arr) {
+		    int stopDateId = cartDTO.getStopdate_id();
+		    stopDateIdList.add(stopDateId);
+		}
+		System.out.println("Payment DAO : 장바구니 번호 cartDTO  ");
+		return stopDateIdList;
 	}
 	
 	
@@ -72,6 +88,8 @@ public class PaymentDAO {
 		System.out.println("Payment DAO : 전달받은 장바구니 번호 변환 완료 ");
 		return cart_id;
 	} // 1. 끝
+	
+	
 	
 	
 //	// 2. 장바구니번호 ArrayList<Integer> 로 장바구니 정보 조회하기
@@ -140,42 +158,87 @@ public class PaymentDAO {
 //		return productList;
 //		}//3.끝
 	
+//	//4. 카트랑 프로덕트 합치기
+//	public ArrayList getPurchase(ArrayList<Integer> cart_id) {
+//		ArrayList purchasetList = new ArrayList();
+//		
+//		try {con=getCon();
+//			
+//			sql = "select * from cart c join product p on c.product_id = p.product_id where c.cart_id =?";
+//			pstmt = con.prepareStatement(sql);
+//			
+//			for(int cartId : cart_id) {
+//				pstmt.setInt(1, cartId);
+//				rs = pstmt.executeQuery();
+//				while (rs.next()) {
+//					PaymentDTO payDto = new PaymentDTO();
+//					
+//					payDto.setCart_id(rs.getInt("cart_id"));
+//					payDto.setMember_id(rs.getInt("member_id"));
+//					payDto.setProduct_id(rs.getInt("product_id"));
+//					payDto.setQuantity(rs.getInt("quantity"));
+//					payDto.setAddress(rs.getString("address"));
+//					payDto.setStopdate_id(rs.getInt("stopdate_id"));
+//					payDto.setName(rs.getString("name"));
+//					payDto.setPrice(rs.getInt("price"));
+//					payDto.setImage(rs.getString("image"));
+//					
+//					purchasetList.add(payDto);
+//				}
+//			}
+//			System.out.println("Payment DAO : (cart+product)상품 정보 조회 완료!");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}finally{
+//			CloseDB();
+//		}
+//		return purchasetList;
+//		}//4.끝
 	//4. 카트랑 프로덕트 합치기
 	public ArrayList getPurchase(ArrayList<Integer> cart_id) {
 		ArrayList purchasetList = new ArrayList();
 		
 		try {con=getCon();
-			
-			sql = "select * from cart c join product p on c.product_id = p.product_id where c.cart_id =?";
-			pstmt = con.prepareStatement(sql);
-			
-			for(int cartId : cart_id) {
-				pstmt.setInt(1, cartId);
-				rs = pstmt.executeQuery();
-				while (rs.next()) {
-					PaymentDTO payDto = new PaymentDTO();
-					
-					payDto.setCart_id(rs.getInt("cart_id"));
-					payDto.setMember_id(rs.getInt("member_id"));
-					payDto.setProduct_id(rs.getInt("product_id"));
-					payDto.setQuantity(rs.getInt("quantity"));
-					payDto.setAddress(rs.getString("address"));
-					payDto.setStopdate_id(rs.getInt("stopdate_id"));
-					payDto.setName(rs.getString("name"));
-					payDto.setPrice(rs.getInt("price"));
-					payDto.setImage(rs.getString("image"));
-					
-					purchasetList.add(payDto);
-				}
+		
+		sql = "SELECT * "
+				+ "FROM cart c "
+				+ "JOIN product p ON c.product_id = p.product_id "
+				+ "JOIN stopdate sd ON c.stopdate_id = sd.stop_id "
+				+ "JOIN stop s ON sd.stop_id = s.stod_id "
+				+ "WHERE c.cart_id = ?";
+		pstmt = con.prepareStatement(sql);
+		
+		for(int cartId : cart_id) {
+			pstmt.setInt(1, cartId);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				PaymentDTO payDto = new PaymentDTO();
+				// 카트테이블 전부
+				payDto.setCart_id(rs.getInt("cart_id"));
+				payDto.setMember_id(rs.getInt("member_id"));
+				payDto.setProduct_id(rs.getInt("product_id"));
+				payDto.setQuantity(rs.getInt("quantity"));
+				payDto.setAddress(rs.getString("address"));
+				payDto.setStopdate_id(rs.getInt("stopdate_id"));
+				// 상품 이름과 가격, 이미지 주소
+				payDto.setName(rs.getString("name"));
+				payDto.setPrice(rs.getInt("price"));
+				payDto.setImage(rs.getString("image"));
+				// 주소와 일자
+				payDto.setTime(rs.getString("time"));
+				payDto.setDate(rs.getString("date"));
+				
+				purchasetList.add(payDto);
 			}
-			System.out.println("Payment DAO : (cart+product)상품 정보 조회 완료!");
+		}
+		System.out.println("Payment DAO : (cart+product+time)상품 정보 조회 완료!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			CloseDB();
 		}
 		return purchasetList;
-		}//4.끝
+	}//4.끝
 	
 	// 5. 아이디정보로 회원정보 조회하기 getMember()
 	public MemberDTO getMember(String id) {
@@ -215,6 +278,29 @@ public class PaymentDAO {
 		return dto;
 	}
 	
+	// 이름 합치기 combinedName(PurchaseList)
+	public String combinedName(ArrayList<PaymentDTO> purchaseList) {
+		StringBuilder nameString = new StringBuilder();
+		int nameCount = 0;
+
+		for (PaymentDTO payDTO : purchaseList) {
+		    if (nameCount == 0) {
+		        nameString.append(payDTO.getName());
+		    } else if (nameCount == 1) {
+		        nameString.append(", ").append(payDTO.getName()).append(" 외 ");
+		    } else {
+		        nameString.append(", ").append(payDTO.getName());
+		    }
+		    nameCount++;
+		}
+
+		if (nameCount > 1) {
+		    nameString.append(nameCount - 1).append("개");
+		}
+
+		String result = nameString.toString();
+		return result;
+	}
 	
 	//AFter=================================================================================
 	//1. 
@@ -291,6 +377,40 @@ public class PaymentDAO {
 
 		return result;
 }
+	// 글 정보 목록을 가져오는 메서드 - getBoardList(int startRow, int pageSize)
+	public PurchaseDTO getBoard() {
+		PurchaseDTO dto = null;
+		try {
+			con = getCon();
+			
+			sql="select * from purchase";
+			pstmt=con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new PurchaseDTO();
+				
+				dto.setDetail_id(rs.getInt("detail_id"));
+				dto.setMember_id(rs.getInt("member_id"));
+				dto.setProduct_id(rs.getInt("product_id"));
+				dto.setPurchase_id(rs.getInt("purchase_id"));
+				dto.setQuantity(rs.getInt("quantity"));
+				dto.setAddress(rs.getString("address"));
+				
+			} // if
+			
+			System.out.println("DAO : 글 정보 조회 성공");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			CloseDB();
+		}
+		
+		return dto;
+	}
+		
 		
 		
 	

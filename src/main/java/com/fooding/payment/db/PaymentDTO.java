@@ -1,5 +1,8 @@
 package com.fooding.payment.db;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+
 public class PaymentDTO {
 	
 	private int cart_id;		// 장바구니 번호
@@ -11,6 +14,23 @@ public class PaymentDTO {
 	private String name;  //상품이름
 	private int price;  //가격
 	private String image;  //이미지경로
+	private String time; //운행시간
+	private String Date; // 운행일
+	
+	
+	
+	public String getDate() {
+		return Date;
+	}
+	public void setDate(String date) {
+		Date = date;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 	public int getCart_id() {
 		return cart_id;
 	}
