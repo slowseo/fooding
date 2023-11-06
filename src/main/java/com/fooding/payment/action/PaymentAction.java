@@ -36,6 +36,7 @@ public class PaymentAction implements Action {
 		String[] getCartList  = request.getParameterValues("cartList"); // <-이거 써야함
 		ArrayList<CartDTO> cartList = new ArrayList<>();
 		for (String cartData : getCartList) {
+			
 		    String[] dataArray = cartData.split(","); // 데이터는 쉼표(,)로 구분되어 있다고 가정
 
 		    CartDTO cartDTO = new CartDTO();
