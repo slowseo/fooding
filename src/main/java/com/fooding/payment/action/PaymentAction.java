@@ -32,7 +32,7 @@ public class PaymentAction implements Action {
 		/*  --------------------------------------------------------     */
 		// 0. 전달정보 저장하기
 		// ArrayList 로 오는 전달정보 저장하기 (일단 어떻게 테스트하지)
-		String[] getCartList  = request.getParameterValues("cartList"); // <-이거 써야함
+		String[] getCartList  = request.getParameterValues("cartList"); // <-이거 써야함(맞는지 확인필요)
 //		ArrayList<CartDTO> cartList = new ArrayList<>();
 //		for (String cartData : getCartList) {
 //			
@@ -81,9 +81,6 @@ public class PaymentAction implements Action {
 		
 		//5. 로그인 아이디로 회원정보 조회하기
 		MemberDTO member = pdao.getMember("id234"); // 여기에 session id 값 넣어야함
-		
-		//6. 운행정보번호로 정차시간 가져오기(?)
-//		ArrayLsit time = pdao.getTruckTime(stop_date);
 		
 		// reqest 영역에 정보 저장하기
 		request.setAttribute("cart_id", cart_id);
