@@ -181,6 +181,13 @@
 				buyer_name: userName
 			},   function (rsp) {
 				if ( rsp.success ) {
+					   uid = rsp.imp_uid;
+			            // 결제검증
+			            $.ajax({
+			                url: '/order/verify_iamport/' + rsp.imp_uid,
+			                type: 'post'
+			            }).done(function(data) {
+			            	if (cdPay.textContent == data.response.amount) {
 			    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 			    	jQuery.ajax({
 			    		url: "/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요

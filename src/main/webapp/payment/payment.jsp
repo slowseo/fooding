@@ -96,6 +96,8 @@
 				<input type="hidden" name="address" value="${dto.address}">
 				<br>
 			</c:forEach>
+			<h1> 주소 </h1>
+			<h2> 수령일자 </h2>
 
 			<!-- 결제방법 선택하기(2~3개) -->
 			<h1>결제방법</h1>
@@ -214,7 +216,7 @@
 	</script>
 
 
-	<!-- 본문들어가는곳(결제페이지) -->
+	<!-- 본문들어가는곳(결제페이지) 끝 -->
 
 	<!-- 푸터들어가는곳 -->
 	 <div class="fooding-footer">

@@ -74,11 +74,11 @@ public class PaymentAfterAction implements Action{
 		// => 사용한 장바구니 데이터만 지우기! (장바구니 번호 이용)
 //		pdao.deleteMember(cart_id);
 		
-		// 뒤로가기 막기
+		// 뒤로가기 막기(왜 안될까?)
 		boolean blockBackOnSpecificPage = true;
 		request.setAttribute("blockBackOnSpecificPage", blockBackOnSpecificPage);
-
 		
+
 		
 		// 모든 처리 후 결제정보확인 페이지로 이동하기
 		forward = new ActionForward();

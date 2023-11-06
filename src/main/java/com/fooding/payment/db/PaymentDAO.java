@@ -11,6 +11,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 
+
+
 public class PaymentDAO {
 	
 	// 공통 변수 선언
@@ -73,6 +75,8 @@ public class PaymentDAO {
 		System.out.println("Payment DAO : 전달받은 장바구니 번호 변환 완료 ");
 		return cart_id;
 	} // 1. 끝
+	
+	
 	
 	
 //	// 2. 장바구니번호 ArrayList<Integer> 로 장바구니 정보 조회하기
@@ -216,6 +220,38 @@ public class PaymentDAO {
 		return dto;
 	}
 	
+//	 6. 운행정보번호로 정차시간 가져오기
+	public ArrayList getProduct(ArrayList<Integer> cart_id) {
+	ArrayList productList = new ArrayList();
+	
+	try {con=getCon();
+		
+		sql = "select * from stopdate sd join stop s on sd.stop_id = s.stod_id where stopdate_id in ?";
+		pstmt = con.prepareStatement(sql);
+		
+		for(int cartId : cart_id) {
+			pstmt.setInt(1, cartId);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ProductDTO ProDto = new ProductDTO ();
+				
+				ProDto.setProduct_id(rs.getInt("product_id"));
+				ProDto.setName(rs.getString("name"));
+				ProDto.setPrice(rs.getInt("price"));
+				ProDto.setImage(rs.getString("image"));
+				
+				productList.add(ProDto);
+			}
+		}
+		System.out.println("Payment DAO : 상품 정보 조회 완료!");
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally{
+		CloseDB();
+	}
+	return productList;
+	}//3.끝
+	
 	
 	//AFter=================================================================================
 	//1. 
@@ -292,6 +328,40 @@ public class PaymentDAO {
 
 		return result;
 }
+	// 글 정보 목록을 가져오는 메서드 - getBoardList(int startRow, int pageSize)
+	public PurchaseDTO getBoard() {
+		PurchaseDTO dto = null;
+		try {
+			con = getCon();
+			
+			sql="select * from purchase";
+			pstmt=con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new PurchaseDTO();
+				
+				dto.setDetail_id(rs.getInt("detail_id"));
+				dto.setMember_id(rs.getInt("member_id"));
+				dto.setProduct_id(rs.getInt("product_id"));
+				dto.setPurchase_id(rs.getInt("purchase_id"));
+				dto.setQuantity(rs.getInt("quantity"));
+				dto.setAddress(rs.getString("address"));
+				
+			} // if
+			
+			System.out.println("DAO : 글 정보 조회 성공");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			CloseDB();
+		}
+		
+		return dto;
+	}
+		
 		
 		
 	

@@ -1,6 +1,7 @@
 package com.fooding.payment.action;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -18,15 +19,6 @@ public class PaymentAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		// 0. 전달정보 저장하기
-		// ArrayList 로 오는 전달정보 저장하기
-		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단 어떻게 테스트하지)
-		CartDTO cartDto = new CartDTO();
-		
-		 String[] arr = {"23","24"}; // 임시
-//      ArrayList<CartDTO> cartList  = request.getParameterValues("cartList"); <-이거 써야함
-		 
 		// 로그인 세션 제어
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
@@ -37,25 +29,51 @@ public class PaymentAction implements Action {
 			forward.setRedirect(true);
 		}
 		
+		
+		// 0. 전달정보 저장하기
+		// ArrayList 로 오는 전달정보 저장하기
+		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단 어떻게 테스트하지)
+		String[] getCartList  = request.getParameterValues("cartList"); // <-이거 써야함
+		ArrayList<CartDTO> cartList = new ArrayList<>();
+		for (String cartData : getCartList) {
+		    String[] dataArray = cartData.split(","); // 데이터는 쉼표(,)로 구분되어 있다고 가정
+
+		    CartDTO cartDTO = new CartDTO();
+		    cartDTO.setCart_id(Integer.parseInt(dataArray[0]));
+		    cartDTO.setMember_id(Integer.parseInt(dataArray[1]));
+		    cartDTO.setProduct_id(Integer.parseInt(dataArray[2]));
+		    cartDTO.setQuantity(Integer.parseInt(dataArray[3]));
+		    cartDTO.setAddress(dataArray[4]);
+		    cartDTO.setStopdate_id(Integer.parseInt(dataArray[5]));
+
+		    cartList.add(cartDTO);
+		}
+		CartDTO cartDto = new CartDTO();
+		
+		 String[] arr = {"23","24"}; // 임시
+		 
 		// 뒤로가기 막기 . 장바구니 데이터가 전달되지 않은 경우!
 		if(arr == null) {
 			forward.setPath("./main.me");
 			forward.setRedirect(true);
 		}
+		
+		
 		//===========================================================================================
 		PaymentDAO pdao = new PaymentDAO();
 		
 		// 1. 장바구니 번호 String[] 이거 ArrayList로 변경하기
 		ArrayList cart_id = pdao.stringToArrayList(arr); // 임시
 //		ArrayList cart_id = pdao.cartList(cartList); // 상품번호 얻어오기
+		// ArrayList stop_date = pdao.
 		
 		//4. 장바구니 번호 ArrayList로 조회해서 상품정보 가져오기
 		ArrayList purchaseList = pdao.getPurchase(cart_id);
 		
 		//5. 로그인 아이디로 회원정보 조회하기
-		MemberDTO member = pdao.getMember("id234");
+		MemberDTO member = pdao.getMember("id234"); // 여기에 session id 값 넣어야함
 		
-		//6. 상품이름들을 하나의 String으로 만들기
+		//6. 운행정보번호로 정차시간 가져오기
 		
 		
 		// reqest 영역에 정보 저장하기
