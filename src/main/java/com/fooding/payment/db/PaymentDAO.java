@@ -56,9 +56,13 @@ public class PaymentDAO {
 	// 그거를 카트DTO에서 저장하기. getCartID(String[] arr)
 	public ArrayList<Integer> cartList(ArrayList<CartDTO> arr){
 		ArrayList<Integer> cartIdList = new ArrayList<Integer>();
+	    ArrayList<Integer> stopDateIdList = new ArrayList<Integer>();
+
 		for (CartDTO cartDTO : arr) {
 		    int cartId = cartDTO.getCart_id(); 
+		    int stopDateId = cartDTO.getStopdate_id();
 		    cartIdList.add(cartId);
+		    stopDateIdList.add(stopDateId);
 		}
 		System.out.println("Payment DAO : 장바구니 번호 cartDTO  ");
 		return cartIdList;

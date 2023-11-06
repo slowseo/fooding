@@ -29,10 +29,9 @@ public class PaymentAction implements Action {
 			forward.setRedirect(true);
 		}
 		
-		
+		/*  --------------------------------------------------------     */
 		// 0. 전달정보 저장하기
-		// ArrayList 로 오는 전달정보 저장하기
-		// (request로 구매할 장바구니번호 받아오기) => 결제완료 후 삭제 (일단 어떻게 테스트하지)
+		// ArrayList 로 오는 전달정보 저장하기 (일단 어떻게 테스트하지)
 		String[] getCartList  = request.getParameterValues("cartList"); // <-이거 써야함
 		ArrayList<CartDTO> cartList = new ArrayList<>();
 		for (String cartData : getCartList) {
@@ -50,6 +49,15 @@ public class PaymentAction implements Action {
 		    cartList.add(cartDTO);
 		}
 		CartDTO cartDto = new CartDTO();
+		
+		
+		/*  --------------------------------------------------------     */
+		
+		
+		
+		
+		
+		
 		
 		 String[] arr = {"23","24"}; // 임시
 		 
