@@ -80,7 +80,7 @@
 
 
 	<script>
-
+		
 		let money = "<c:out value="${total}"/>" // 결제금액
 // 		let productName = // 구매상품명 계산은 어ㄸㅎ게하지
 		let email = "<c:out value="${member.email}"/>" // 구매자 이메일
@@ -88,6 +88,14 @@
 		
 	    const purchase_id = createOrderNum();
 	    document.getElementById("purchase_id").value = purchase_id;
+	    
+		// 뒤로가기 막기
+		var blockBackOnSpecificPage = false; 
+		function goToAFromSpecificPage() {
+			  blockBackOnSpecificPage = true;
+			  // submit
+			  document.getElementById("mypayment").submit(); 
+			}
 		
 		// 상품번호 생성
 		function createOrderNum(){
@@ -136,7 +144,7 @@
 				pg : selectedPG, // 라디오 버튼마다 결제방식 달라짐
 				pay_method : "card",// card는 고정
 				merchant_uid : purchase_id, //상품번호+주문날짜
-				name : "Fooding", // 여기에 브랜드명 입력 (\n 뒤에 자세한 내용은 주문내역확인 누르니까 결제가 안넘어감)
+				name : "Fooding", // 
 				amount : money,
 				buyer_email: email,
 				buyer_name: userName
@@ -146,7 +154,7 @@
                   var msg = "결제 완료";
                   
                   // 폼 데이터 submit 실행
-                  document.getElementById("mypayment").submit(); // 넘어감!
+		        	goToAFromSpecificPage();
 
              }else { // 결제취소할때, 중복결제하려고 할 때
                     var msg = "결제를 취소하셨습니다";

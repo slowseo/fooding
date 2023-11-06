@@ -59,16 +59,23 @@ public class PaymentFrontController extends HttpServlet{
 				e.printStackTrace();
 			}
 		}
-		else if(command.equals("/PaymentCheck.pay")) { // 디비에 정보를 저장하고 이동해야함
-			System.out.println(" C : /PaymentCheck.pay 호출 ");
+		else if(command.equals("/TestAjax.pay")) {
+			System.out.println(" C : /TestAjax.pay 호출 ");
 			System.out.println(" C : 패턴 2 - 데이터처리O, 페이지로 이동");
 		
-		
-				forward = new ActionForward();
-				forward.setPath("./board/체크할jsp파일이름.jsp");
-				forward.setRedirect(false);
+			action = new PaymentAfterAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
+		else if(command.equals("/payementResult.jsp")) {
+			forward = new ActionForward();
+			forward.setPath("./payment/paymentResult.jsp"); // 결제내역창 주소 입력해야함
+			forward.setRedirect(false);
+		}
+			
 		
 		System.out.println("\n -----------------2. 가상주소 매핑 시작 --------------------");
 
