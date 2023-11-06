@@ -14,9 +14,17 @@ public class PaymentDTO {
 	private String name;  //상품이름
 	private int price;  //가격
 	private String image;  //이미지경로
-	private String time;
+	private String time; //운행시간
+	private String Date; // 운행일
 	
 	
+	
+	public String getDate() {
+		return Date;
+	}
+	public void setDate(String date) {
+		Date = date;
+	}
 	public String getTime() {
 		return time;
 	}

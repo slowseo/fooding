@@ -33,22 +33,21 @@ public class PaymentAction implements Action {
 		// 0. 전달정보 저장하기
 		// ArrayList 로 오는 전달정보 저장하기 (일단 어떻게 테스트하지)
 		String[] getCartList  = request.getParameterValues("cartList"); // <-이거 써야함
-		ArrayList<CartDTO> cartList = new ArrayList<>();
-		for (String cartData : getCartList) {
-			
-		    String[] dataArray = cartData.split(","); // 데이터는 쉼표(,)로 구분되어 있다고 가정
-
-		    CartDTO cartDTO = new CartDTO();
-		    cartDTO.setCart_id(Integer.parseInt(dataArray[0]));
-		    cartDTO.setMember_id(Integer.parseInt(dataArray[1]));
-		    cartDTO.setProduct_id(Integer.parseInt(dataArray[2]));
-		    cartDTO.setQuantity(Integer.parseInt(dataArray[3]));
-		    cartDTO.setAddress(dataArray[4]);
-		    cartDTO.setStopdate_id(Integer.parseInt(dataArray[5]));
-
-		    cartList.add(cartDTO);
-		}
-		CartDTO cartDto = new CartDTO();
+//		ArrayList<CartDTO> cartList = new ArrayList<>();
+//		for (String cartData : getCartList) {
+//			
+//		    String[] dataArray = cartData.split(","); // 데이터는 쉼표(,)로 구분되어 있다고 가정
+//
+//		    CartDTO cartDTO = new CartDTO();
+//		    cartDTO.setCart_id(Integer.parseInt(dataArray[0]));
+//		    cartDTO.setMember_id(Integer.parseInt(dataArray[1]));
+//		    cartDTO.setProduct_id(Integer.parseInt(dataArray[2]));
+//		    cartDTO.setQuantity(Integer.parseInt(dataArray[3]));
+//		    cartDTO.setAddress(dataArray[4]);
+//		    cartDTO.setStopdate_id(Integer.parseInt(dataArray[5]));
+//
+//		    cartList.add(cartDTO);
+//		}
 		
 		
 		/*  --------------------------------------------------------     */
@@ -70,11 +69,12 @@ public class PaymentAction implements Action {
 		
 		//===========================================================================================
 		PaymentDAO pdao = new PaymentDAO();
+		CartDTO CDto = new CartDTO();
 		
 		// 1. 장바구니 번호 String[] 이거 ArrayList로 변경하기
 		ArrayList cart_id = pdao.stringToArrayList(arr); // 임시
-//		ArrayList cart_id = pdao.cartList(cartList); // 상품번호 얻어오기
-		// ArrayList stop_date = pdao.
+//		ArrayList cart_id = pdao.cartList(cartList); // 장바구니 번호 얻어오기
+//		 ArrayList stop_date = pdao.stopDateIdList(cartList); // 운행정보 가져오기
 		
 		//4. 장바구니 번호 ArrayList로 조회해서 상품정보 가져오기
 		ArrayList purchaseList = pdao.getPurchase(cart_id);
@@ -82,8 +82,8 @@ public class PaymentAction implements Action {
 		//5. 로그인 아이디로 회원정보 조회하기
 		MemberDTO member = pdao.getMember("id234"); // 여기에 session id 값 넣어야함
 		
-		//6. 운행정보번호로 정차시간 가져오기
-		
+		//6. 운행정보번호로 정차시간 가져오기(?)
+//		ArrayLsit time = pdao.getTruckTime(stop_date);
 		
 		// reqest 영역에 정보 저장하기
 		request.setAttribute("cart_id", cart_id);
