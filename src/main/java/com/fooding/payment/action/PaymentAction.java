@@ -64,8 +64,7 @@ public class PaymentAction implements Action {
 		
 		// combinedName(purchaseList)
 		String combinedName = pdao.combinedName(purchaseList);
-		
-		
+	
 		// reqest 영역에 정보 저장하기
 		request.setAttribute("cart_id", cart_id);
 		request.setAttribute("purchaseList", purchaseList);
