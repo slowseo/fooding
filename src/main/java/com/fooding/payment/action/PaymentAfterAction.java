@@ -32,7 +32,10 @@ public class PaymentAfterAction implements Action{
         String[] names = request.getParameterValues("name"); //상품이름
         
         // 주문번호 purchaseid
-        int purchaseid = (Integer.parseInt(request.getParameter("purchase_id")));
+        String purchase_id = request.getParameter("purchase_id");
+        int purchaseid=Integer.parseInt(purchase_id);
+        response.setContentType("text/html; charset=UTF-8");
+        response.getWriter().write("서버에서의 처리 완료: " + purchase_id);
         
         for (int i = 0; i < memberid.length; i++) {
             PurchaseDTO dto = new PurchaseDTO();

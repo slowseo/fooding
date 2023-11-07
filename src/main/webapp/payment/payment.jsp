@@ -89,8 +89,9 @@
 	<h1>주문/결제</h1>
 	<fieldset id="field">
 <form action="./PaymentResult.pay" method="post" id="mypayment" >
+	<!-- 주문번호 -->
+ 	<input type="hidden" id="purchase_id" name="purchase_id" value="">
     <c:forEach var="dto" items="${purchaseList}" varStatus="loop">
-        <input type="hidden" name="purchase_id" id="purchase_id_input" value="">
         <!-- 장바구니 정보 출력하기(리스트) -->
         <!-- 장바구니 번호 -->
         <input type="hidden" name="cart_id" value="${dto.cart_id}">
@@ -98,11 +99,12 @@
         <input type="hidden" name="member_id" value="${dto.member_id}">
         <!-- 상품번호 -->
         <input type="hidden" name="product_id" value="${dto.product_id}">
-        
+        <!-- 주소 -->
+        <input type="hidden" name="address" value="${dto.address}">
         <c:choose>
             <c:when test="${loop.first || !dto.date.equals(purchaseList[loop.index - 1].date)}">
                 <!-- 첫 번째 아이템 또는 이전 아이템과 날짜가 다를 때만 출력 -->
-                <h3>주문일:  ${dto.date}</h3>
+                <h3>영업날짜:  ${dto.date}</h3>
                 <h3>${dto.foodtruckName}</h3>
             </c:when>
             <c:otherwise>
@@ -110,7 +112,6 @@
             </c:otherwise>
         </c:choose>
         
-        <c:forEach var="address" items="${dto.address}" varStatus="addressStatus">
             상품사진 : <img src="${dto.image}">
             <br>
             상품이름 : <input type="text" name="name" value="${dto.name}" readonly>
@@ -119,7 +120,6 @@
             <br>
             가격 : <input type="text" name="price" value="${dto.price}" readonly>
             <hr>
-        </c:forEach>
     </c:forEach>
 
 			<!-- 결제방법 선택하기(2~3개) 아이콘 왜 안나오지-->
@@ -149,7 +149,7 @@
 	<button id="order-btn" onclick="findSubject()">결제하기</button>
 	<!-- 주문취소 버튼 (장바구니 페이지로 이동)  -->
 	<button id="cancel" onclick="cartBack()">장바구니로</button>
-
+<br><br><br><br>
 
 	<script src="test-ajx.jsp"></script>
 	<script>
@@ -160,16 +160,7 @@
 
 		// 상품번호(merchant_uid)
 		const purchase_id = createOrderNum();
-		
-// 		$.ajax({
-// 		    type: "POST",
-// 		    url: "./PaymentResult.pay",
-// 		    data: { purchase_id: purchase_id },
-// 		    success: function(data) {
-// 		        // 서버에서의 처리 완료 후 콜백 함수
-// 		        console.log("서버에서의 처리 완료:", data);
-// 		    }
-// 		});
+	    document.getElementById("purchase_id").value = purchase_id;
 
 
 		// 상품번호 생성
@@ -185,7 +176,30 @@
 			}
 			return orderNum; // 총 8자리 숫자
 		}
-
+		
+        // JavaScript로 중복 주소 제거
+        var addresses = []; // 주소를 저장할 배열
+        var uniqueAddresses = new Set(); // 중복을 체크할 Set
+        // 주소 정보를 가져와서 배열에 저장
+        var addressElements = document.getElementsByName("address");
+        for (var i = 0; i < addressElements.length; i++) {
+            addresses.push(addressElements[i].value);
+        }
+        // 중복 주소를 체크하고 중복이 없는 주소를 Set에 저장
+        for (var i = 0; i < addresses.length; i++) {
+            uniqueAddresses.add(addresses[i]);
+        }
+        // 중복이 없는 주소를 다시 배열에 저장
+        var uniqueAddressesArray = Array.from(uniqueAddresses);
+        // 중복이 없는 주소를 출력
+        var addressOutput = document.getElementById("addressOutput");
+        for (var i = 0; i < uniqueAddressesArray.length; i++) {
+            var address = uniqueAddressesArray[i];
+            var addressElement = document.createElement("div");
+            addressElement.textContent = address;
+            addressOutput.appendChild(addressElement);
+        }
+        
 		// 장바구니로 돌아가기
 		function cartBack() {
 			var confirmResult = confirm("장바구니로 돌아가시겠습니까?");
