@@ -16,9 +16,16 @@ public class PaymentDTO {
 	private String image;  //이미지경로
 	private String time; //운행시간
 	private String Date; // 운행일
+	private String foodtruckName;
 	
 	
-	
+
+	public String getFoodtruckName() {
+		return foodtruckName;
+	}
+	public void setFoodtruckName(String foodtruckName) {
+		this.foodtruckName = foodtruckName;
+	}
 	public String getDate() {
 		return Date;
 	}

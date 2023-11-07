@@ -102,8 +102,8 @@
         <c:choose>
             <c:when test="${loop.first || !dto.date.equals(purchaseList[loop.index - 1].date)}">
                 <!-- 첫 번째 아이템 또는 이전 아이템과 날짜가 다를 때만 출력 -->
-                <h3>주문일 : ${dto.date}</h3>
-                <h3>주소 : ${dto.address}</h3>
+                <h3>주문일:  ${dto.date}</h3>
+                <h3>${dto.foodtruckName}</h3>
             </c:when>
             <c:otherwise>
                 <!-- 이전 아이템과 날짜가 같으면 아무것도 출력하지 않음 -->
@@ -160,8 +160,7 @@
 
 		// 상품번호(merchant_uid)
 		const purchase_id = createOrderNum();
-		document.getElementById("purchase_id_input").value = purchase_id;
-
+		
 // 		$.ajax({
 // 		    type: "POST",
 // 		    url: "./PaymentResult.pay",

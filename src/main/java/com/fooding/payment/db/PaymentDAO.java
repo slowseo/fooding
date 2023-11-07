@@ -203,11 +203,14 @@ public class PaymentDAO {
 		
 		try {con=getCon();
 		
-		sql = "SELECT * "
+		sql = "SELECT cart_id, member_id, p.product_id, quantity, "
+				+ "c.address, c.stopdate_id, p.name, price, p.image, "
+				+ "s.time ,sd.date, f.name AS foodTruckName "
 				+ "FROM cart c "
 				+ "JOIN product p ON c.product_id = p.product_id "
 				+ "JOIN stopdate sd ON c.stopdate_id = sd.stopdate_id "
 				+ "JOIN stop s ON sd.stop_id = s.stop_id "
+				+ "JOIN foodtruck f ON f.foodtruck_id = sd.foodtruck_id "
 				+ "WHERE c.cart_id = ?";
 		pstmt = con.prepareStatement(sql);
 		
@@ -230,6 +233,7 @@ public class PaymentDAO {
 				// 주소와 일자
 				payDto.setTime(rs.getString("time"));
 				payDto.setDate(rs.getString("date"));
+				payDto.setFoodtruckName(rs.getString("foodTruckName"));
 				
 				purchasetList.add(payDto);
 			}
