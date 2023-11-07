@@ -331,7 +331,7 @@ public class PaymentDAO {
 		   try {
 		      con = getCon();
 		      //쿼리에서 date 삭제하기
-		      sql = "INSERT INTO purchase (purchaseid, member_id, product_id, quantity, address,date) VALUES (?,?,?,?,?,now())";
+		      sql = "INSERT INTO purchase (purchaseid, member_id, product_id, quantity, address) VALUES (?,?,?,?,?)";
 		      pstmt = con.prepareStatement(sql);
 
 		      for (PurchaseDTO dto : arr) {

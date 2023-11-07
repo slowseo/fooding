@@ -59,29 +59,7 @@ public class PaymentFrontController extends HttpServlet{
 				e.printStackTrace();
 			}
 		}
-		else if(command.equals("/TestAjax.pay")) {
-			System.out.println(" C : /TestAjax.pay 호출 ");
-			System.out.println(" C : 패턴 2 - 데이터처리O, 페이지로 이동");
-		
-			action = new PaymentAfterAction();
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-//<<<<<<< HEAD
-//				
-//				
-//=======
-		else if(command.equals("/payementResult.jsp")) {
-			forward = new ActionForward();
-			forward.setPath("./payment/paymentResult.jsp"); // 결제내역창 주소 입력해야함
-			forward.setRedirect(false);
-		}
-			
-//>>>>>>> branch 'feat-ajax' of https://github.com/slowseo/fooding.git
-		
+	
 		System.out.println("\n -----------------2. 가상주소 매핑 시작 --------------------");
 
 		System.out.println("\n -----------------3. 가상주소 이동 시작 --------------------");

@@ -89,9 +89,8 @@
 	<h1>주문/결제</h1>
 	<fieldset id="field">
 <form action="./PaymentResult.pay" method="post" id="mypayment" >
-    <!-- 주문번호 -->
-    <input type="hidden" id="purchase_id" name="purchase_id" value="loop">
     <c:forEach var="dto" items="${purchaseList}" varStatus="loop">
+        <input type="hidden" name="purchase_id" id="purchase_id_input" value="">
         <!-- 장바구니 정보 출력하기(리스트) -->
         <!-- 장바구니 번호 -->
         <input type="hidden" name="cart_id" value="${dto.cart_id}">
@@ -159,16 +158,20 @@
 		let email = '<c:out value="${member.email}"/>'; // 구매자 이메일
 		let userName = '<c:out value="${member.name}"/>'; // 구매자 이름
 
-
+		// 상품번호(merchant_uid)
 		const purchase_id = createOrderNum();
+		document.getElementById("purchase_id_input").value = purchase_id;
 
-		// 뒤로가기 막기
-		var blockBackOnSpecificPage = false;
-		function goToAFromSpecificPage() {
-			blockBackOnSpecificPage = true;
-			// submit
-			document.getElementById("mypayment").submit();
-		}
+// 		$.ajax({
+// 		    type: "POST",
+// 		    url: "./PaymentResult.pay",
+// 		    data: { purchase_id: purchase_id },
+// 		    success: function(data) {
+// 		        // 서버에서의 처리 완료 후 콜백 함수
+// 		        console.log("서버에서의 처리 완료:", data);
+// 		    }
+// 		});
+
 
 		// 상품번호 생성
 		function createOrderNum() {
@@ -232,7 +235,7 @@
 					var msg = "결제 완료";
 
 					// 폼 데이터 submit 실행
-					goToAFromSpecificPage();
+					document.getElementById("mypayment").submit();
 
 				} else { // 결제취소할때, 중복결제하려고 할 때
 					var msg = "결제를 취소하셨습니다";

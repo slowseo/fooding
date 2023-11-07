@@ -18,7 +18,6 @@ public class PaymentAfterAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 전달정보 저장하기
 		//장바구니 번호
-			// 이게 있어야지 데이터 지울 수 있음
 		String[] arr = request.getParameterValues("cart_id"); 
 		
 		 ArrayList<PurchaseDTO> purchaseList = new ArrayList<>();
@@ -32,8 +31,7 @@ public class PaymentAfterAction implements Action{
         String[] prices = request.getParameterValues("price"); //가격
         String[] names = request.getParameterValues("name"); //상품이름
         
-        // 주문번호
-        // purchaseid 값을 가져와야함. 그러면..? AJax를 이용해야해돼
+        // 주문번호 purchaseid
         int purchaseid = (Integer.parseInt(request.getParameter("purchase_id")));
         
         for (int i = 0; i < memberid.length; i++) {
@@ -73,10 +71,6 @@ public class PaymentAfterAction implements Action{
 		// 2. 장바구니 테이블 데이터 지우기
 		// => 사용한 장바구니 데이터만 지우기! (장바구니 번호 이용)
 //		pdao.deleteMember(cart_id);
-		
-		// 뒤로가기 막기(왜 안될까?)
-		boolean blockBackOnSpecificPage = true;
-		request.setAttribute("blockBackOnSpecificPage", blockBackOnSpecificPage);
 		
 
 		
