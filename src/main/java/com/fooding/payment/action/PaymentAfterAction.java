@@ -34,9 +34,7 @@ public class PaymentAfterAction implements Action{
         // 주문번호 purchaseid
         String purchase_id = request.getParameter("purchase_id");
         int purchaseid=Integer.parseInt(purchase_id);
-        response.setContentType("text/html; charset=UTF-8");
-        response.getWriter().write("서버에서의 처리 완료: " + purchase_id);
-        
+
         for (int i = 0; i < memberid.length; i++) {
             PurchaseDTO dto = new PurchaseDTO();
             dto.setMember_id(Integer.parseInt(memberid[i]));
@@ -71,8 +69,7 @@ public class PaymentAfterAction implements Action{
 		PurchaseDTO dto = new PurchaseDTO();
 		pdao.insertPurchase(purchaseList);
 
-		// 2. 장바구니 테이블 데이터 지우기
-		// => 사용한 장바구니 데이터만 지우기! (장바구니 번호 이용)
+		// 2. 장바구니 테이블 데이터 지우기 => 사용한 장바구니 데이터만 지우기! (장바구니 번호 이용)
 //		pdao.deleteMember(cart_id);
 		
 
