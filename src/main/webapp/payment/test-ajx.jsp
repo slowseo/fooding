@@ -90,7 +90,7 @@
 			    // imp_uid로 포트원 서버에서 결제 정보 조회
 			    const getPaymentData = await axios({
 			      // imp_uid 전달
-			      url: `https://api.iamport.kr/payments/${imp_uid}`,
+			      url: "https://api.iamport.kr/payments/${imp_uid}",
 			      // GET method
 			      method: "get",
 			      // 인증 토큰 Authorization header에 추가

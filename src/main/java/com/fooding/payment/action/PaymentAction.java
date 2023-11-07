@@ -30,9 +30,9 @@ public class PaymentAction implements Action {
 		}
 		
 		/*  --------------------------------------------------------     */
-		// 0. 전달정보 저장하기
+		// 0. 전달정보 저장하기 (물어보기)
 		ArrayList<CartDTO> cartList = (ArrayList<CartDTO>) request.getAttribute("cartList"); // <-이거 써야함(맞는지 확인필요)
-
+		
 		
 		
 		/*  --------------------------------------------------------     */
