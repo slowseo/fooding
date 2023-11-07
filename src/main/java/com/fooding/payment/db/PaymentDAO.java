@@ -55,8 +55,7 @@ public class PaymentDAO {
 	//================    디비 연결(자원) 해제 메서드    ====================
 	//=============     /////////////    =======================
 	
-	//0-1.ArrayList로 전달된 장바구니 정보를 String[]으로 받음
-	// 그거를 카트DTO에서 저장하기. getCartID(String[] arr)
+	//0-1. getCartID(ArrayList<CartDTO> arr)
 	public ArrayList<Integer> cartList(ArrayList<CartDTO> arr){
 		ArrayList<Integer> cartIdList = new ArrayList<Integer>();
 
@@ -68,17 +67,6 @@ public class PaymentDAO {
 		return cartIdList;
 	}
 	
-	// 운행정보 번호
-	public ArrayList <Integer> stopDateIdList(ArrayList<CartDTO> arr){
-	    ArrayList<Integer> stopDateIdList = new ArrayList<Integer>();
-
-		for (CartDTO cartDTO : arr) {
-		    int stopDateId = cartDTO.getStopdate_id();
-		    stopDateIdList.add(stopDateId);
-		}
-		System.out.println("Payment DAO : 장바구니 번호 cartDTO  ");
-		return stopDateIdList;
-	}
 	
 	
 	// 1. String[] 으로 오는 장바구니 번호 ArrayList<Integer>로 변환하기
@@ -203,14 +191,10 @@ public class PaymentDAO {
 		
 		try {con=getCon();
 		
-		sql = "SELECT cart_id, member_id, p.product_id, quantity, "
-				+ "c.address, c.stopdate_id, p.name, price, p.image, "
-				+ "s.time ,sd.date, f.name AS foodTruckName "
+		sql = "SELECT *, f.name As foodTruckName "
 				+ "FROM cart c "
 				+ "JOIN product p ON c.product_id = p.product_id "
-				+ "JOIN stopdate sd ON c.stopdate_id = sd.stopdate_id "
-				+ "JOIN stop s ON sd.stop_id = s.stop_id "
-				+ "JOIN foodtruck f ON f.foodtruck_id = sd.foodtruck_id "
+				+ "JOIN foodtruck f ON f.foodtruck_id = p.foodtruck_id "
 				+ "WHERE c.cart_id = ?";
 		pstmt = con.prepareStatement(sql);
 		
@@ -224,15 +208,14 @@ public class PaymentDAO {
 				payDto.setMember_id(rs.getInt("member_id"));
 				payDto.setProduct_id(rs.getInt("product_id"));
 				payDto.setQuantity(rs.getInt("quantity"));
+				payDto.setDate(rs.getString("date"));
 				payDto.setAddress(rs.getString("address"));
-				payDto.setStopdate_id(rs.getInt("stopdate_id"));
+				payDto.setStoptime(rs.getString("stoptime"));
 				// 상품 이름과 가격, 이미지 주소
 				payDto.setName(rs.getString("name"));
 				payDto.setPrice(rs.getInt("price"));
 				payDto.setImage(rs.getString("image"));
-				// 주소와 일자
-				payDto.setTime(rs.getString("time"));
-				payDto.setDate(rs.getString("date"));
+				// 푸드트럭 이름
 				payDto.setFoodtruckName(rs.getString("foodTruckName"));
 				
 				purchasetList.add(payDto);
