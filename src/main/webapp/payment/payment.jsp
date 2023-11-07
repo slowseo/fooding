@@ -87,8 +87,8 @@
 
 	<!-- 본문들어가는곳(결제페이지) -->
 	<h1>주문/결제</h1>
-	<fieldset>
-<form action="./PaymentResult.pay" method="post" id="mypayment" border="1px">
+	<fieldset id="field">
+<form action="./PaymentResult.pay" method="post" id="mypayment" >
     <!-- 주문번호 -->
     <input type="hidden" id="purchase_id" name="purchase_id" value="loop">
     <c:forEach var="dto" items="${purchaseList}" varStatus="loop">
@@ -103,10 +103,8 @@
         <c:choose>
             <c:when test="${loop.first || !dto.date.equals(purchaseList[loop.index - 1].date)}">
                 <!-- 첫 번째 아이템 또는 이전 아이템과 날짜가 다를 때만 출력 -->
-                <h2>주문일</h2>
-                <h3>${dto.date}</h3>
-                <h2>주소</h2>
-                <h3>${dto.address}</h3>
+                <h3>주문일 : ${dto.date}</h3>
+                <h3>주소 : ${dto.address}</h3>
             </c:when>
             <c:otherwise>
                 <!-- 이전 아이템과 날짜가 같으면 아무것도 출력하지 않음 -->
@@ -125,11 +123,11 @@
         </c:forEach>
     </c:forEach>
 
-			<!-- 결제방법 선택하기(2~3개) -->
+			<!-- 결제방법 선택하기(2~3개) 아이콘 왜 안나오지-->
 			<h1>결제방법</h1>
 			<input type="radio" name="pay" value="INIBillTst"> 카드결제 <br>
-			<input type="radio" name="pay" value="kakaopay"> 카카오페이 <br>
-			<input type="radio" name="pay" value="tosspay"> 토스페이 <br>
+			<input type="radio" name="pay" value="kakaopay"> 카카오페이 <img src="kakao.png" width="50px"/><br>
+			<input type="radio" name="pay" value="tosspay"> 토스페이 <img src="Toss.png" width="30px"/><br>
 
 			<br>
 			
@@ -146,9 +144,6 @@
 		</form>
 	</fieldset>
 
-	<script>
-		
-	</script>
 
 	<br>
 	<!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
