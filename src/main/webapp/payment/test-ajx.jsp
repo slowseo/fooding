@@ -19,7 +19,7 @@
 <script>
 	
 	const IMP = "imp75410442";
-	const RestApiLey = "1500428451315773";
+	const RestApiKey = "1500428451315773";
 	const RESTApiSecret = "T1rLNPm2YQzEDqYOEmXYGFthFdwEi15aqlhCtkrB2C2pJW455YVrfltaCLqiO7IJw1z8PS0tLtWzcr6B";
 
 	async function getData(){
@@ -31,6 +31,17 @@
 	
 	// => 이걸로 데이터 정보 받아와서 가격 비교?하면 되지 않을까?
 	// 사전 검증을 여기서 하고  script src 로 가져오면 될듯...
+	
+	// 사전검증용
+	await axios({
+  url: "https://api.iamport.kr/payments/prepare",
+  method: "post",
+  headers: { "Content-Type": "application/json" }, 
+  data: {
+    merchant_uid: "...", // 가맹점 주문번호
+    amount: 420000, // 결제 예정금액
+  }
+});
 </script>
 	
 </body>

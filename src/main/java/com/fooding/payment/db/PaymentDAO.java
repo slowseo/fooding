@@ -206,8 +206,8 @@ public class PaymentDAO {
 		sql = "SELECT * "
 				+ "FROM cart c "
 				+ "JOIN product p ON c.product_id = p.product_id "
-				+ "JOIN stopdate sd ON c.stopdate_id = sd.stop_id "
-				+ "JOIN stop s ON sd.stop_id = s.stod_id "
+				+ "JOIN stopdate sd ON c.stopdate_id = sd.stopdate_id "
+				+ "JOIN stop s ON sd.stop_id = s.stop_id "
 				+ "WHERE c.cart_id = ?";
 		pstmt = con.prepareStatement(sql);
 		
@@ -283,26 +283,27 @@ public class PaymentDAO {
 	
 	// 이름 합치기 combinedName(PurchaseList)
 	public String combinedName(ArrayList<PaymentDTO> purchaseList) {
-		StringBuilder nameString = new StringBuilder();
-		int nameCount = 0;
+	    StringBuilder nameString = new StringBuilder();
+	    int nameCount = 0;
 
-		for (PaymentDTO payDTO : purchaseList) {
-		    if (nameCount == 0) {
-		        nameString.append(payDTO.getName());
-		    } else if (nameCount == 1) {
-		        nameString.append(", ").append(payDTO.getName()).append(" 외 ");
-		    } else {
-		        nameString.append(", ").append(payDTO.getName());
-		    }
-		    nameCount++;
-		}
+	    for (PaymentDTO payDTO : purchaseList) {
+	        if (nameCount == 0) {
+	            nameString.append(payDTO.getName());
+	        } else if (nameCount == 1) {
+	            nameString.append(", ").append(payDTO.getName());
+	        } else {
+	            break; // 2개 이상의 상품이 있는 경우 루프를 종료
+	        }
+	        nameCount++;
+	    }
 
-		if (nameCount > 1) {
-		    nameString.append(nameCount - 1).append("개");
-		}
+	    if (nameCount > 1) {
+	        nameString.append(" 외 ").append(nameCount);
+	    }
 
-		String result = nameString.toString();
-		return result;
+	    String result = nameString.toString();
+	    System.out.println("DAO : 이름합치기 완료 : " + result);
+	    return result;
 	}
 	
 

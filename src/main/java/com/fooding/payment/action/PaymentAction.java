@@ -31,20 +31,19 @@ public class PaymentAction implements Action {
 		
 		/*  --------------------------------------------------------     */
 		// 0. 전달정보 저장하기
-		// ArrayList 로 오는 전달정보 저장하기 
 		ArrayList<CartDTO> cartList = (ArrayList<CartDTO>) request.getAttribute("cartList"); // <-이거 써야함(맞는지 확인필요)
 
 		
 		
 		/*  --------------------------------------------------------     */
 		
-		 String[] arr = {"23","24"}; // 임시
+		 String[] arr = {"3","5","6","9"}; // 임시
 		 
-		// 뒤로가기 막기 . 장바구니 데이터가 전달되지 않은 경우!
-		 if (cartList == null || cartList.isEmpty()) { 
-			    response.sendRedirect("./main.me");
-			    return null; // 중요: 이후 코드 실행을 막기 위해 return 사용
-			}
+		//  장바구니 데이터가 전달되지 않은 경우!
+//		 if (cartList == null || cartList.isEmpty()) { 
+//			    response.sendRedirect("./main.me");
+//			    return null; // 중요: 이후 코드 실행을 막기 위해 return 사용
+//			}
 		
 		
 		//===========================================================================================
@@ -54,7 +53,6 @@ public class PaymentAction implements Action {
 		// 1. 장바구니 번호 String[] 이거 ArrayList로 변경하기
 		ArrayList cart_id = pdao.stringToArrayList(arr); // 임시
 //		ArrayList cart_id = pdao.cartList(cartList); // 장바구니 번호 얻어오기
-//		 ArrayList stop_date = pdao.stopDateIdList(cartList); // 운행정보 가져오기
 		
 		//4. 장바구니 번호 조회해서 장바구니 정보 + 상품정보 + 날짜 가져오기
 		ArrayList purchaseList = pdao.getPurchase(cart_id);
