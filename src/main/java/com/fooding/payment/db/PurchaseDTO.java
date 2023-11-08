@@ -1,15 +1,38 @@
 package com.fooding.payment.db;
 
+import java.sql.Timestamp;
+
 public class PurchaseDTO {
 
 	// 주문내역(purchase) 테이블
-	private int detail_id;		//주문상세번호
-	private int purchase_id;		// 주문번호 (결제처리할때 하나 만들어넣기)
-	private int product_id;		//상품번호
+	private int detail_id;		// 주문상세번호
+	private int purchase_id;	// 주문번호 (결제처리할때 하나 만들어넣기)
+	private int product_id;		// 상품번호
 	private int member_id;		// 회원번호
-	private int quantity;		//수량
-	private String address;		//주소
+	private int quantity;		// 수량
+	private Timestamp orderdate; // 주문일자
+	private String date;		// 운행일
+	private String address;		// 주소
+	private String stoptime; 	//정차시간(픽업시간)
 	
+	public Timestamp getOrderdate() {
+		return orderdate;
+	}
+	public void setOrderdate(Timestamp orderdate) {
+		this.orderdate = orderdate;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getStoptime() {
+		return stoptime;
+	}
+	public void setStoptime(String stoptime) {
+		this.stoptime = stoptime;
+	}
 	public int getMember_id() {
 		return member_id;
 	}
@@ -48,8 +71,9 @@ public class PurchaseDTO {
 	}
 	@Override
 	public String toString() {
-		return "PurchaseDTO [detail_id=" + detail_id + ", purchaseid=" + purchase_id + ", product_id=" + product_id
-				+ ", quantity=" + quantity + ", address=" + address + "]";
+		return "PurchaseDTO [detail_id=" + detail_id + ", purchase_id=" + purchase_id + ", product_id=" + product_id
+				+ ", member_id=" + member_id + ", quantity=" + quantity + ", orderdate=" + orderdate + ", date=" + date
+				+ ", address=" + address + ", stoptime=" + stoptime + "]";
 	}
 	
 }

@@ -27,9 +27,14 @@ public class PaymentAfterAction implements Action{
 		String[] productid = request.getParameterValues("product_id"); // 상품번호
         String[] quantities = request.getParameterValues("quantity"); //수량
         String[] addresses = request.getParameterValues("address"); // 주소
+        String[] stoptime = request.getParameterValues("stoptime"); // 
+        String[] date = request.getParameterValues("date");
+        
 		// 저장안해도 되는 정보
         String[] prices = request.getParameterValues("price"); //가격
         String[] names = request.getParameterValues("name"); //상품이름
+        
+        
         
         // 주문번호 purchaseid
         String purchase_id = request.getParameter("purchase_id");
@@ -42,6 +47,8 @@ public class PaymentAfterAction implements Action{
             dto.setQuantity(Integer.parseInt(quantities[i]));
             dto.setAddress(addresses[i]);
             dto.setPurchase_id(purchaseid);
+            dto.setStoptime(stoptime[i]);
+            dto.setDate(date[i]);;
             purchaseList.add(dto);
         }
         
@@ -64,15 +71,14 @@ public class PaymentAfterAction implements Action{
 //		ArrayList purchaseList = pdao.stringToArrayList(purchaseid, memberid, productid, quantities, addresses);
 		
 		//1. insert 메서드 호출하기
-		// 오류났던게 지금 내가 사용하는 데이터베이스(구)에 date컬럼이 남아있어서!
-		// 차후 수정해야함(date 지우는거 잊지말것)
 		PurchaseDTO dto = new PurchaseDTO();
 		pdao.insertPurchase(purchaseList);
 
 		// 2. 장바구니 테이블 데이터 지우기 => 사용한 장바구니 데이터만 지우기! (장바구니 번호 이용)
 //		pdao.deleteMember(cart_id);
 		
-
+		//데이터 보내기
+		request.setAttribute("purchaseList", purchaseList);
 		
 		// 모든 처리 후 결제정보확인 페이지로 이동하기
 		forward = new ActionForward();

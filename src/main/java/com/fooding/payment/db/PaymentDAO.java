@@ -318,7 +318,7 @@ public class PaymentDAO {
 		   try {
 		      con = getCon();
 		      //쿼리에서 date 삭제하기
-		      sql = "INSERT INTO purchase (purchaseid, member_id, product_id, quantity, address) VALUES (?,?,?,?,?)";
+		      sql = "INSERT INTO purchase (purchaseid, member_id, product_id, quantity, orderdate, date, address, stoptime) VALUES (?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
 		      pstmt = con.prepareStatement(sql);
 
 		      for (PurchaseDTO dto : arr) {
@@ -326,10 +326,13 @@ public class PaymentDAO {
 		         pstmt.setInt(2, dto.getMember_id());
 		         pstmt.setInt(3, dto.getProduct_id());
 		         pstmt.setInt(4, dto.getQuantity());
-		         pstmt.setString(5, dto.getAddress());
+		         pstmt.setString(5, dto.getDate());//date
+		         pstmt.setString(6, dto.getAddress());//address
+		         pstmt.setString(7, dto.getStoptime());//stoptime
 
 		         pstmt.executeUpdate();
 		      }
+		      System.out.println(" DAO : 데이터 입력 완");
 		   } catch (Exception e) {
 		      e.printStackTrace();
 		   } finally {

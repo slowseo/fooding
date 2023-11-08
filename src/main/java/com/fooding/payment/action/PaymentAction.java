@@ -19,6 +19,7 @@ public class PaymentAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		// 로그인 세션 제어
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
@@ -37,7 +38,7 @@ public class PaymentAction implements Action {
 		
 		/*  --------------------------------------------------------     */
 		
-		 String[] arr = {"3","5","6","9"}; // 임시
+		 String[] arr = {"1","2","5","6"}; // 임시
 		 
 		//  장바구니 데이터가 전달되지 않은 경우!
 //		 if (cartList == null || cartList.isEmpty()) { 

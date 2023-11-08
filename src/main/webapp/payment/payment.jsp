@@ -41,6 +41,7 @@
 
 <!-- css -->
 <link rel="stylesheet" href="css/team2.css">
+<link rel="stylesheet" href="css/payment.css">
 <!-- iamport.payment.js -->
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
@@ -86,8 +87,9 @@
 	<br>
 
 	<!-- 본문들어가는곳(결제페이지) -->
-	<h1>주문/결제</h1>
 	<fieldset id="field">
+	<h1 class="orderPay">주문/결제</h1>
+	<div class="formCenter">
 <form action="./PaymentResult.pay" method="post" id="mypayment" >
 	<!-- 주문번호 -->
  	<input type="hidden" id="purchase_id" name="purchase_id" value="">
@@ -101,24 +103,32 @@
         <input type="hidden" name="product_id" value="${dto.product_id}">
         <!-- 주소 -->
         <input type="hidden" name="address" value="${dto.address}">
+        <!-- 정차시간 -->
+        <input type="hidden" name="stoptime" value="${dto.stoptime}">
+        <!-- date -->
+        <input type="hidden" name="date" value="${dto.date}">
         <c:choose>
-            <c:when test="${loop.first || !dto.date.equals(purchaseList[loop.index - 1].date)}">
+            <c:when test="${loop.first || !dto.foodtruckName.equals(purchaseList[loop.index - 1].foodtruckName)}">
                 <!-- 첫 번째 아이템 또는 이전 아이템과 날짜가 다를 때만 출력 -->
-                <h3>영업날짜:  ${dto.date}</h3>
-                <h3>${dto.foodtruckName}</h3>
+                <h3 class="pickup">${dto.foodtruckName}</h3>
+                <div class="pickup">픽업 일자 : ${dto.date} </div>
             </c:when>
             <c:otherwise>
                 <!-- 이전 아이템과 날짜가 같으면 아무것도 출력하지 않음 -->
             </c:otherwise>
         </c:choose>
-        
-            상품사진 : <img src="${dto.image}">
+               <span class="pickup"> 픽업 시간 : ${dto.stoptime }  </span> 
+               <span class="pickup"> 픽업 위치: ${dto.address }</span>
+               <br>
+             <div class="productIMG">
+            	<img src="${dto.image}">
+             </div>
             <br>
-            상품이름 : <input type="text" name="name" value="${dto.name}" readonly>
+           <sapn class="text-line"> 상품명 : <input type="text" name="name" value="${dto.name}" readonly> </sapn>
             <br>
-            수량 : <input type="number" name="quantity" value="${dto.quantity}" readonly>
+            <sapn> 수량 : <input type="number" name="quantity" value="${dto.quantity}" readonly> </sapn>
             <br>
-            가격 : <input type="text" name="price" value="${dto.price}" readonly>
+            <sapn> 가격 : <input type="text" name="price" value="${dto.price}" readonly> </sapn>
             <hr>
     </c:forEach>
 
@@ -128,7 +138,7 @@
 			<input type="radio" name="pay" value="kakaopay"> 카카오페이 <img src="kakao.png" width="50px"/><br>
 			<input type="radio" name="pay" value="tosspay"> 토스페이 <img src="Toss.png" width="30px"/><br>
 
-			<br>
+			<br><br><br>
 			
 			<!-- 총 주문금액(=결제금액)  -->
 			<!-- 			가격*갯수 + 가격*갯수 = 총금액이렇게 구하기 -->
@@ -141,17 +151,17 @@
 				<c:out value="${total}" />
 			</h2>
 		</form>
-	</fieldset>
-
-
 	<br>
 	<!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
 	<button id="order-btn" onclick="findSubject()">결제하기</button>
 	<!-- 주문취소 버튼 (장바구니 페이지로 이동)  -->
 	<button id="cancel" onclick="cartBack()">장바구니로</button>
 <br><br><br><br>
+	</div>
+	</fieldset>
 
-	<script src="test-ajx.jsp"></script>
+
+
 	<script>
 		let money = '<c:out value="${total}"/>'; // 결제금액
 		let name = '${combinedName}';

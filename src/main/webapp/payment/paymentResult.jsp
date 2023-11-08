@@ -29,37 +29,35 @@
 <body>
 <h1>페이지(뒤로가기 막기용)</h1>
 
-		<!-- 게시판 -->
-		<article>
-			<h1>Notice</h1>
-			<table id="notice">
-			<c:forEach var="dto" items="${boardList }" varStatus="">
-				<tr>
-					<th >${dto.detail_id }</th>
-					<th >${dto.purchase_id }</th>
-					<th>${dto.product_id }</th>
-					<th>${dto.quantity }</th>
-					<th>${dto.address }</th>
-				</tr>
-			</c:forEach>
-			</table>
-			
-			
-			
-			<div class="clear"></div>
-			<div id="page_control">
-				<c:if test="${startPage > pageBlock }">
-				<a href="./BoardList.bo?pageNum=${startPage-pageBlock }&search=${param.search}">Prev</a> 
-				</c:if>
-				
-				<c:forEach var="i" begin="${startPage}" end="${endPage }" step="1">
-				<a href="./BoardList.bo?pageNum=${i}&search=${param.search}">${i}</a>
-				</c:forEach>		
-				
-				<c:if test="${endPage < pageCount }">
-				<a href="./BoardList.bo?pageNum=${startPage+pageBlock }&search=${param.search}">Next</a>
-				</c:if>
-			</div>
-		</article>
+	<button onclick="cancelPay()">환불하기</button>
+		
+		<script>
+  function cancelPay() {
+    jQuery.ajax({
+      "url": "/PaymentResult.pay", 
+      "type": "POST",
+      "contentType": "application/json",
+      "data": JSON.stringify({
+        "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
+        "cancel_request_amount": 2000, // 환불금액
+        "reason": "테스트 결제 환불" // 환불사유
+        // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+        "refund_holder": "홍길동", 
+        // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+        "refund_bank": "88" 
+        // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+        "refund_account": "56211105948400" 
+      }),
+      "dataType": "json"
+    });
+  }
+</script>
+		
+		
+		
+		
+		
+		
+		
 </body>
 </html>

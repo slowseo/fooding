@@ -21,55 +21,13 @@
 	<!-- 헤더 들어가는곳 -->
 
 
-	<!-- 본문들어가는곳(결제페이지) -->
-	<h1>주문/결제</h1>
-	<fieldset>
-		<form action="./PaymentResult.pay" method="post" id="mypayment">
-		<!-- 주문번호 -->
-   		 <input type="hidden" id="purchase_id" name="purchase_id" value="">
-			<c:forEach var="dto" items="${purchaseList}" varStatus="">
-				<!-- 장바구니 정보 출력하기 출력하기(리스트) -->
-				<!-- 장바구니 번호 -->
-				<input type="hidden" name="cart_id" value="${dto.cart_id}">
-				<!-- 회원번호 -->
-				<input type="hidden" name="member_id" value="${dto.member_id}">
-				<!-- 상품번호 -->
-				<input type="hidden" name="product_id" value="${dto.product_id}">
-			상품사진 : <img src="${dto.image}">
-				<br>
-			상품이름 : <input type="text" name="name" value="${dto.name}" readonly>
-				<br>
-			수량 : <input type="number" name="quantity" value="${dto.quantity }"
-					readonly>
-				<br>
-			가격 : <input type="text" name="price" value="${dto.price }" readonly>
-			<hr>
-				<!-- 트럭 픽업위치, 주문시간(주문일) 출력하기 -->
-				<input type="hidden" name="address" value="${dto.address}">
-				<br>
-			</c:forEach>
-			<!-- 중복이 없는 주소를 출력할 엘리먼트 -->
-			<h2>주소 :</h2>
-			<span id="addressOutput"></span>
-
+	
 			<!-- 결제방법 선택하기(2~3개) -->
 			<h1>결제방법</h1>
 			<input type="radio" name="pay" value="INIBillTst"> 카드결제 <br>
 			<input type="radio" name="pay" value="kakaopay"> 카카오페이 <br>
 			<input type="radio" name="pay" value="tosspay"> 토스페이 <br>
 
-
-			<!-- 총 주문금액(=결제금액)  -->
-			<!-- 			가격*갯수 + 가격*갯수 = 총금액이렇게 구하기 -->
-			<c:forEach var="dto" items="${purchaseList}">
-				<c:set var="total" value="${(dto.price * dto.quantity)+total}" />
-				<c:set var="test" value="${dto.name}" />
-			</c:forEach>
-			<h2>
-				총 결제 금액 : <c:out value="${total}" />
-			</h2>
-		</form>
-	</fieldset>
 
 	<script>
     </script>
@@ -78,48 +36,16 @@
 	<!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
 	<button id="order-btn" onclick="findSubject()">결제하기</button>
 	<!-- 주문취소 버튼 (장바구니 페이지로 이동)  -->
-	<button id="cancel" onclick="cartBack()">장바구니로</button>
 
+<script src="Ajax.js"></script>
 
 
 	<script>
-
-        // JavaScript로 중복 주소 제거
-        var addresses = []; // 주소를 저장할 배열
-        var uniqueAddresses = new Set(); // 중복을 체크할 Set
-        // 주소 정보를 가져와서 배열에 저장
-        var addressElements = document.getElementsByName("address");
-        for (var i = 0; i < addressElements.length; i++) {
-            addresses.push(addressElements[i].value);
-        }
-        // 중복 주소를 체크하고 중복이 없는 주소를 Set에 저장
-        for (var i = 0; i < addresses.length; i++) {
-            uniqueAddresses.add(addresses[i]);
-        }
-        // 중복이 없는 주소를 다시 배열에 저장
-        var uniqueAddressesArray = Array.from(uniqueAddresses);
-        // 중복이 없는 주소를 출력
-        var addressOutput = document.getElementById("addressOutput");
-        for (var i = 0; i < uniqueAddressesArray.length; i++) {
-            var address = uniqueAddressesArray[i];
-            var addressElement = document.createElement("div");
-            addressElement.textContent = address;
-            addressOutput.appendChild(addressElement);
-        }
-        
-        
-		let money = "<c:out value="${total}"/>" // 결제금액
+		let money = 100; // 결제금액
 // 		let productName = // 구매상품명 계산은 어ㄸㅎ게하지
-		let email = "<c:out value="${member.email}"/>" // 구매자 이메일
-		let userName = "<c:out value="${member.name}"/>" // 구매자 이름
+		let email = "email@mail.com"; // 구매자 이메일
+		let userName = "서현정"; // 구매자 이름
 		
-		// 뒤로가기 막기
-		var blockBackOnSpecificPage = false; 
-		function goToAFromSpecificPage() {
-			  blockBackOnSpecificPage = true;
-			  // submit
-			  document.getElementById("mypayment").submit(); 
-			}  
 		
 		// 상품번호(랜덤생성) 저장
 	    const purchase_id = createOrderNum();
@@ -137,14 +63,6 @@
 				orderNum += Math.floor(Math.random() * 10);	
 			}
 			return orderNum;
-		}
-		
-		// 장바구니로 돌아가기
-		function cartBack() {
-			var confirmResult = confirm("장바구니로 돌아가시겠습니까?");
-			if (confirmResult) {
-				location.href = './cart.car'
-			}
 		}
 		
 		// 주문버튼을 클릭했을때 주문한게 없으면 없다고 alert창으로 알려주기 
@@ -168,36 +86,33 @@
 			// 라디오 버튼 선택에 따라 pg 값을 동적으로 설정
 			var selectedPG = document.querySelector('input[name="pay"]:checked').value;
 
-			IMP.request_pay({
-				pg : selectedPG, // 라디오 버튼마다 결제방식 달라짐
-				pay_method : "card",// card는 고정
-				merchant_uid : purchase_id, //상품번호+주문날짜
-				name : "Fooding", // 여기에 브랜드명 입력 (\n 뒤에 자세한 내용은 주문내역확인 누르니까 결제가 안넘어감)
+			IMP.request_pay({ //param
+				pg : selectedPG, // 라디오 버튼
+				pay_method : "card",
+				merchant_uid : purchase_id, 
+				name : "Fooding", 
 				amount : money,
 				buyer_email: email,
 				buyer_name: userName
 			},  rsp => {
 			    if (rsp.success) {   
-			        // axios로 HTTP 요청
-			        axios({
-			          url: "/TestAjax.pay",
-			          method: "post",
-			          headers: { "Content-Type": "application/json" },
-			          data: {
-			            imp_uid: rsp.imp_uid,
-			            merchant_uid: rsp.merchant_uid
-			          }
-			        }).then((data) => {
-			        	goToAFromSpecificPage();
-			        })
-
-             }else { // 결제취소할때, 중복결제하려고 할 때
-                    var msg = "결제를 취소하셨습니다";
-                }
-                alert(msg);
-            });
-        }
-			 
+				      // axios로 HTTP 요청
+				      axios({
+				        url: "/paymentResult.pay",
+				        method: "post",
+				        headers: { "Content-Type": "application/json" },
+				        data: {
+				          imp_uid: rsp.imp_uid,
+				          merchant_uid: rsp.merchant_uid
+				        }
+				      }).then((data) => {
+				        // 서버 결제 API 성공시 로직
+				      })
+				    } else {
+				      alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
+				    }
+				  });
+		}
 	</script>
 
 

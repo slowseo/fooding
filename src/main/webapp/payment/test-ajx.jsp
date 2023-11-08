@@ -17,8 +17,9 @@
 </head>
 <body>
 <script>
+/*===========================================================================*/
 
-
+		// 상품번호만들기
 		function createOrderNum() {
 		const date = new Date();
 		const year = date.getFullYear().toString().slice(-2);
@@ -32,8 +33,10 @@
 		return orderNum; // 총 8자리 숫자
 	}
 	
-	var merchant_uid = createOrderNum();
-	
+		createOrderNum();
+		var merchant_uid = createOrderNum();
+/*===========================================================================*/
+	// 포트원 API 키 
 	const IMP = "imp75410442";
 	const RestApiKey = "1500428451315773";
 	const RESTApiSecret = "T1rLNPm2YQzEDqYOEmXYGFthFdwEi15aqlhCtkrB2C2pJW455YVrfltaCLqiO7IJw1z8PS0tLtWzcr6B";
@@ -46,6 +49,7 @@
 // 	console.log("data",data);
 // 	}
 	
+/*===========================================================================*/
 	async function getToken(){
 		const url ="https://api.iamport.kr/users/getToken?imp_key=1500428451315773&imp_secret=T1rLNPm2YQzEDqYOEmXYGFthFdwEi15aqlhCtkrB2C2pJW455YVrfltaCLqiO7IJw1z8PS0tLtWzcr6B";
 		const response = await fetch(url);
@@ -56,6 +60,7 @@
 	// => 이걸로 데이터 정보 받아와서 가격 비교?하면 되지 않을까?
 	// 사전 검증을 여기서 하고  script src 로 가져오면 될듯...
 	
+/*===========================================================================*/
 	// 사전검증용
 	async function checkCheck(){
 	await axios({
@@ -69,7 +74,8 @@
 });
 	}
 	
-	// 사후검증용
+/*===========================================================================*/
+	// 사후검증용(node.js용이긴함)
 	async function checkOut(){
 		app.use(bodyParser.json());
 		app.post("/payments/complete", async (req, res) => {
@@ -105,6 +111,25 @@
 	
 	
 	checkout();
+/*===========================================================================*/
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ */
 </script>
 	
 </body>
