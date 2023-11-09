@@ -88,76 +88,84 @@
 
 	<!-- 본문들어가는곳(결제페이지) -->
 	<fieldset id="field">
-	<h1 class="orderPay">주문/결제</h1>
-	<div class="formCenter">
-<form action="./PaymentResult.pay" method="post" id="mypayment" >
-	<!-- 주문번호 -->
- 	<input type="hidden" id="purchase_id" name="purchase_id" value="">
-    <c:forEach var="dto" items="${purchaseList}" varStatus="loop">
-        <!-- 장바구니 정보 출력하기(리스트) -->
-        <!-- 장바구니 번호 -->
-        <input type="hidden" name="cart_id" value="${dto.cart_id}">
-        <!-- 회원번호 -->
-        <input type="hidden" name="member_id" value="${dto.member_id}">
-        <!-- 상품번호 -->
-        <input type="hidden" name="product_id" value="${dto.product_id}">
-        <!-- 주소 -->
-        <input type="hidden" name="address" value="${dto.address}">
-        <!-- 정차시간 -->
-        <input type="hidden" name="stoptime" value="${dto.stoptime}">
-        <!-- date -->
-        <input type="hidden" name="date" value="${dto.date}">
-        <c:choose>
-            <c:when test="${loop.first || !dto.foodtruckName.equals(purchaseList[loop.index - 1].foodtruckName)}">
-                <!-- 첫 번째 아이템 또는 이전 아이템과 날짜가 다를 때만 출력 -->
-                <h3 class="pickup">${dto.foodtruckName}</h3>
-                <div class="pickup">픽업 일자 : ${dto.date} </div>
-            </c:when>
-            <c:otherwise>
-                <!-- 이전 아이템과 날짜가 같으면 아무것도 출력하지 않음 -->
-            </c:otherwise>
-        </c:choose>
-               <span class="pickup"> 픽업 시간 : ${dto.stoptime }  </span> 
-               <span class="pickup"> 픽업 위치: ${dto.address }</span>
-               <br>
-             <div class="productIMG">
-            	<img src="${dto.image}">
-             </div>
-            <br>
-           <sapn class="text-line"> 상품명 : <input type="text" name="name" value="${dto.name}" readonly> </sapn>
-            <br>
-            <sapn> 수량 : <input type="number" name="quantity" value="${dto.quantity}" readonly> </sapn>
-            <br>
-            <sapn> 가격 : <input type="text" name="price" value="${dto.price}" readonly> </sapn>
-            <hr>
-    </c:forEach>
+		<h1 class="orderPay">주문/결제</h1>
+		<div class="formCenter">
+			<form action="./PaymentResult.pay" method="post" id="mypayment">
+				<!-- 주문번호 -->
+				<input type="hidden" id="purchase_id" name="purchase_id" value="">
+				<c:forEach var="dto" items="${purchaseList}" varStatus="loop">
+				<!-- 이거 트럭고유번호를 입력해줘야함 -->
+				<span onclick="location.href='가상주소?트럭고유번호'" title="'${dto.foodtruckName}' 상세페이지로 이동"> 
+					<!-- 장바구니 정보 출력하기(리스트) -->
+					<!-- 장바구니 번호 -->
+					<input type="hidden" name="cart_id" value="${dto.cart_id}">
+					<!-- 회원번호 -->
+					<input type="hidden" name="member_id" value="${dto.member_id}">
+					<!-- 상품번호 -->
+					<input type="hidden" name="product_id" value="${dto.product_id}">
+					<!-- 주소 -->
+					<input type="hidden" name="address" value="${dto.address}">
+					<!-- 정차시간 -->
+					<input type="hidden" name="stoptime" value="${dto.stoptime}">
+					<!-- date -->
+					<input type="hidden" name="date" value="${dto.date}">
+					<c:choose>
+						<c:when
+							test="${loop.first || !dto.foodtruckName.equals(purchaseList[loop.index - 1].foodtruckName)}">
+							<!-- 첫 번째 아이템 또는 이전 아이템과 날짜가 다를 때만 출력 -->
+							<h3 class="pickup">${dto.foodtruckName}</h3>
+						</c:when>
+						<c:otherwise>
+							<!-- 이전 아이템과 날짜가 같으면 아무것도 출력하지 않음 -->
+						</c:otherwise>
+					</c:choose>
+					<div class="pickup">픽업 일자 : ${dto.date}</div>
+					<span class="pickup"> 픽업 시간 : ${dto.stoptime } </span>
+					<span class="pickup-"> 픽업 위치: ${dto.address }</span>
+					<br>
+					<div class="productIMG">
+						<img src="${dto.image}">
+					</div>
+					<br>
+					<sapn class="text-line"> 상품명 : <input type="text"
+						name="name" value="${dto.name}" readonly> </sapn>
+					<br>
+					<sapn class="text-line"> 수량 : <input type="number"
+						name="quantity" value="${dto.quantity}" readonly> </sapn>
+					<br>
+					<sapn class="text-line"> 가격 : <input type="text"
+						name="price" value="${dto.price}" readonly> </sapn>
+					<hr>
+				</span>
+				</c:forEach>
+				<!-- 결제방법 선택하기(2~3개) 아이콘 왜 안나오지-->
+				<h1 id="choice">결제방법</h1>
+				<input type="radio" name="pay" value="INIBillTst" class="pay">
+				카드결제 <br> <input type="radio" name="pay" value="../image/kakaopay"
+					class="pay"> 카카오페이 <img src="kakao.png" width="50px" /><br>
+				<input type="radio" name="pay" value="tosspay" class="pay">
+				토스페이 <img src="../image/Toss.png" width="30px" /><br> <br>
+				<br>
+				<br>
 
-			<!-- 결제방법 선택하기(2~3개) 아이콘 왜 안나오지-->
-			<h1>결제방법</h1>
-			<input type="radio" name="pay" value="INIBillTst"> 카드결제 <br>
-			<input type="radio" name="pay" value="kakaopay"> 카카오페이 <img src="kakao.png" width="50px"/><br>
-			<input type="radio" name="pay" value="tosspay"> 토스페이 <img src="Toss.png" width="30px"/><br>
+				<!-- 총 주문금액(=결제금액)  -->
+				<!-- 			가격*갯수 + 가격*갯수 = 총금액이렇게 구하기 -->
+				<c:forEach var="dto" items="${purchaseList}">
+					<c:set var="total" value="${(dto.price * dto.quantity)+total}" />
+					<c:set var="test" value="${dto.name}" />
+				</c:forEach>
+				<h2 id="finalMoney">
+					총 결제 금액 :
+					<c:out value="${total}" />
+				</h2>
+				<br>
+				<!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
+				<button id="order-btn" onclick="findSubject()">결제하기</button>
+				<!-- 주문취소 버튼 (장바구니 페이지로 이동)  -->
+				<button id="cancle" onclick="cartBack()">장바구니로</button>
+			</form>
 
-			<br><br><br>
-			
-			<!-- 총 주문금액(=결제금액)  -->
-			<!-- 			가격*갯수 + 가격*갯수 = 총금액이렇게 구하기 -->
-			<c:forEach var="dto" items="${purchaseList}">
-				<c:set var="total" value="${(dto.price * dto.quantity)+total}" />
-				<c:set var="test" value="${dto.name}" />
-			</c:forEach>
-			<h2>
-				총 결제 금액 :
-				<c:out value="${total}" />
-			</h2>
-		</form>
-	<br>
-	<!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
-	<button id="order-btn" onclick="findSubject()">결제하기</button>
-	<!-- 주문취소 버튼 (장바구니 페이지로 이동)  -->
-	<button id="cancel" onclick="cartBack()">장바구니로</button>
-<br><br><br><br>
-	</div>
+		</div>
 	</fieldset>
 
 
@@ -170,8 +178,7 @@
 
 		// 상품번호(merchant_uid)
 		const purchase_id = createOrderNum();
-	    document.getElementById("purchase_id").value = purchase_id;
-
+		document.getElementById("purchase_id").value = purchase_id;
 
 		// 상품번호 생성
 		function createOrderNum() {
@@ -186,30 +193,30 @@
 			}
 			return orderNum; // 총 8자리 숫자
 		}
-		
-        // JavaScript로 중복 주소 제거
-        var addresses = []; // 주소를 저장할 배열
-        var uniqueAddresses = new Set(); // 중복을 체크할 Set
-        // 주소 정보를 가져와서 배열에 저장
-        var addressElements = document.getElementsByName("address");
-        for (var i = 0; i < addressElements.length; i++) {
-            addresses.push(addressElements[i].value);
-        }
-        // 중복 주소를 체크하고 중복이 없는 주소를 Set에 저장
-        for (var i = 0; i < addresses.length; i++) {
-            uniqueAddresses.add(addresses[i]);
-        }
-        // 중복이 없는 주소를 다시 배열에 저장
-        var uniqueAddressesArray = Array.from(uniqueAddresses);
-        // 중복이 없는 주소를 출력
-        var addressOutput = document.getElementById("addressOutput");
-        for (var i = 0; i < uniqueAddressesArray.length; i++) {
-            var address = uniqueAddressesArray[i];
-            var addressElement = document.createElement("div");
-            addressElement.textContent = address;
-            addressOutput.appendChild(addressElement);
-        }
-        
+
+		// JavaScript로 중복 주소 제거
+		var addresses = []; // 주소를 저장할 배열
+		var uniqueAddresses = new Set(); // 중복을 체크할 Set
+		// 주소 정보를 가져와서 배열에 저장
+		var addressElements = document.getElementsByName("address");
+		for (var i = 0; i < addressElements.length; i++) {
+			addresses.push(addressElements[i].value);
+		}
+		// 중복 주소를 체크하고 중복이 없는 주소를 Set에 저장
+		for (var i = 0; i < addresses.length; i++) {
+			uniqueAddresses.add(addresses[i]);
+		}
+		// 중복이 없는 주소를 다시 배열에 저장
+		var uniqueAddressesArray = Array.from(uniqueAddresses);
+		// 중복이 없는 주소를 출력
+		var addressOutput = document.getElementById("addressOutput");
+		for (var i = 0; i < uniqueAddressesArray.length; i++) {
+			var address = uniqueAddressesArray[i];
+			var addressElement = document.createElement("div");
+			addressElement.textContent = address;
+			addressOutput.appendChild(addressElement);
+		}
+
 		// 장바구니로 돌아가기
 		function cartBack() {
 			var confirmResult = confirm("장바구니로 돌아가시겠습니까?");
@@ -272,14 +279,13 @@
 	<!-- 본문들어가는곳(결제페이지) 끝 -->
 
 	<!-- 푸터들어가는곳 CSS 위치 조절 필요-->
-		 <div class="fooding-footer" >
-	  <p>
-	    부산광역시 부산진구 동천로 109 삼한골든게이트빌딩 7층(접수)
-	    사업자등록번호 : 507-85-07103<br />
-	    TEL : 051-803-0909 FAX : 051-803-0979 <br />
-	    ©fooding - All rights reserved
-	  </p>
-	  <br />
+	<div class="fooding-footer">
+		<p>
+			부산광역시 부산진구 동천로 109 삼한골든게이트빌딩 7층(접수) 사업자등록번호 : 507-85-07103<br /> TEL
+			: 051-803-0909 FAX : 051-803-0979 <br /> ©fooding - All rights
+			reserved
+		</p>
+		<br />
 	</div>
 	<!-- Bootstrap core JS-->
 	<script

@@ -74,7 +74,7 @@ public class PaymentAfterAction implements Action{
 		PurchaseDTO dto = new PurchaseDTO();
 		pdao.insertPurchase(purchaseList);
 
-		// 2. 장바구니 테이블 데이터 지우기 => 사용한 장바구니 데이터만 지우기! (장바구니 번호 이용)
+		// 2. 장바구니 테이블 데이터 지우기 => 사용한 장바구니 데이터 (장바구니 번호 이용)
 //		pdao.deleteMember(cart_id);
 		
 		//데이터 보내기
@@ -82,8 +82,8 @@ public class PaymentAfterAction implements Action{
 		
 		// 모든 처리 후 결제정보확인 페이지로 이동하기
 		forward = new ActionForward();
-		forward.setPath("./payment/paymentResult.jsp"); // 결제내역창 주소 입력해야함
-		forward.setRedirect(false);
+		forward.setPath("./OrderDetails.pay"); // 결제내역창 주소 입력해야함
+		forward.setRedirect(true); // 전체출력이라 데이터 넘길거 없음
 		
 		return forward;
 		

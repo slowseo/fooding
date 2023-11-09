@@ -59,6 +59,17 @@ public class PaymentFrontController extends HttpServlet{
 				e.printStackTrace();
 			}
 		}
+		else if(command.equals("/OrderDetails.pay")) { // PaymentAfterAction() 에서 정보를 받고 디비에서 정보를 꺼내와야함
+			System.out.println(" C : /Payment.pay 매핑" );
+			System.out.println(" C : 패턴 3 - DB사용O, 페이지 출력 ");			
+			
+			action = new PaymentAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	
 		System.out.println("\n -----------------2. 가상주소 매핑 시작 --------------------");
 
