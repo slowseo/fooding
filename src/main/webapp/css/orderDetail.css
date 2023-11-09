@@ -38,40 +38,66 @@ button{
 	height : 130px;
 	border: 1px solid black;
 }
-/* The Modal (background) */
+/* -----------------------모달-------------------------- */
+.news-img {
+  width: auto;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+/* 이미지 클릭 시, 밝기 조절 */
+.news-img:hover {
+  opacity: 0.8;
+}
+
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none; /* 모달창 숨겨 놓기 */
+  position: fixed;
+  z-index: 1; /* 모달창을 제일 앞에 두기 */
+  padding-top: 100px;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* 스크롤 허용 auto */
+  cursor: pointer; /* 마우스 손가락모양 */
+  background-color: rgba(0, 0, 0, 0.8);
 }
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+/* 모달창 이미지 */
+.modal_content {
+  margin: auto;
+  padding : 2em;
+  display: block;
+  width: 50%;
+  height: auto;
+  max-width: 800px;
+  border-radius: 10px;
+  animation-name: zoom;
+  animation-duration: 0.8s;
+  background-color: white;
 }
-
-/* The Close Button */
+/* 모달창 애니메이션 추가 */
+@keyframes zoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+/* 닫기 버튼 꾸미기 */
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #000000;
+  font-size: 40px;
   font-weight: bold;
+  transition: 0.3s;
 }
-
 .close:hover,
 .close:focus {
-  color: black;
+  color: #000000;
   text-decoration: none;
   cursor: pointer;
 }

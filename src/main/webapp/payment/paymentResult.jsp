@@ -87,13 +87,16 @@ $(document).ready(function(){
 	<div>상품명 : ${item.name }</div>
 	<span>픽업날짜 : ${item.stoptime }</span>
 	<div>픽업위치 : ${item.address}</div>
-	<button id="myBtn">상세보기</button>
+	<button class="news-img">상세보기</button>
 	<button onclick="">리뷰쓰기</button>
 	<button onclick="cancelPay()">결제취소</button>
 </div> 
 <!-- 상세보기 -->
 
       <!-- 모달안에 들어갈 내용들 -->
+ <div class="modal">
+        <div class="modal_content" >
+        <span class="close">&times;</span>
        <h4 >주문 상세 내역</h4>
       <p>Some text in the Modal..</p>
 	<img src="${item.image}" id="productImgDetail">
@@ -104,8 +107,14 @@ $(document).ready(function(){
   	  <div> 결제금액 : ${item.price * item.quantity }</div>
   	  <div> 픽업날짜 : ${item.stoptime}</div>
   	  <div> 픽업주소 : ${item.address}</div>
+        </div>
+ </div>
       <!-- 모달안에 들어갈 내용들 -->
-
+     <div class="modal">
+    
+    
+        <img class="modal_content" id="img01">
+      </div>
 </c:forEach>
 
 
@@ -135,6 +144,39 @@ $(document).ready(function(){
 		
 		
 		
+ <div class="news-container">
+        <div class="card " style="width: 18rem;" id="card1">
+          <img src="images/겨울신메뉴이미지.jpg" class="news-img" /></img>
+          <div class="card-body">
+            <p class="card-text">
+              <span class="fooding-news">푸딩, 겨울 신메뉴 등록<br></span>
+              "겨울메뉴도 푸딩에서"
+            </p>
+          </div>
+        </div>
+---------------------------------------------------
+     <div class="modal">
+    
+        <span class="close">&times;</span>
+    
+        <img class="modal_content" id="img01">
+      </div>
+---------------------------------------------------
+      <div class="modal">
+    
+        <span class="close">&times;</span>
+    
+        <img class="modal_content" id="img02">
+      </div>
+
+---------------------------------------------------
+      <div class="modal">
+    
+        <span class="close">&times;</span>
+    
+        <img class="modal_content" id="img03">
+      </div>
+
 		
 		
 		
@@ -142,6 +184,38 @@ $(document).ready(function(){
 		
 		
 <!-- 결제내역 보이게 하기 -->
+     <script>
+     // 모달 스크립트(메인페이지에 있던거)
+const modal = document.querySelectorAll(".modal");
+const img = document.querySelectorAll(".news-img");
+const modal_img = document.querySelectorAll(".modal_content");
+const span = document.querySelectorAll(".close");
+
+for(let i=0; i<modal.length;i++){
+  img[i].addEventListener('click', ()=>{
+  modalDisplay(i,"block");
+//   modal_img[i].src = img[i].src;
+});
+}
+
+for(let i=0; i<modal.length;i++){
+  span[i].addEventListener('click', ()=>{
+  modalDisplay(i,"none");
+});
+}
+
+for(let i=0; i<modal.length;i++){
+  modal[i].addEventListener('click', ()=>{
+  modalDisplay(i,"none");
+});
+}
+
+
+function modalDisplay(i,text){
+  modal[i].style.display = text;
+}
+
+        </script>
 <script>
 	
 	// 결제건 주문번호
