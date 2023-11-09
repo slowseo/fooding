@@ -252,11 +252,12 @@ public class PaymentDAO {
 				dto.setId(rs.getString("id"));
 				dto.setPw(rs.getString("pw"));
 				dto.setName(rs.getString("name"));
+				dto.setPhone(rs.getString("phone"));
 				dto.setEmail(rs.getString("email"));
 				dto.setRegdate(rs.getTimestamp("regdate"));
 			}
 			
-			System.out.println("DAO : 회원정보 조회 완료!");
+			System.out.println("DAO : 회원정보 조회 완료!"+dto.toString());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -301,7 +302,7 @@ public class PaymentDAO {
 		ArrayList<PurchaseDTO> purchaseList = new ArrayList<>();
 		for (int i = 0; i < purchase.length; i++) {
 		    PurchaseDTO dto = new PurchaseDTO();
-		    dto.setPurchase_id(Integer.parseInt(purchase[i]));
+		    dto.setPurchaseid(Integer.parseInt(purchase[i]));
 		    dto.setMember_id(Integer.parseInt(member[i]));
 		    dto.setProduct_id(Integer.parseInt(product[i]));
 		    dto.setQuantity(Integer.parseInt(quantity[i]));
@@ -322,7 +323,7 @@ public class PaymentDAO {
 		      pstmt = con.prepareStatement(sql);
 
 		      for (PurchaseDTO dto : arr) {
-		         pstmt.setInt(1, dto.getPurchase_id());
+		         pstmt.setInt(1, dto.getPurchaseid());
 		         pstmt.setInt(2, dto.getMember_id());
 		         pstmt.setInt(3, dto.getProduct_id());
 		         pstmt.setInt(4, dto.getQuantity());
@@ -389,7 +390,7 @@ public class PaymentDAO {
 				dto.setDetail_id(rs.getInt("detail_id"));
 				dto.setMember_id(rs.getInt("member_id"));
 				dto.setProduct_id(rs.getInt("product_id"));
-				dto.setPurchase_id(rs.getInt("purchase_id"));
+				dto.setPurchaseid(rs.getInt("purchaseid"));
 				dto.setQuantity(rs.getInt("quantity"));
 				dto.setAddress(rs.getString("address"));
 				

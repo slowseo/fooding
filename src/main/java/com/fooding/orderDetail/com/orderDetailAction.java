@@ -26,19 +26,23 @@ public class orderDetailAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// 로그인 세션 제어
-		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
+//		HttpSession session = request.getSession();
+//		String id = (String)session.getAttribute("id");
+//		
+//		ActionForward forward = new ActionForward();
+//		if(id==null) {
+//			forward.setPath("./Main.me");
+//			forward.setRedirect(true);
+//			return forward;
+//		}
 		
-		ActionForward forward = new ActionForward();
-		if(id==null) {
-			forward.setPath("./Main.me");
-			forward.setRedirect(true);
-		}
-		
-		
+		String id = "koki9625";
 		
 		// 기존에 저장된 데이터 가져와서 화면에 출력
 		orderDetailDAO odao= new orderDetailDAO();
+		// 0. 멤버번호 조회 - getMemberId(string id)
+		int idNum = odao.getMemberId(id);
+		
 		int count = 0;
 		count = odao.getPurchaseCount();
 		
@@ -59,8 +63,6 @@ public class orderDetailAction implements Action {
 		// 끝행 번호 계산
 		int endRow = currentPage * pageSize;
 		//****************페이징처리1****************/
-		// 0. 멤버번호 조회 - getMemberId(string id)
-		int idNum = odao.getMemberId(id);
 		
 		// DAO - 주문내역정보 모두(list)를 가져오는 메서드
 		ArrayList purchaseList = new ArrayList();
@@ -110,8 +112,9 @@ public class orderDetailAction implements Action {
 					// 총 7개 request에 담아서 보내기
 		
 		
+		ActionForward forward = new ActionForward();
 		forward = new ActionForward();
-		forward.setPath("./paymentResult.jsp"); // 결제내역창 주소 입력해야함
+		forward.setPath("./payment/paymentResult.jsp"); // 결제내역창 주소 입력해야함
 		forward.setRedirect(false); // 전체출력이라 데이터 넘길거 없음
 		
 		return forward;

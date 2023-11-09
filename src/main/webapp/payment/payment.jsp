@@ -57,32 +57,8 @@
 
 	<!-- 헤더 들어가는곳 -->
 	<!-- Navigation-->
-	<nav
-		class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm fooding-nav"
-		id="mainNav">
-		<div class="container px-5">
-			<a class="navbar-brand fw-bold" href="메인페이지 주소">fooding</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="false"
-				aria-label="Toggle navigation">
-				Menu <i class="bi-list"></i>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-					<li class="nav-item"><a class="nav-link me-lg-3" href="">마이페이지</a></li>
-					<li class="nav-item"><a class="nav-link me-lg-3" href="">장바구니</a></li>
-
-				</ul>
-				<button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0"
-					data-bs-toggle="modal" data-bs-target="#feedbackModal">
-					<span class="d-flex align-items-center"> <i
-						class="bi-chat-text-fill me-2"></i> <span class="small">로그인</span>
-					</span>
-				</button>
-			</div>
-		</div>
-	</nav>
+   <!-- Navigation-->
+		 <jsp:include page="../css/top.jsp"></jsp:include>
 	<!-- 헤더 들어가는곳 -->
 	<br>
 
@@ -95,7 +71,7 @@
 				<input type="hidden" id="purchase_id" name="purchase_id" value="">
 				<c:forEach var="dto" items="${purchaseList}" varStatus="loop">
 				<!-- 이거 트럭고유번호를 입력해줘야함 -->
-				<span onclick="location.href='가상주소?트럭고유번호'" title="'${dto.foodtruckName}' 상세페이지로 이동"> 
+<%-- 				<span onclick="location.href='가상주소?트럭고유번호'" title="'${dto.foodtruckName}' 상세페이지로 이동">  --%>
 					<!-- 장바구니 정보 출력하기(리스트) -->
 					<!-- 장바구니 번호 -->
 					<input type="hidden" name="cart_id" value="${dto.cart_id}">
@@ -136,13 +112,13 @@
 					<sapn class="text-line"> 가격 : <input type="text"
 						name="price" value="${dto.price}" readonly> </sapn>
 					<hr>
-				</span>
+<!-- 				</span> -->
 				</c:forEach>
 				<!-- 결제방법 선택하기(2~3개) 아이콘 왜 안나오지-->
 				<h1 id="choice">결제방법</h1>
 				<input type="radio" name="pay" value="INIBillTst" class="pay">
-				카드결제 <br> <input type="radio" name="pay" value="../image/kakaopay"
-					class="pay"> 카카오페이 <img src="kakao.png" width="50px" /><br>
+				카드결제 <br> <input type="radio" name="pay" value="kakaopay"
+					class="pay"> 카카오페이 <img src="../image/kakao.png" width="50px" /><br>
 				<input type="radio" name="pay" value="tosspay" class="pay">
 				토스페이 <img src="../image/Toss.png" width="30px" /><br> <br>
 				<br>
@@ -159,13 +135,13 @@
 					<c:out value="${total}" />
 				</h2>
 				<br>
+			</form>
+
+		</div>
 				<!-- 결제하기 버튼 라디오버튼 값에 따라 결제수단 변경 -->
 				<button id="order-btn" onclick="findSubject()">결제하기</button>
 				<!-- 주문취소 버튼 (장바구니 페이지로 이동)  -->
 				<button id="cancle" onclick="cartBack()">장바구니로</button>
-			</form>
-
-		</div>
 	</fieldset>
 
 
@@ -279,14 +255,8 @@
 	<!-- 본문들어가는곳(결제페이지) 끝 -->
 
 	<!-- 푸터들어가는곳 CSS 위치 조절 필요-->
-	<div class="fooding-footer">
-		<p>
-			부산광역시 부산진구 동천로 109 삼한골든게이트빌딩 7층(접수) 사업자등록번호 : 507-85-07103<br /> TEL
-			: 051-803-0909 FAX : 051-803-0979 <br /> ©fooding - All rights
-			reserved
-		</p>
-		<br />
-	</div>
+	 <jsp:include page="../css/bottom.jsp"></jsp:include>
+	
 	<!-- Bootstrap core JS-->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

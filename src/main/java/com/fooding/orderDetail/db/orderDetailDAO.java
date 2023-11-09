@@ -123,7 +123,12 @@ public ArrayList getPurchaseList(int startRow, int pageSize, int id){
 		con = getCon();
 	//---------------위의 과정은 반복되기 때문에 합친다-
 	//3.sql 작성(select) & pstmt 객체
-		sql = "select * from purchase where member_id = ? order by detail_id asc limit ?,?"; 
+		sql = "SELECT *, f.name As foodTruckName "
+				+ "FROM purchase c "
+				+ "JOIN product p ON c.product_id = p.product_id "
+				+ "JOIN foodtruck f ON f.foodtruck_id = p.foodtruck_id "
+				+ "WHERE c.member_id = ? "
+				+ "order by detail_id desc limit ?,?";
 		pstmt = con.prepareStatement(sql);				
 		
 		//????
@@ -137,9 +142,9 @@ public ArrayList getPurchaseList(int startRow, int pageSize, int id){
 		// BoardBean 객체 여러개 => ArrayList 저장
 		while(rs.next()) {
 			// 글 하나의 정보 => BoardBean저장 
-			PurchaseDTO pdto = new PurchaseDTO();
+			OrderDetailDTO pdto = new OrderDetailDTO();
 			pdto.setDetail_id(rs.getInt("detail_id"));
-			pdto.setPurchase_id(rs.getInt("purchase_id"));
+			pdto.setPurchaseid(rs.getInt("purchaseid"));
 			pdto.setProduct_id(rs.getInt("product_id"));
 			pdto.setMember_id(rs.getInt("member_id"));
 			pdto.setQuantity(rs.getInt("quantity"));
@@ -147,7 +152,13 @@ public ArrayList getPurchaseList(int startRow, int pageSize, int id){
 			pdto.setDate(rs.getString("date"));
 			pdto.setAddress(rs.getString("address"));
 			pdto.setStoptime(rs.getString("stoptime"));
-
+			
+			pdto.setName(rs.getString("name"));
+			pdto.setPrice(rs.getInt("price"));
+			pdto.setImage(rs.getString("image"));
+			
+			pdto.setFoodtruckName(rs.getString("foodtruckName"));
+			
 			// 글 하나의 정보를 배열의 한칸에 저장
 			purchaseList.add(pdto);
 			

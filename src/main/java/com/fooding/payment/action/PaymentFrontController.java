@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fooding.orderDetail.com.orderDetailAction;
 import com.fooding.util.Action;
 import com.fooding.util.ActionForward;
 
@@ -63,7 +64,7 @@ public class PaymentFrontController extends HttpServlet{
 			System.out.println(" C : /Payment.pay 매핑" );
 			System.out.println(" C : 패턴 3 - DB사용O, 페이지 출력 ");			
 			
-			action = new PaymentAction();
+			action = new orderDetailAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

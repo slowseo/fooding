@@ -6,7 +6,7 @@ public class PurchaseDTO {
 
 	// 주문내역(purchase) 테이블
 	private int detail_id;		// 주문상세번호
-	private int purchase_id;	// 주문번호 (결제처리할때 하나 만들어넣기)
+	private int purchaseid;	// 주문번호 (결제처리할때 하나 만들어넣기)
 	private int product_id;		// 상품번호
 	private int member_id;		// 회원번호
 	private int quantity;		// 수량
@@ -45,12 +45,7 @@ public class PurchaseDTO {
 	public void setDetail_id(int detail_id) {
 		this.detail_id = detail_id;
 	}
-	public int getPurchase_id() {
-		return purchase_id;
-	}
-	public void setPurchase_id(int purchase_id) {
-		this.purchase_id = purchase_id;
-	}
+
 	public int getProduct_id() {
 		return product_id;
 	}
@@ -69,11 +64,18 @@ public class PurchaseDTO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	public int getPurchaseid() {
+		return purchaseid;
+	}
+	public void setPurchaseid(int purchaseid) {
+		this.purchaseid = purchaseid;
+	}
 	@Override
 	public String toString() {
-		return "PurchaseDTO [detail_id=" + detail_id + ", purchase_id=" + purchase_id + ", product_id=" + product_id
+		return "PurchaseDTO [detail_id=" + detail_id + ", purchaseid=" + purchaseid + ", product_id=" + product_id
 				+ ", member_id=" + member_id + ", quantity=" + quantity + ", orderdate=" + orderdate + ", date=" + date
 				+ ", address=" + address + ", stoptime=" + stoptime + "]";
 	}
+
 	
 }

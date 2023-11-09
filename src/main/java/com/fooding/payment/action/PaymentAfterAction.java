@@ -46,7 +46,7 @@ public class PaymentAfterAction implements Action{
             dto.setProduct_id(Integer.parseInt(productid[i]));
             dto.setQuantity(Integer.parseInt(quantities[i]));
             dto.setAddress(addresses[i]);
-            dto.setPurchase_id(purchaseid);
+            dto.setPurchaseid(purchaseid);
             dto.setStoptime(stoptime[i]);
             dto.setDate(date[i]);;
             purchaseList.add(dto);
