@@ -39,6 +39,36 @@
 	rel="stylesheet">
 <!-- 모달용 -->
 <!-- 테마 기본 설정 끝 -->
+<script type="text/javascript">
+$(document).ready(function(){
+	// 모달
+	//Get the modal
+	var modal = document.getElementById("myModal");
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks on the button, open the modal
+	btn.onclick = function() {
+	  modal.style.display = "block";
+	}
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+	  modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	  if (event.target == modal) {
+	    modal.style.display = "none";
+	  }
+	}
+});
+</script>
 </head>
 <body>
 	<!-- 헤더 들어가는곳 -->
@@ -57,23 +87,14 @@
 	<div>상품명 : ${item.name }</div>
 	<span>픽업날짜 : ${item.stoptime }</span>
 	<div>픽업위치 : ${item.address}</div>
-	<button type="button" class="btn btn-info btn-lg" 
-	data-toggle="modal" data-target="#myModal">상세보기</button>
+	<button id="myBtn">상세보기</button>
 	<button onclick="">리뷰쓰기</button>
 	<button onclick="cancelPay()">결제취소</button>
 </div> 
 <!-- 상세보기 -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button> <!-- &times; == X -->
-                    <h4 class="modal-title">주문 상세 내역</h4>
-                  </div>
-        <div class="modal-body">
+
       <!-- 모달안에 들어갈 내용들 -->
+       <h4 >주문 상세 내역</h4>
       <p>Some text in the Modal..</p>
 	<img src="${item.image}" id="productImgDetail">
   	  <div> 주문번호 : ${item.purchaseid }</div>
@@ -84,13 +105,7 @@
   	  <div> 픽업날짜 : ${item.stoptime}</div>
   	  <div> 픽업주소 : ${item.address}</div>
       <!-- 모달안에 들어갈 내용들 -->
- </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-       </div>
-    </div>
+
 </c:forEach>
 
 
@@ -128,53 +143,28 @@
 		
 <!-- 결제내역 보이게 하기 -->
 <script>
-// 모달
-//Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-
-
+	
+	// 결제건 주문번호
+	var purchaseid = ${purchaseid}
+	// 금액
+	var money = 
 
 
   function cancelPay() {
     jQuery.ajax({
-      "url": "/PaymentResult.pay", 
+      "url": "./OrderDetails.pay", 
       "type": "POST",
       "contentType": "application/json",
       "data": JSON.stringify({
-        "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
-        "cancel_request_amount": 2000, // 환불금액
-        "reason": "테스트 결제 환불" // 환불사유
-        // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
-        "refund_holder": "홍길동", 
-        // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
-        "refund_bank": "88" 
-        // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
-        "refund_account": "56211105948400" 
+        "merchant_uid": "9769412", // 예: ORD20180131-0000011
+        "cancel_request_amount": 100, // 환불금액
+        "reason": "환불" // 환불사유
       }),
       "dataType": "json"
+    }).done(data){
+    	if(data.sucess){
+    		alert('환불');
+    	}
     });
   }
 </script>
