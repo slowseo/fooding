@@ -59,8 +59,9 @@ public class PaymentAfterAction implements Action{
 		
 		ActionForward forward = new ActionForward();
 		if(id==null) {
-			forward.setPath("./Main.me");
+			forward.setPath("./MemberLogin.mem");
 			forward.setRedirect(true);
+			return forward;
 		}
 		
 		// 결제처리? ( 일단 하나의 DTO에 모든 정보를 때려박은거)

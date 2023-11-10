@@ -21,26 +21,26 @@ public class PaymentAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		// 로그인 세션 제어
-//		HttpSession session = request.getSession();
-//		String id = (String)session.getAttribute("id");
-//		System.out.println("DAO id 값 : "+id);
-//		ActionForward forward = new ActionForward();
-//		if(id==null) { 
-//			forward.setPath("./MemberLogin.mem");
-//			forward.setRedirect(true);
-//			return forward;
-//		}
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		System.out.println("DAO id 값 : "+id);
+		ActionForward forward = new ActionForward();
+		if(id==null) { 
+			forward.setPath("./MemberLogin.mem");
+			forward.setRedirect(true);
+			return forward;
+		}
 		
-		String id="koki9625"; // 임시
+//		String id="koki9625"; // 임시
 
 		/*  --------------------------------------------------------     */
 		// 0. 전달정보 저장하기 (물어보기)
-//		ArrayList<CartDTO> cartList = (ArrayList<CartDTO>) request.getAttribute("cartList"); // <-이거 써야함(맞는지 확인필요)
+		ArrayList<CartDTO> cartList = (ArrayList<CartDTO>) request.getAttribute("cartList"); // <-이거 써야함(맞는지 확인필요)
 		
-//		 String[] arr = request.getParameterValues("cart_id"); // 카트번호만 받아오기
+		 String[] arr = request.getParameterValues("cart_id"); // 카트번호만 받아오기
 		
 		/*  --------------------------------------------------------     */
-		 String[] arr = {"1","2","5","6"}; // 임시
+//		 String[] arr = {"1","2","5","6"}; // 임시
 		 
 		//  장바구니 데이터가 전달되지 않은 경우!
 //		 if (cartList == null || cartList.isEmpty()) { 
@@ -77,7 +77,7 @@ public class PaymentAction implements Action {
 		
 		// 페이지 이동
 
-		ActionForward forward = new ActionForward();
+		forward = new ActionForward();
 //		forward = new ActionForward();
 		forward.setPath("./fooding/payment/payment.jsp");
 		forward.setRedirect(false);

@@ -20,6 +20,20 @@
   	 <url-pattern>*.pay</url-pattern>
   </servlet-mapping>
   
+    <!-- 회원정보 Member 매핑 -->
+  <servlet>
+  	<servlet-name>MemberFrontController</servlet-name>
+  	<servlet-class>com.fooding.member.action.MemberFrontController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>MemberFrontController</servlet-name>
+  	<url-pattern>*.mem</url-pattern>
+  </servlet-mapping>
+  <!-- 회원정보 Member 매핑 -->
+
+  
+  
     <!-- 한글 인코딩 처리설정 -->
 	<filter>
 		<filter-name>SetUTF8</filter-name>

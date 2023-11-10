@@ -18,7 +18,7 @@
 		
 		// 실행주소
 
-		response.sendRedirect("./Payment.pay");
+		response.sendRedirect("./CartList.car");
 
 
 	%>
