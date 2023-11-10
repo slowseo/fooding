@@ -118,9 +118,9 @@
 				<h1 id="choice">결제방법</h1>
 				<input type="radio" name="pay" value="INIBillTst" class="pay">
 				카드결제 <br> <input type="radio" name="pay" value="kakaopay"
-					class="pay"> 카카오페이 <img src="../image/kakao.png" width="50px" /><br>
+					class="pay"> 카카오페이 <img src="./image/kakao.png" width="50px" /><br>
 				<input type="radio" name="pay" value="tosspay" class="pay">
-				토스페이 <img src="../image/Toss.png" width="30px" /><br> <br>
+				토스페이 <img src="./image/Toss.png" width="30px" /><br> <br>
 				<br>
 				<br>
 

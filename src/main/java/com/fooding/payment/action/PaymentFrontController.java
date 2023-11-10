@@ -61,7 +61,7 @@ public class PaymentFrontController extends HttpServlet{
 			}
 		}
 		else if(command.equals("/OrderDetails.pay")) { // PaymentAfterAction() 에서 정보를 받고 디비에서 정보를 꺼내와야함
-			System.out.println(" C : /Payment.pay 매핑" );
+			System.out.println(" C : /OrderDetails.pay 매핑" );
 			System.out.println(" C : 패턴 3 - DB사용O, 페이지 출력 ");			
 			
 			action = new orderDetailAction();

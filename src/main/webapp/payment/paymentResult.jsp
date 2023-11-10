@@ -37,38 +37,8 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Black+Han+Sans&family=Lato:wght@700&family=Noto+Sans+KR&family=Playpen+Sans&display=swap"
 	rel="stylesheet">
-<!-- 모달용 -->
 <!-- 테마 기본 설정 끝 -->
-<script type="text/javascript">
-$(document).ready(function(){
-	// 모달
-	//Get the modal
-	var modal = document.getElementById("myModal");
 
-	// Get the button that opens the modal
-	var btn = document.getElementById("myBtn");
-
-	// Get the <span> element that closes the modal
-	var span = document.getElementsByClassName("close")[0];
-
-	// When the user clicks on the button, open the modal
-	btn.onclick = function() {
-	  modal.style.display = "block";
-	}
-
-	// When the user clicks on <span> (x), close the modal
-	span.onclick = function() {
-	  modal.style.display = "none";
-	}
-
-	// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function(event) {
-	  if (event.target == modal) {
-	    modal.style.display = "none";
-	  }
-	}
-});
-</script>
 </head>
 <body>
 	<!-- 헤더 들어가는곳 -->
@@ -89,7 +59,7 @@ $(document).ready(function(){
 	<div>픽업위치 : ${item.address}</div>
 	<button class="news-img">상세보기</button>
 	<button onclick="">리뷰쓰기</button>
-	<button onclick="cancelPay()">결제취소</button>
+	<button onclick="refund(${item.purchaseid },${item.price}, ${item.quantity})">결제취소</button>
 </div> 
 <!-- 상세보기 -->
 
@@ -110,16 +80,9 @@ $(document).ready(function(){
         </div>
  </div>
       <!-- 모달안에 들어갈 내용들 -->
-     <div class="modal">
-    
-    
-        <img class="modal_content" id="img01">
-      </div>
 </c:forEach>
 
-
-
-
+<!-- 페이지 컨트롤러  -->
 			<div id="page_control">
 				<c:if test="${startPage > pageBlock }">
 				<a href="./OrderDetails.pay?pageNum=${startPage-pageBlock }">Prev</a> 
@@ -133,59 +96,14 @@ $(document).ready(function(){
 				<a href="./OrderDetails.pay?pageNum=${startPage+pageBlock }">Next</a>
 				</c:if>
 			</div>
+<!-- 페이지 컨트롤러  -->
 		
 </fieldset>
 		
 		
-		
-		
-		
-		
-		
-		
-		
- <div class="news-container">
-        <div class="card " style="width: 18rem;" id="card1">
-          <img src="images/겨울신메뉴이미지.jpg" class="news-img" /></img>
-          <div class="card-body">
-            <p class="card-text">
-              <span class="fooding-news">푸딩, 겨울 신메뉴 등록<br></span>
-              "겨울메뉴도 푸딩에서"
-            </p>
-          </div>
-        </div>
----------------------------------------------------
-     <div class="modal">
-    
-        <span class="close">&times;</span>
-    
-        <img class="modal_content" id="img01">
-      </div>
----------------------------------------------------
-      <div class="modal">
-    
-        <span class="close">&times;</span>
-    
-        <img class="modal_content" id="img02">
-      </div>
-
----------------------------------------------------
-      <div class="modal">
-    
-        <span class="close">&times;</span>
-    
-        <img class="modal_content" id="img03">
-      </div>
-
-		
-		
-		
-		
-		
-		
 <!-- 결제내역 보이게 하기 -->
-     <script>
-     // 모달 스크립트(메인페이지에 있던거)
+<script>
+// 모달 스크립트(메인페이지에 있던거)
 const modal = document.querySelectorAll(".modal");
 const img = document.querySelectorAll(".news-img");
 const modal_img = document.querySelectorAll(".modal_content");
@@ -194,7 +112,6 @@ const span = document.querySelectorAll(".close");
 for(let i=0; i<modal.length;i++){
   img[i].addEventListener('click', ()=>{
   modalDisplay(i,"block");
-//   modal_img[i].src = img[i].src;
 });
 }
 
@@ -215,32 +132,33 @@ function modalDisplay(i,text){
   modal[i].style.display = text;
 }
 
-        </script>
-<script>
-	
+  function refund(id,price, quantity) {
 	// 결제건 주문번호
-	var purchaseid = ${purchaseid}
+	var purchaseid = id;
+	// 수량
+	var quantt =quantity;
 	// 금액
-	var money = 
+	var howMuch = price;
+	// 총 금액?
+	var money = quantt*howMuch;	// 금액 계산됨
+	if(confirm('환불')){
+		  function cancelPay() {
+			    jQuery.ajax({
+			      // 예: http://www.myservice.com/payments/cancel
+			      "url": "./OrderDetails.pay", 
+			      "type": "POST",
+			      "contentType": "application/json",
+			      "data": JSON.stringify({
+			        "merchant_uid": id, // 예: ORD20180131-0000011
+			        "cancel_request_amount": money, // 환불금액
+			        "reason": "테스트 결제 환불" // 환불사유
+			      }),
+			      "dataType": "json"
+			    });
+			  }//cancelPay끝
+	}
 
-
-  function cancelPay() {
-    jQuery.ajax({
-      "url": "./OrderDetails.pay", 
-      "type": "POST",
-      "contentType": "application/json",
-      "data": JSON.stringify({
-        "merchant_uid": "9769412", // 예: ORD20180131-0000011
-        "cancel_request_amount": 100, // 환불금액
-        "reason": "환불" // 환불사유
-      }),
-      "dataType": "json"
-    }).done(data){
-    	if(data.sucess){
-    		alert('환불');
-    	}
-    });
-  }
+	}
 </script>
 		
 	<!-- 푸터들어가는곳 CSS 위치 조절 필요-->

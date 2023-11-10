@@ -36,7 +36,7 @@ public class orderDetailAction implements Action {
 //			return forward;
 //		}
 		
-		String id = "koki9625";
+		String id = "koki9625"; // 임시
 		
 		// 기존에 저장된 데이터 가져와서 화면에 출력
 		orderDetailDAO odao= new orderDetailDAO();
