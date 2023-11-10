@@ -79,7 +79,7 @@ public class PaymentAction implements Action {
 
 		ActionForward forward = new ActionForward();
 //		forward = new ActionForward();
-		forward.setPath("./payment/payment.jsp");
+		forward.setPath("./fooding/payment/payment.jsp");
 		forward.setRedirect(false);
 		
 		return forward;

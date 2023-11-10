@@ -114,7 +114,7 @@ public class orderDetailAction implements Action {
 		
 		ActionForward forward = new ActionForward();
 		forward = new ActionForward();
-		forward.setPath("./payment/paymentResult.jsp"); // 결제내역창 주소 입력해야함
+		forward.setPath("./fooding/payment/paymentResult.jsp"); // 결제내역창 주소 입력해야함
 		forward.setRedirect(false); // 전체출력이라 데이터 넘길거 없음
 		
 		return forward;

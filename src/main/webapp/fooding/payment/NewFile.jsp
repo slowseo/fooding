@@ -4,29 +4,39 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<!-- 포트원 결제연동 소스 -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+
     <title>라디오 버튼 예제</title>
+<script>
+$(document).ready(function(){
+	
+	$.ajax({
+		url: "https://api.iamport.kr/users/getToken",
+		method: "POST",
+		contentType: "application/json",
+		dataType: "json",
+		data: JSON.stringify({ imp_key: "RestApiKey", imp_secret: "RESTApiSecret" }),
+		success: function(data){
+			consol.log(data);
+			$(data).find('response').each(function(){
+				   var a = $(this).find('access_token').text();
+				   consol.log(a);	
+		});
+		},
+		error: function(data){
+			consol.log(data);}
+			
+	});
+
+});
+</script>
 </head>
 <body>
-    <form>
-        <input type="radio" name="textOption" value="option1" onchange="updateText(this.value)"> 옵션 1
-        <input type="radio" name="textOption" value="option2" onchange="updateText(this.value)"> 옵션 2
-        <input type="radio" name="textOption" value="option3" onchange="updateText(this.value)"> 옵션 3
-    </form>
-    
-    <div id="displayText">여기에 텍스트가 나타납니다.</div>
 
-    <script>
-        function updateText(selectedValue) {
-            var displayText = document.getElementById("displayText");
-
-            if (selectedValue === "option1") {
-                displayText.innerText = "옵션 1을 선택했습니다.";
-            } else if (selectedValue === "option2") {
-                displayText.innerText = "옵션 2를 선택했습니다.";
-            } else if (selectedValue === "option3") {
-                displayText.innerText = "옵션 3을 선택했습니다.";
-            }
-        }
-    </script>
+ 
 </body>
 </html>

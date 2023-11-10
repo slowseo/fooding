@@ -1,22 +1,28 @@
 package com.fooding.payment.action;
 
-import java.net.http.HttpResponse;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.eclipse.jdt.internal.compiler.batch.Main;
 
-import com.fooding.util.Action;
-import com.fooding.util.ActionForward;
+import com.google.gson.JsonObject;
 
-public class TestAjax implements Action {
-
-	@Override
-	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+public class TestAjax{
+	public static void main(String[] args) {
+		try {
+			URL url = new URL("https://api.iamport.kr/users/getToken");
+			HttpURLConnection http = (HttpURLConnection) url.openConnection();
+			
+			JsonObject jsonData = new JsonObject();
+			jsonData.addProperty("imp_key","1500428451315773");
+			jsonData.addProperty("imp_secret","T1rLNPm2YQzEDqYOEmXYGFthFdwEi15aqlhCtkrB2C2pJW455YVrfltaCLqiO7IJw1z8PS0tLtWzcr6B");
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-		
-		
-		return null;
 	}
-
 }
