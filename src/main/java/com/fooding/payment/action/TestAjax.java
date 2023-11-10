@@ -16,11 +16,45 @@ import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.eclipse.jdt.internal.compiler.batch.Main;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import netscape.javascript.JSObject;
 
 public class TestAjax{
+	public static void main(String[] args) {
+		JsonObject a = new JsonObject();
+		JsonArray jarr = new JsonArray();
+		
+		for(int i =1; i<3;i++) {
+			JsonObject data = new JsonObject();
+			data.put 
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 //   public JsonObject action() {
 //	   HttpURLConnection conn = null;
