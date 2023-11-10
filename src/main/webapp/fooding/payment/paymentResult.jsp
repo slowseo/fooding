@@ -11,32 +11,10 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>fooding</title>
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-<!-- Bootstrap icons-->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-	rel="stylesheet" />
-<!-- Google fonts-->
-<link rel="preconnect" href="https://fonts.gstatic.com" />
-<link
-	href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap"
-	rel="stylesheet" />
-<link
-	href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap"
-	rel="stylesheet" />
-<link
-	href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap"
-	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
 <link rel="stylesheet" href="css/orderDetail.css">
 
-<!-- 구글폰트 (변경가능)-->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Black+Han+Sans&family=Lato:wght@700&family=Noto+Sans+KR&family=Playpen+Sans&display=swap"
-	rel="stylesheet">
 <!-- 테마 기본 설정 끝 -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -48,6 +26,14 @@
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){	
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+    history.go(1);
+};
+});
+</script>
 </head>
 <body>
 	<!-- 헤더 들어가는곳 -->
@@ -152,24 +138,8 @@ function modalDisplay(i,text){
 	// 총 금액?
 	var money = quantt*howMuch;	// 금액 계산됨
 	if(confirm('환불')){
-		  function cancelPay() { // ajax 써야함!
-			    jQuery.ajax({
-			      // 예: http://www.myservice.com/payments/cancel
-			      "url": "./OrderDetails.pay", 
-			      "type": "POST",
-			      "contentType": "application/json",
-			      "data": JSON.stringify({
-			        "merchant_uid": id, // 예: ORD20180131-0000011
-			        "cancel_request_amount": money, // 환불금액
-			        "reason": "테스트 결제 환불" // 환불사유
-			      }),
-			      "dataType": "json"
-			    }).done(function(result) { // 환불 성공시 로직 
-			        alert("환불 성공");
-			    }).fail(function(error) { // 환불 실패시 로직
-			      alert("환불 실패");
-			    });
-			  }//cancelPay끝
+		// 환불 들어가야함
+		alert('주문취소하셧습니다');
 	}else{
 		alert('환불을 취소하셨습니다');
 	}
