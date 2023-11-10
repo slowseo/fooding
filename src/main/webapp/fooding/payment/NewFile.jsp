@@ -9,7 +9,7 @@
 <!-- 포트원 결제연동 소스 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
-
+<script src="Ajax.js"></script>
     <title>라디오 버튼 예제</title>
 <script>
 $(document).ready(function(){
@@ -24,11 +24,11 @@ $(document).ready(function(){
 			consol.log(data);
 			$(data).find('response').each(function(){
 				   var a = $(this).find('access_token').text();
-				   consol.log(a);	
+				   console.log(a);	
 		});
 		},
 		error: function(data){
-			consol.log(data);}
+			console.log(data);}
 			
 	});
 
@@ -38,5 +38,6 @@ $(document).ready(function(){
 <body>
 
  
+ <%= request.getParameter("IMP")%>
 </body>
 </html>
