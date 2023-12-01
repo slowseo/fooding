@@ -2,14 +2,17 @@ package com.fooding.payment.action;
 
 import java.io.IOException;
 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fooding.util.Action;
 import com.fooding.util.ActionForward;
+
 
 public class PaymentFrontController extends HttpServlet{
 
@@ -37,12 +40,24 @@ public class PaymentFrontController extends HttpServlet{
 			System.out.println(" C : /Payment.pay 매핑" );
 			System.out.println(" C : 패턴 3 - DB사용O, 페이지 출력 ");			
 		
+			action = new PaymentAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
 		}
-		else if(command.equals("/PaymentAfter.pay")) { // 디비에 정보를 저장하고 이동해야함
-			System.out.println(" C : /PaymentAfter.pay 호출 ");
+		else if(command.equals("/PaymentResult.pay")) { // 디비에 정보를 저장하고 이동해야함
+			System.out.println(" C : /PaymentResult.pay 호출 ");
 			System.out.println(" C : 패턴 2 - 데이터처리O, 페이지로 이동");
 		
+			action = new PaymentAfterAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		System.out.println("\n -----------------2. 가상주소 매핑 시작 --------------------");
